@@ -1,0 +1,30 @@
+{
+    "name": "@webwriter/ww-map",
+    "version": "0.1.0",
+    "description": "",
+    "keywords": [
+        "webwriter-widget"
+    ],
+    "license": "",
+    "author": "",
+    "contributors": [
+        "Jorik van Genuchten"
+    ],
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite --open",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "@shoelace-style/shoelace": "^2.4.0",
+        "@webwriter/lit": "^0.3.0",
+        "fa-icons": "^0.2.0",
+        "jimp": "0.22.7",
+        "leaflet": "^1.9.4",
+        "lit": "^2.4.0"
+    },
+    "devDependencies": {
+        "typescript": "^4.8.4",
+        "vite": "^3.1.6"
+    }
+}

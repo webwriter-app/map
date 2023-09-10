@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html encoding="utf8">
+  <head>
+    <title>Testing ww-map</title>
+    <script src="index.ts" type="module"></script>
+  </head>
+  <body>
+    <ww-map></ww-map>
+    <form autocomplete="off" style="position: fixed; bottom: 0; right: 0; padding: 10px; background: rgba(255, 255, 255, 0.75)">
+      <input checked type="checkbox" onchange="document.querySelector('ww-map').toggleAttribute('editable')">editable</input>
+      <input type="checkbox" onchange="document.querySelector('ww-map').toggleAttribute('printable')">printable</input>
+    </form>
+  </body>
+</html>
