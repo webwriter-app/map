@@ -185,22 +185,22 @@ export class WwMap extends LitElementWw {
     }
 
     connectedCallback(): void {
-        console.log('connectedCallback');
+        // console.log('connectedCallback');
         super.connectedCallback();
     }
 
     disconnectedCallback(): void {
-        console.log('disconnectedCallback');
+        // console.log('disconnectedCallback');
         super.disconnectedCallback();
     }
 
     protected update(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-        console.log('update');
+        // console.log('update');
         super.update(changedProperties);
     }
 
     protected updated(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-        console.log('updated');
+        // console.log('updated');
         super.updated(changedProperties);
 
         if (this.map && changedProperties.has('customTileUrl')) {
@@ -296,20 +296,20 @@ export class WwMap extends LitElementWw {
     }
 
     protected shouldUpdate(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): boolean {
-        console.log('shouldUpdate');
+        // console.log('shouldUpdate');
         return super.shouldUpdate(changedProperties);
     }
 
     protected willUpdate(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-        console.log('willUpdate');
+        // console.log('willUpdate');
         super.willUpdate(changedProperties);
     }
 
     protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-        console.log('firstUpdated');
+        // console.log('firstUpdated');
         super.firstUpdated(_changedProperties);
 
-        console.log(this.styles);
+        // console.log(this.styles);
 
         this.map = L.map(this.mapElement).setView([this.initialPos.lat, this.initialPos.lng], this.initialZoom);
         if (this.customTileUrl) {
@@ -346,11 +346,11 @@ export class WwMap extends LitElementWw {
     }
 
     onMapMove() {
-        console.log('onMapMove');
+        // console.log('onMapMove');
     }
 
     onMapClick(e: L.LeafletMouseEvent) {
-        console.log('onMapClick');
+        // console.log('onMapClick');
         if (this.mapMode === 'mouseSelect') {
             if (this.mouseMarker) {
                 this.map?.removeLayer(this.mouseMarker);
@@ -1203,7 +1203,7 @@ export class WwMap extends LitElementWw {
     }
 
     setInitialPosition() {
-        console.log('setInitialPosition');
+        // console.log('setInitialPosition');
 
         this.initialPos = {
             lat: this.inputLat,
@@ -1259,7 +1259,7 @@ export class WwMap extends LitElementWw {
     private saveObject(o, id: string = undefined) {
         const checkIfObjectExists = this.objects.hasOwnProperty(id);
 
-        console.log('SAVE DRAW OBJECT', this.objects, checkIfObjectExists);
+        // console.log('SAVE DRAW OBJECT', this.objects, checkIfObjectExists);
 
         if (!id) {
             id = crypto.randomUUID();

@@ -32,6 +32,11 @@
   "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz"
   "version" "5.15.4"
 
+"@fortawesome/fontawesome-free@^6.4.2":
+  "integrity" "sha512-CNy5vSwN3fsUStPRLX7fUYojyuzoEMSXPl7zSLJ8TgtRfjv24LOnOWKT2zYwaHZCJGkdyRnTmstR0P+Ah503Gw=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.5.1.tgz"
+  "version" "6.5.1"
+
 "@jimp/bmp@^0.22.10":
   "integrity" "sha512-1UXRl1Nw1KptZ1r0ANqtXOst9vGH51dq7keVKQzyyTO2lz4dOaezS9StuSTNh+RmiHg/SVPaFRpPfB0S/ln4Kg=="
   "resolved" "https://registry.npmjs.org/@jimp/bmp/-/bmp-0.22.10.tgz"
@@ -546,7 +551,7 @@
   "resolved" "https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.4.tgz"
   "version" "0.4.4"
 
-"leaflet@>=1.9.4 <2.0.0-0":
+"leaflet@^1.9.4":
   "integrity" "sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA=="
   "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz"
   "version" "1.9.4"
@@ -595,7 +600,7 @@
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-"lit@^2.7.5", "lit@>=2.4.0 <3.0.0-0":
+"lit@^2.4.0", "lit@^2.7.5":
   "integrity" "sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA=="
   "resolved" "https://registry.npmjs.org/lit/-/lit-2.8.0.tgz"
   "version" "2.8.0"
