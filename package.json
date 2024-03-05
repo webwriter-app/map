@@ -23,8 +23,9 @@
         "@webwriter/lit": "^1.6.3",
         "fa-icons": ">=0.2.0 <0.3.0-0",
         "jimp": "0.22.7",
-        "leaflet": ">=1.9.4 <2.0.0-0",
-        "lit": ">=2.4.0 <3.0.0-0"
+        "leaflet": "^1.9.4",
+        "lit": "^2.4.0",
+        "@fortawesome/fontawesome-free": "^6.4.2"
     },
     "devDependencies": {
         "typescript": ">=4.8.4 <5.0.0-0",
