@@ -73,4 +73,8 @@ export const style = css`
         align-items: center;
         justify-content: center;
     }
+
+    sl-dialog {
+        z-index: 2000;
+    }
 `;

@@ -1,5 +1,5 @@
 import { LitElementWw } from '@webwriter/lit';
-import { PropertyValueMap, html } from 'lit';
+import { LitElement, PropertyValueMap, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
 import { styleMap } from 'lit/directives/style-map.js';
@@ -34,31 +34,32 @@ import {
     faVectorSquare,
 } from './fontawesome.css.js';
 
-import {
-    SlDropdown,
-    SlMenu,
-    SlMenuItem,
-    SlButton,
-    SlDivider,
-    SlCard,
-    SlSwitch,
-    SlIcon,
-    SlRange,
-    SlDetails,
-    SlCheckbox,
-    SlProgressBar,
-    SlButtonGroup,
-    SlInput,
-    SlTooltip,
-    SlDialog,
-} from '@shoelace-style/shoelace';
+import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
+import SlDetails from '@shoelace-style/shoelace/dist/components/details/details.component.js';
+import SlInput from '@shoelace-style/shoelace/dist/components/input/input.component.js';
+import SlCheckbox from '@shoelace-style/shoelace/dist/components/checkbox/checkbox.component.js';
+import SlTooltip from '@shoelace-style/shoelace/dist/components/tooltip/tooltip.component.js';
+import SlButtonGroup from '@shoelace-style/shoelace/dist/components/button-group/button-group.component.js';
+import SlIcon from '@shoelace-style/shoelace/dist/components/icon/icon.component.js';
+import SlDialog from '@shoelace-style/shoelace/dist/components/dialog/dialog.component.js';
+import SlMenu from '@shoelace-style/shoelace/dist/components/menu/menu.component.js';
+import SlMenuItem from '@shoelace-style/shoelace/dist/components/menu-item/menu-item.component.js';
+import SlDropdown from '@shoelace-style/shoelace/dist/components/dropdown/dropdown.component.js';
+import SlRange from '@shoelace-style/shoelace/dist/components/range/range.component.js';
+import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
+import SlCard from '@shoelace-style/shoelace/dist/components/card/card.component.js';
+import SlDivider from '@shoelace-style/shoelace/dist/components/divider/divider.component.js';
+import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.component.js';
+import SlColorPicker from '@shoelace-style/shoelace/dist/components/color-picker/color-picker.component.js';
+
+import '@shoelace-style/shoelace/dist/themes/light.css';
 
 // import leafletStyles from './leaflet/leaflet.css.js';
 
 import * as L from './leaflet/leaflet.js';
 import 'fa-icons';
 
-@customElement('ww-map')
+@customElement('webwriter-map')
 export class WwMap extends LitElementWw {
     // styles = [leafletStyles];
     styles = [style, leafletStyles];
@@ -159,6 +160,8 @@ export class WwMap extends LitElementWw {
     @property({ type: Object })
     drawObject;
 
+    static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
+
     static get scopedElements() {
         return {
             'sl-button-group': SlButtonGroup,
@@ -177,6 +180,7 @@ export class WwMap extends LitElementWw {
             'sl-dropdown': SlDropdown,
             'sl-tooltip': SlTooltip,
             'sl-dialog': SlDialog,
+            'sl-color-picker': SlColorPicker,
         };
     }
 
@@ -337,6 +341,10 @@ export class WwMap extends LitElementWw {
         this.loadObjects();
     }
 
+    private isEditable() {
+        return this.contentEditable === 'true' || this.contentEditable === '';
+    }
+
     onMapMove() {
         console.log('onMapMove');
     }
@@ -360,15 +368,17 @@ export class WwMap extends LitElementWw {
                 ${this.styles}
             </style>
 
-            ${this.editable ? this.toolbox() : ''}
+            ${this.isEditable() ? this.toolbox() : ''}
 
             <div id="map" style=${styleMap({ height: this.mapHeight + 'px', width: this.mapWidth + '%' })}></div>
+
+            ${this.isEditable() ? this.dialogs() : ''}
         `;
     }
 
     toolbox() {
         return html`
-            <div part="action" class="toolbox">
+            <div part="options" class="toolbox">
                 <div class="position">
                     <sl-input
                         class="label-on-left"
@@ -444,29 +454,6 @@ export class WwMap extends LitElementWw {
                             }}
                             >${faLocationDot}</sl-button
                         >
-
-                        <sl-dialog id="pinDialog">
-                            <div slot="label">
-                                Add Pin
-                                <div class="marker-icon marker-icon-red" style="position: relative"></div>
-                            </div>
-                            <sl-input
-                                autofocus
-                                placeholder="Text"
-                                value=${this.pinTitle}
-                                @sl-change=${(e: any) => {
-                                    this.pinTitle = e.target.value;
-                                }}
-                            ></sl-input>
-                            <sl-button
-                                slot="footer"
-                                variant="primary"
-                                @click=${() => {
-                                    this.addLabel();
-                                }}
-                                >Add</sl-button
-                            >
-                        </sl-dialog>
                     </sl-tooltip>
                     <sl-tooltip content="Set Position as initial">
                         <sl-button
@@ -797,6 +784,31 @@ export class WwMap extends LitElementWw {
         `;
     }
 
+    dialogs() {
+        return html`<sl-dialog id="pinDialog">
+            <div slot="label">
+                Add Pin
+                <div class="marker-icon marker-icon-red" style="position: relative"></div>
+            </div>
+            <sl-input
+                autofocus
+                placeholder="Text"
+                value=${this.pinTitle}
+                @sl-change=${(e: any) => {
+                    this.pinTitle = e.target.value;
+                }}
+            ></sl-input>
+            <sl-button
+                slot="footer"
+                variant="primary"
+                @click=${() => {
+                    this.addLabel();
+                }}
+                >Add</sl-button
+            >
+        </sl-dialog>`;
+    }
+
     addRectangel() {
         //disable map dragging
         this.map?.dragging.disable();
@@ -990,7 +1002,7 @@ export class WwMap extends LitElementWw {
     }
 
     onRectangleClick(e: any) {
-        if (!this.editable) return;
+        if (!this.isEditable()) return;
 
         this.clearEditObject();
         this.editObject = e.target;
@@ -1070,7 +1082,7 @@ export class WwMap extends LitElementWw {
     }
 
     onCircleClick(e: any) {
-        if (!this.editable) return;
+        if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
             this.editObjectMarkers.forEach((marker) => {
@@ -1129,7 +1141,7 @@ export class WwMap extends LitElementWw {
     }
 
     onPolygonClick(e: any) {
-        if (!this.editable) return;
+        if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
             this.editObjectMarkers.forEach((marker) => {
@@ -1160,7 +1172,7 @@ export class WwMap extends LitElementWw {
     }
 
     onPolylineClick(e: any) {
-        if (!this.editable) return;
+        if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
             this.editObjectMarkers.forEach((marker) => {
