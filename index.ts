@@ -65,16 +65,16 @@ export class WwMap extends LitElementWw {
     styles = [style, leafletStyles];
 
     @query('#map')
-    mapElement!: HTMLElement;
+    accessor mapElement!: HTMLElement;
 
     @query('#pinDialog')
-    pinDialog!: SlDialog;
+    accessor pinDialog!: SlDialog;
 
     @property({ type: Object })
-    map: L.Map | undefined;
+    accessor map: L.Map | undefined;
 
     @property({ type: Object, attribute: true, reflect: true })
-    initialPos: {
+    accessor initialPos: {
         lat: number;
         lng: number;
     } = {
@@ -83,82 +83,82 @@ export class WwMap extends LitElementWw {
     };
 
     @property({ type: Object, attribute: true, reflect: true })
-    mapBounds: L.LatLngBoundsExpression;
+    accessor mapBounds: L.LatLngBoundsExpression;
 
     @property({ type: Number, attribute: true, reflect: true })
-    maxZoom: number;
+    accessor maxZoom: number;
 
     @property({ type: Number, attribute: true, reflect: true })
-    minZoom: number;
+    accessor minZoom: number;
 
     @property({ type: Number, attribute: true, reflect: true })
-    initialZoom = 13;
+    accessor initialZoom = 13;
 
     @property({ type: Array, attribute: true, reflect: true })
-    markers = [];
+    accessor markers = [];
 
     @property({ type: Object, attribute: true, reflect: true })
-    objects = {};
+    accessor objects = {};
 
     @property({ type: String, attribute: true, reflect: true })
-    customTileUrl = '';
+    accessor customTileUrl = '';
 
     @property({ type: String, attribute: true, reflect: true })
-    geoJSON = '';
+    accessor geoJSON = '';
 
     @property({ type: Number, attribute: true, reflect: true })
-    mapWidth = 100;
+    accessor mapWidth = 100;
 
     @property({ type: Number, attribute: true, reflect: true })
-    mapHeight = 500;
+    accessor mapHeight = 500;
 
     @property({ type: Boolean, attribute: true, reflect: true })
-    boundsActive = true;
+    accessor boundsActive = true;
 
     @property({ type: Number })
-    inputLat = 0;
+    accessor inputLat = 0;
 
     @property({ type: Number })
-    inputLng = 0;
+    accessor inputLng = 0;
 
     @property({ type: Number })
-    inputZoom = 0;
+    accessor inputZoom = 0;
 
     @property({ type: String })
-    inputBorderColor = '#000000ff';
+    accessor inputBorderColor = '#000000ff';
 
     @property({ type: String })
-    inputFillColor = '#000000ff';
+    accessor inputFillColor = '#000000ff';
 
     @property({ type: String })
-    inputDrawObjectLabel = '';
+    accessor inputDrawObjectLabel = '';
 
     @property({ type: String })
-    pinTitle = '';
+    accessor pinTitle = '';
 
     @property({ type: String })
-    mapMode = 'view';
+    accessor mapMode = 'view';
 
     @property({ type: Object })
-    mouseMarker: L.Marker | undefined;
+    accessor mouseMarker: L.Marker | undefined;
 
     @property({ type: Boolean })
-    showBounds = false;
+    accessor showBounds = false;
 
     @property({ type: Object })
-    showBoundsLayer: L.Rectangle | undefined;
+    accessor showBoundsLayer: L.Rectangle | undefined;
 
     @property({ type: Object })
-    editObject;
+    accessor editObject;
 
     @property({ type: Array })
-    editObjectMarkers = [];
+    accessor editObjectMarkers = [];
 
     @property({ type: Object })
-    layerControl;
+    accessor layerControl;
 
     @property({ type: Object })
-    drawObject;
+    accessor drawObject;
 
     static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
