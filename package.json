@@ -1,7 +1,7 @@
 {
     "name": "@webwriter/map",
     "version": "1.0.1",
-    "description": "interactive map with different terrain options and settings.",
+    "description": "Geographical map with different terrain options and drawing of shapes.",
     "keywords": [
         "webwriter-widget"
     ],
