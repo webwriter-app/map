@@ -12,7 +12,8 @@
     ],
     "main": "index.js",
     "exports": {
-        "./widgets/webwriter-map": "./index.ts"
+        "./widgets/webwriter-map": "./index.ts",
+        "./*": {"source": "./*", "default": null}
     },
     "scripts": {
         "dev": "vite --open",
