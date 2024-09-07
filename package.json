@@ -1,6 +1,6 @@
 {
     "name": "@webwriter/map",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Geographical map with different terrain options and drawing of shapes.",
     "keywords": [
         "webwriter-widget"
@@ -11,7 +11,7 @@
         "Jorik van Genuchten"
     ],
     "exports": {
-        "./widgets/webwriter-map/*": {
+        "./widgets/webwriter-map.*": {
           "source": "./index.ts",
           "default": "./dist/widgets/webwriter-map.*"
         },
