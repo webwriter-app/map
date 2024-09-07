@@ -1,6 +1,6 @@
 {
     "name": "@webwriter/map",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "description": "Geographical map with different terrain options and drawing of shapes.",
     "keywords": [
         "webwriter-widget"
@@ -10,14 +10,15 @@
     "contributors": [
         "Jorik van Genuchten"
     ],
-    "main": "index.js",
     "exports": {
-        "./widgets/webwriter-map": "./index.ts",
-        "./*": {"source": "./*", "default": null}
+        "./widgets/webwriter-map/*": {
+          "source": "./index.ts",
+          "default": "./dist/widgets/webwriter-map.*"
+        },
+        "./package.json": "./package.json"
     },
     "scripts": {
-        "dev": "vite --open",
-        "build": "vite build"
+      "prepublishOnly": "npx @webwriter/build"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.4.2",
