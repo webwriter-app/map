@@ -77,4 +77,8 @@ export const style = css`
     sl-dialog {
         z-index: 2000;
     }
+    sl-button {
+        margin-block: 5px;
+        width: 100%;
+    }
 `;

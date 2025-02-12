@@ -339,6 +339,10 @@ export class WwMap extends LitElementWw {
         this.inputZoom = this.initialZoom;
 
         this.loadObjects();
+
+        setInterval(() => {
+            this.setInitialPosition()
+        }, 250);
     }
 
     private isEditable() {
@@ -346,7 +350,7 @@ export class WwMap extends LitElementWw {
     }
 
     onMapMove() {
-        // console.log('onMapMove');
+        // this.setInitialPosition()
     }
 
     onMapClick(e: L.LeafletMouseEvent) {
@@ -379,7 +383,7 @@ export class WwMap extends LitElementWw {
     toolbox() {
         return html`
             <div part="options" class="toolbox">
-                <div class="position">
+                <!-- <div class="position">
                     <sl-input
                         class="label-on-left"
                         label="Lat"
@@ -722,27 +726,19 @@ export class WwMap extends LitElementWw {
                         }}
                         ><span slot="suffix">px</span></sl-input
                     >
-                </sl-details>
+                </sl-details> -->
 
                 <sl-details summary="Advanced" class="custom-icons">
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
-                    <sl-input
-                        label="Custom Tile Url"
-                        value=${this.customTileUrl}
-                        @sl-change=${(e: any) => {
-                            this.customTileUrl = e.target.value;
-                        }}
-                    ></sl-input>
-
-                    <!-- <sl-button-group label="Map Type"> -->
+                    <p style="margin-top:-20px;margin-bottom:-2px; font-size:11.5pt">Map style</p>
                     <sl-tooltip content="Default">
                         <sl-button
                             @click=${() => {
                                 this.customTileUrl = undefined;
                             }}
-                            >Default</sl-button
+                            >User select</sl-button
                         >
                     </sl-tooltip>
                     <sl-tooltip content="OpenStreetMapDE">
@@ -770,10 +766,15 @@ export class WwMap extends LitElementWw {
                             >WorldImagery</sl-button
                         >
                     </sl-tooltip>
-                    <!-- </sl-button-group> -->
-
                     <sl-input
-                        label="Geo JSON"
+                        label="Custom Tile Url"
+                        value=${this.customTileUrl}
+                        @sl-change=${(e: any) => {
+                            this.customTileUrl = e.target.value;
+                        }}
+                    ></sl-input>
+                    <sl-input
+                        label="GeoJSON"
                         value=${this.geoJSON}
                         @sl-change=${(e: any) => {
                             this.geoJSON = e.target.value;
@@ -1203,7 +1204,7 @@ export class WwMap extends LitElementWw {
     }
 
     setInitialPosition() {
-        // console.log('setInitialPosition');
+        this.loadMapPosition()
 
         this.initialPos = {
             lat: this.inputLat,

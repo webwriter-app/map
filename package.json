@@ -1,36 +1,36 @@
 {
-    "name": "@webwriter/map",
-    "version": "2.0.1",
-    "description": "Geographical map with different terrain options and drawing of shapes.",
-    "keywords": [
-        "webwriter-widget"
-    ],
-    "license": "MIT",
-    "author": "Jorik van Genuchten",
-    "contributors": [
-        "Jorik van Genuchten"
-    ],
-    "exports": {
-        "./widgets/webwriter-map.*": {
-          "source": "./index.ts",
-          "default": "./dist/widgets/webwriter-map.*"
-        },
-        "./package.json": "./package.json"
-    },
-    "scripts": {
-      "prepublishOnly": "npx @webwriter/build"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-free": "^6.4.2",
-        "@shoelace-style/shoelace": ">=2.4.0 <3.0.0-0",
-        "@webwriter/lit": "^2.0.0",
-        "fa-icons": ">=0.2.0 <0.3.0-0",
-        "jimp": "0.22.7",
-        "leaflet": "^1.9.4",
-        "lit": ">=3.0.0 <4.0.0-0"
-    },
-    "devDependencies": {
-        "typescript": ">=4.8.4 <5.0.0-0",
-        "vite": ">=3.1.6 <4.0.0-0"
-    }
+	"name": "@webwriter/map",
+	"version": "2.0.3",
+	"description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
+	"keywords": [
+		"webwriter-widget"
+	],
+	"license": "MIT",
+	"author": "Jorik van Genuchten",
+	"contributors": [
+		"Jorik van Genuchten"
+	],
+	"scripts": {
+		"prepublishOnly": "npx @webwriter/build"
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^6.4.2",
+		"@shoelace-style/shoelace": ">=2.4.0 <3.0.0-0",
+		"@webwriter/lit": "^2.0.0",
+		"fa-icons": ">=0.2.0 <0.3.0-0",
+		"jimp": "0.22.7",
+		"leaflet": "^1.9.4",
+		"lit": ">=3.0.0 <4.0.0-0"
+	},
+	"devDependencies": {
+		"typescript": ">=4.8.4 <5.0.0-0",
+		"vite": ">=3.1.6 <4.0.0-0"
+	},
+	"exports": {
+		"./widgets/webwriter-map.*": {
+			"source": "./index.ts",
+			"default": "./dist/widgets/webwriter-map.*"
+		},
+		"./package.json": "./package.json"
+	}
 }
