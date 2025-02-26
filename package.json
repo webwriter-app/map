@@ -1,6 +1,6 @@
 {
 	"name": "@webwriter/map",
-	"version": "2.0.4",
+	"version": "2.0.5",
 	"description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
 	"keywords": [
 		"webwriter-widget"
@@ -31,6 +31,7 @@
 			"source": "./index.ts",
 			"default": "./dist/widgets/webwriter-map.*"
 		},
+		"./snippets/Beispielort.html": "./snippets/Beispielort.html",
 		"./package.json": "./package.json",
 		"./icon": "./icon.svg"
 	}
