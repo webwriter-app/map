@@ -1,38 +1,48 @@
 {
-	"name": "@webwriter/map",
-	"version": "2.0.5",
-	"description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
-	"keywords": [
-		"webwriter-widget"
-	],
-	"license": "MIT",
-	"author": "Jorik van Genuchten",
-	"contributors": [
-		"Jorik van Genuchten"
-	],
-	"scripts": {
-		"prepublishOnly": "npx @webwriter/build"
-	},
-	"dependencies": {
-		"@fortawesome/fontawesome-free": "^6.4.2",
-		"@shoelace-style/shoelace": ">=2.4.0 <3.0.0-0",
-		"@webwriter/lit": "^2.0.0",
-		"fa-icons": ">=0.2.0 <0.3.0-0",
-		"jimp": "0.22.7",
-		"leaflet": "^1.9.4",
-		"lit": ">=3.0.0 <4.0.0-0"
-	},
-	"devDependencies": {
-		"typescript": ">=4.8.4 <5.0.0-0",
-		"vite": ">=3.1.6 <4.0.0-0"
-	},
-	"exports": {
-		"./widgets/webwriter-map.*": {
-			"source": "./index.ts",
-			"default": "./dist/widgets/webwriter-map.*"
-		},
-		"./snippets/Beispielort.html": "./snippets/Beispielort.html",
-		"./package.json": "./package.json",
-		"./icon": "./icon.svg"
-	}
+    "name": "@webwriter/map",
+    "version": "2.0.6",
+    "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
+    "keywords": [
+        "webwriter-widget",
+        "widget-lang-en",
+        "widget-online",
+        "iscedf2013-99",
+        "isced2011-0",
+        "isced2011-1",
+        "isced2011-2",
+        "isced2011-3",
+        "geology",
+        "map",
+        "earth"
+    ],
+    "license": "MIT",
+    "author": "Jorik van Genuchten",
+    "contributors": [
+        "Jorik van Genuchten"
+    ],
+    "scripts": {
+        "prepublishOnly": "npx @webwriter/build"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.4.2",
+        "@shoelace-style/shoelace": ">=2.4.0 <3.0.0-0",
+        "@webwriter/lit": "^2.0.0",
+        "fa-icons": ">=0.2.0 <0.3.0-0",
+        "jimp": "0.22.7",
+        "leaflet": "^1.9.4",
+        "lit": ">=3.0.0 <4.0.0-0"
+    },
+    "devDependencies": {
+        "typescript": ">=4.8.4 <5.0.0-0",
+        "vite": ">=3.1.6 <4.0.0-0"
+    },
+    "exports": {
+        "./widgets/webwriter-map.*": {
+            "source": "./index.ts",
+            "default": "./dist/widgets/webwriter-map.*"
+        },
+        "./snippets/Example-Location.html": "./snippets/Example-Location.html",
+        "./package.json": "./package.json",
+        "./icon": "./icon.svg"
+    }
 }
