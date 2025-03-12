@@ -1,6 +1,6 @@
 {
     "name": "@webwriter/map",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
     "keywords": [
         "webwriter-widget",
@@ -44,5 +44,12 @@
         "./snippets/Example-Location.html": "./snippets/Example-Location.html",
         "./package.json": "./package.json",
         "./icon": "./icon.svg"
+    },
+    "editingConfig": {
+        ".": {
+            "description": {
+                "de": "Geografische Karte mit verschiedenen Geländeoptionen, einschließlich benutzerdefiniertem Tiling, und GeoJSON-Unterstützung."
+            }
+        }
     }
 }
