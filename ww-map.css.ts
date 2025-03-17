@@ -1,6 +1,12 @@
 import { css } from 'lit';
 
 export const style = css`
+
+    :host{
+        display: block;
+        /* overflow: hidden */
+    }
+
     .toolbox > * {
         margin-bottom: 1em;
     }
@@ -67,6 +73,22 @@ export const style = css`
         background-color: blue;
     }
 
+    #overlay{
+        position: relative; 
+        display: block; 
+    }
+
+    #fsButton{
+        pointer-events: auto;
+        position: absolute;
+        width: 30px;
+        top: 80px; 
+        left: 12px; 
+        z-index: 10000; 
+        border: 2px solid rgba(0, 0, 0, 0.2); 
+        border-radius: 0.25rem
+    }
+
     sl-button::part(base) {
         display: flex;
         flex-direction: column;
@@ -80,5 +102,8 @@ export const style = css`
     sl-button {
         margin-block: 5px;
         width: 100%;
+    }
+    sl-button::part(base){
+        line-height: normal
     }
 `;
