@@ -1,0 +1,158 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="es">
+    <body>
+      <trans-unit id="s8af61807443f32a4">
+        <source>Actions</source>
+        <target>Acciones</target>
+      </trans-unit>
+      <trans-unit id="s1bcea0c68ac23efb">
+        <source>Add Pin</source>
+        <target>Añadir alfiler</target>
+      </trans-unit>
+      <trans-unit id="sab904a167497cd3e">
+        <source>Set Position as initial</source>
+        <target>Establecer Posición como inicial</target>
+      </trans-unit>
+      <trans-unit id="s3b5ddf60892a6a48">
+        <source>Bounds</source>
+        <target>Límites</target>
+      </trans-unit>
+      <trans-unit id="s8f3d223923b156c6">
+        <source>not set</source>
+        <target>no fijado</target>
+      </trans-unit>
+      <trans-unit id="sf42ce409138b0d9c">
+        <source>activated</source>
+        <target>activado</target>
+      </trans-unit>
+      <trans-unit id="s25392c6d0eb63175">
+        <source>deactivated</source>
+        <target>desactivado</target>
+      </trans-unit>
+      <trans-unit id="sa9f2381c84bd9969">
+        <source>Set Top Left</source>
+        <target>Set Top Left</target>
+      </trans-unit>
+      <trans-unit id="sd83da86c74147960">
+        <source>Set Bottom Right</source>
+        <target>Fijar abajo a la derecha</target>
+      </trans-unit>
+      <trans-unit id="s6fc95ee75e407518">
+        <source>Set Max Zoom</source>
+        <target>Fijar zoom máximo</target>
+      </trans-unit>
+      <trans-unit id="s0aee4705bcc0c15e">
+        <source>Set Min Zoom</source>
+        <target>Fijar zoom mínimo</target>
+      </trans-unit>
+      <trans-unit id="s936c17dcc2e04cf5">
+        <source>Fit Bounds</source>
+        <target>En forma</target>
+      </trans-unit>
+      <trans-unit id="sa53d08f6b088b54e">
+        <source>Visualize Bounds</source>
+        <target>Visualizar límites</target>
+      </trans-unit>
+      <trans-unit id="s5488509fd37aa9fc">
+        <source>Disable Bounds</source>
+        <target>Desactivar límites</target>
+      </trans-unit>
+      <trans-unit id="s6beb392ed926ce5b">
+        <source>Enable Bounds</source>
+        <target>Habilitar límites</target>
+      </trans-unit>
+      <trans-unit id="sdc9cf2d6e96526c1">
+        <source>Reset Bounds</source>
+        <target>Restablecer límites</target>
+      </trans-unit>
+      <trans-unit id="s1c0ea772de28e773">
+        <source>Draw</source>
+        <target>Dibujar</target>
+      </trans-unit>
+      <trans-unit id="sd42752882536c15a">
+        <source>Draw Rectangle</source>
+        <target>Dibujar rectángulo</target>
+      </trans-unit>
+      <trans-unit id="s37c758bc19c67a4d">
+        <source>Draw Circle</source>
+        <target>Dibujar círculo</target>
+      </trans-unit>
+      <trans-unit id="saeeff153fba5364d">
+        <source>Draw Polygon</source>
+        <target>Dibujar polígono</target>
+      </trans-unit>
+      <trans-unit id="sc539af8ae925acc1">
+        <source>Draw Polyline</source>
+        <target>Dibujar polilínea</target>
+      </trans-unit>
+      <trans-unit id="sdc673e73b5c13aea">
+        <source>Delete</source>
+        <target>Borrar</target>
+      </trans-unit>
+      <trans-unit id="sca9faebc773bf95d">
+        <source>Delete Object</source>
+        <target>Borrar objeto</target>
+      </trans-unit>
+      <trans-unit id="s6ba44d4d5d284468">
+        <source>Border Color</source>
+        <target>Color del borde</target>
+      </trans-unit>
+      <trans-unit id="sdd253aec6b88b6af">
+        <source>Fill Color</source>
+        <target>Color de relleno</target>
+      </trans-unit>
+      <trans-unit id="s5590dbf7e425789d">
+        <source>Label</source>
+        <target>Etiqueta</target>
+      </trans-unit>
+      <trans-unit id="s78789724e789221c">
+        <source>Size</source>
+        <target>Talla</target>
+      </trans-unit>
+      <trans-unit id="sf21fb4f4b9e8911f">
+        <source>Width</source>
+        <target>Anchura</target>
+      </trans-unit>
+      <trans-unit id="sffdadf0a576fd802">
+        <source>Height</source>
+        <target>Altura</target>
+      </trans-unit>
+      <trans-unit id="s71218539d83e0ab8">
+        <source>Movement</source>
+        <target>Movimiento</target>
+      </trans-unit>
+      <trans-unit id="sa88dfb051be09d0e">
+        <source>Allow student movement</source>
+        <target>Permitir el movimiento de los alumnos</target>
+      </trans-unit>
+      <trans-unit id="s21b06c38fc4164db">
+        <source>Advanced</source>
+        <target>Avanzado</target>
+      </trans-unit>
+      <trans-unit id="s32689d1d09608f54">
+        <source>Map style</source>
+        <target>Estilo del mapa</target>
+      </trans-unit>
+      <trans-unit id="s11326fd2590f4e5e">
+        <source>Default</source>
+        <target>Por defecto</target>
+      </trans-unit>
+      <trans-unit id="s3011241149f8d10e">
+        <source>User select</source>
+        <target>Selección de usuario</target>
+      </trans-unit>
+      <trans-unit id="s8abdd4fbc8368253">
+        <source>Custom Tile Url</source>
+        <target>Url de azulejos personalizada</target>
+      </trans-unit>
+      <trans-unit id="s2492f5fb1b05b45e">
+        <source>Text</source>
+        <target>Texto</target>
+      </trans-unit>
+      <trans-unit id="sf9aee319a006c9b4">
+        <source>Add</source>
+        <target>Añadir</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

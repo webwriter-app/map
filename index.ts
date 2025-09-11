@@ -1,6 +1,8 @@
 import { LitElementWw } from '@webwriter/lit';
 import { LitElement, PropertyValueMap, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import { localized, msg } from '@lit/localize';
+import LOCALIZE from './localization/generated';
 
 import { styleMap } from 'lit/directives/style-map.js';
 
@@ -59,10 +61,16 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 import L from './leaflet/leaflet.js';
 import 'fa-icons';
 
+/**
+ * Geographical map with different terrain options including custom tiling, and GeoJSON support.
+ */
 @customElement('webwriter-map')
+@localized()
 export class WwMap extends LitElementWw {
     // styles = [leafletStyles];
     styles = [style, leafletStyles];
+
+	localize = LOCALIZE;
 
     @query('#map')
     accessor mapElement!: HTMLElement;
@@ -76,6 +84,7 @@ export class WwMap extends LitElementWw {
     @property({ type: Object })
     accessor map: L.Map | undefined;
 
+    /** Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{"lat":51,"lng":19}'). */
     @property({ type: Object, attribute: true, reflect: true })
     accessor initialPos: {
         lat: number;
@@ -85,95 +94,109 @@ export class WwMap extends LitElementWw {
         lng: 19,
     };
 
+    /** Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]'). */
     @property({ type: Object, attribute: true, reflect: true })
     accessor mapBounds: L.LatLngBoundsExpression;
 
+    /** Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor maxZoom: number;
 
+    /** Minimum zoom level allowed.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor minZoom: number;
 
+    /** Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor initialZoom = 13;
 
+    /** Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true})
     accessor fixedZoom = 1;
 
+    /** Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string. */
     @property({ type: Array, attribute: true, reflect: true })
     accessor markers = [];
 
+    /** Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string. */
     @property({ type: Object, attribute: true, reflect: true })
     accessor objects = {};
 
+    /** Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used. */
     @property({ type: String, attribute: true, reflect: true })
     accessor customTileUrl = '';
 
+    /** GeoJSON overlay to render on the map.<br>Expected value: stringified GeoJSON (Feature or FeatureCollection).<br>Optional; when empty/falsy, no GeoJSON overlay is shown. */
     @property({ type: String, attribute: true, reflect: true })
     accessor geoJSON = '';
 
+    /** Map container width, as a percentage of the host element's width.<br>Expected value: number (0–100). Applied as CSS width: `${mapWidth}%`.<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor mapWidth = 100;
 
+    /** Map container height in pixels.<br>Expected value: number (pixels). Applied as CSS height: `${mapHeight}px`.<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor mapHeight = 500;
 
+    /** Whether to enforce `mapBounds` and `maxZoom` constraints on the map.<br>Expected value: boolean; when true and `mapBounds` is set, panning is constrained to those bounds.<br>Optional. */
     @property({ type: Boolean, attribute: true, reflect: true })
     accessor boundsActive = true;
 
     @property({ type: Number })
-    accessor inputLat = 0;
+    private accessor inputLat = 0;
 
     @property({ type: Number })
-    accessor inputLng = 0;
+    private accessor inputLng = 0;
 
     @property({ type: Number })
-    accessor inputZoom = 0;
+    private accessor inputZoom = 0;
 
     @property({ type: String })
-    accessor inputBorderColor = '#000000ff';
+    private accessor inputBorderColor = '#000000ff';
 
     @property({ type: String })
-    accessor inputFillColor = '#000000ff';
+    private accessor inputFillColor = '#000000ff';
 
     @property({ type: String })
-    accessor inputDrawObjectLabel = '';
+    private accessor inputDrawObjectLabel = '';
 
     @property({ type: String })
-    accessor pinTitle = '';
+    private accessor pinTitle = '';
 
     @property({ type: String })
-    accessor mapMode = 'view';
+    private accessor mapMode = 'view';
 
     @property({ type: Object })
-    accessor mouseMarker: L.Marker | undefined;
+    private accessor mouseMarker: L.Marker | undefined;
 
     @property({ type: Boolean })
-    accessor showBounds = false;
+    private accessor showBounds = false;
 
     @property({ type: Object })
-    accessor showBoundsLayer: L.Rectangle | undefined;
+    private accessor showBoundsLayer: L.Rectangle | undefined;
 
     @property({ type: Object })
-    accessor editObject;
+    private accessor editObject;
 
     @property({ type: Array })
-    accessor editObjectMarkers = [];
+    private accessor editObjectMarkers = [];
 
     @property({ type: Object })
-    accessor layerControl;
+    private accessor layerControl;
 
     @property({ type: Object })
-    accessor drawObject;
+    private accessor drawObject;
 
     @property({ type: Number })
-    accessor heightBuffer;
+    private accessor heightBuffer;
 
     @property({ type: Boolean, reflect: true })
-    accessor allowPanning;
+    private  accessor allowPanning;
 
+	/** @internal */
     static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
+	/** @internal */
     static get scopedElements() {
         return {
             'sl-button-group': SlButtonGroup,
@@ -376,7 +399,6 @@ export class WwMap extends LitElementWw {
         
         setInterval(() => {
             this.setInitialPosition()
-            this.mapHeight = this.getBoundingClientRect().height
             if(!this.allowPanning && !this.hasAttribute("contenteditable")){
                 this.map.setZoom(this.fixedZoom)
             }
@@ -387,11 +409,11 @@ export class WwMap extends LitElementWw {
         return this.contentEditable === 'true' || this.contentEditable === '';
     }
 
-    onMapMove() {
+    private onMapMove() {
         // this.setInitialPosition()
     }
 
-    onMapClick(e: L.LeafletMouseEvent) {
+    private onMapClick(e: L.LeafletMouseEvent) {
         // console.log('onMapClick');
         if (this.mapMode === 'mouseSelect') {
             if (this.mouseMarker) {
@@ -442,7 +464,7 @@ export class WwMap extends LitElementWw {
         `;
     }
 
-    toolbox() {
+    private toolbox() {
         return html`
             <div part="options" class="toolbox">
                 <!-- <div class="position">
@@ -512,8 +534,8 @@ export class WwMap extends LitElementWw {
                         >
                     </sl-tooltip>
                 </sl-button-group>
-                <sl-button-group label="Actions">
-                    <sl-tooltip content="Add Pin">
+                <sl-button-group label=${msg('Actions')}>
+                    <sl-tooltip content=${msg('Add Pin')}>
                         <sl-button
                             @click=${() => {
                                 this.pinDialog.show();
@@ -521,7 +543,7 @@ export class WwMap extends LitElementWw {
                             >${faLocationDot}</sl-button
                         >
                     </sl-tooltip>
-                    <sl-tooltip content="Set Position as initial">
+                    <sl-tooltip content=${msg('Set Position as initial')}>
                         <sl-button
                             @click=${() => {
                                 this.setInitialPosition();
@@ -532,16 +554,16 @@ export class WwMap extends LitElementWw {
                 </sl-button-group>
                 <sl-details class="custom-icons">
                     <div slot="summary">
-                        Bounds
+                        ${msg('Bounds')}
                         <i style="font-size:0.5rem"
-                            >(${!this.mapBounds ? 'not set' : this.boundsActive ? 'activated' : 'deactivated'})</i
+                            >(${!this.mapBounds ? msg('not set') : this.boundsActive ? msg('activated') : msg('deactivated')})</i
                         >
                     </div>
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
-                    <sl-button-group label="Bounds">
-                        <sl-tooltip content="Set Top Left">
+                    <sl-button-group label=${msg('Bounds')}>
+                        <sl-tooltip content=${msg('Set Top Left')}>
                             <sl-button
                                 @click=${() => {
                                     if (this.mapBounds) {
@@ -556,7 +578,7 @@ export class WwMap extends LitElementWw {
                                 >${faBorderTopLeft}</sl-button
                             >
                         </sl-tooltip>
-                        <sl-tooltip content="Set Bottom Right">
+                        <sl-tooltip content=${msg('Set Bottom Right')}>
                             <sl-button
                                 @click=${() => {
                                     if (this.mapBounds) {
@@ -571,7 +593,7 @@ export class WwMap extends LitElementWw {
                                 >${faBorderBottomRight}</sl-button
                             >
                         </sl-tooltip>
-                        <sl-tooltip content="Set Max Zoom">
+                        <sl-tooltip content=${msg('Set Max Zoom')}>
                             <sl-button
                                 @click=${() => {
                                     this.maxZoom = this.inputZoom;
@@ -579,7 +601,7 @@ export class WwMap extends LitElementWw {
                                 >${faMagnifyingGlassPlus}</sl-button
                             >
                         </sl-tooltip>
-                        <sl-tooltip content="Set Min Zoom">
+                        <sl-tooltip content=${msg('Set Min Zoom')}>
                             <sl-button
                                 @click=${() => {
                                     this.minZoom = this.inputZoom;
@@ -588,8 +610,8 @@ export class WwMap extends LitElementWw {
                             >
                         </sl-tooltip>
                     </sl-button-group>
-                    <sl-button-group label="Actions">
-                        <sl-tooltip content="Fit Bounds">
+                    <sl-button-group label=${msg('Actions')}>
+                        <sl-tooltip content=${msg('Fit Bounds')}>
                             <sl-button
                                 @click=${() => {
                                     this.map?.fitBounds(this.mapBounds);
@@ -597,7 +619,7 @@ export class WwMap extends LitElementWw {
                                 >${faExpand}</sl-button
                             >
                         </sl-tooltip>
-                        <sl-tooltip content="Visualize Bounds">
+                        <sl-tooltip content=${msg('Visualize Bounds')}>
                             <sl-button
                                 @click=${() => {
                                     this.showBounds = !this.showBounds;
@@ -615,7 +637,7 @@ export class WwMap extends LitElementWw {
                                 >${!this.showBounds ? faEye : faEyeSlashed}</sl-button
                             >
                         </sl-tooltip>
-                        <sl-tooltip content=${this.boundsActive ? 'Disable Bounds' : 'Enable Bounds'}>
+                        <sl-tooltip content=${this.boundsActive ? msg('Disable Bounds') : msg('Enable Bounds')}>
                             <sl-button
                                 @click=${() => {
                                     this.boundsActive = !this.boundsActive;
@@ -624,7 +646,7 @@ export class WwMap extends LitElementWw {
                                 >${this.boundsActive ? faBan : faBan}</sl-button
                             >
                         </sl-tooltip>
-                        <sl-tooltip content="Reset Bounds">
+                        <sl-tooltip content=${msg('Reset Bounds')}>
                             <sl-button
                                 @click=${() => {
                                     this.mapBounds = undefined;
@@ -640,13 +662,13 @@ export class WwMap extends LitElementWw {
                         </sl-tooltip>
                     </sl-button-group>
                 </sl-details>
-                <sl-details summary="Draw" class="custom-icons">
+                <sl-details summary=${msg('Draw')} class="custom-icons">
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
                     <div>
-                        <sl-button-group label="Draw">
-                            <sl-tooltip content="Draw Rectangle">
+                        <sl-button-group label=${msg('Draw')}>
+                            <sl-tooltip content=${msg('Draw Rectangle')}>
                                 <sl-button
                                     @click=${this.addRectangel}
                                     variant=${this.mapMode === 'drawingRectangle' ||
@@ -657,7 +679,7 @@ export class WwMap extends LitElementWw {
                                     ${faVectorSquare}
                                 </sl-button>
                             </sl-tooltip>
-                            <sl-tooltip content="Draw Circle">
+                            <sl-tooltip content=${msg('Draw Circle')}>
                                 <sl-button
                                     @click=${this.addCircle}
                                     variant=${this.mapMode === 'drawingCircle' || this.mapMode === 'awaitDrawingCircle'
@@ -667,7 +689,7 @@ export class WwMap extends LitElementWw {
                                     ${faCircle}
                                 </sl-button>
                             </sl-tooltip>
-                            <sl-tooltip content="Draw Polygon">
+                            <sl-tooltip content=${msg('Draw Polygon')}>
                                 <sl-button
                                     @click=${() => {
                                         if (this.mapMode === 'drawingPolygon') {
@@ -691,7 +713,7 @@ export class WwMap extends LitElementWw {
                                     ${faDrawPolygon}
                                 </sl-button>
                             </sl-tooltip>
-                            <sl-tooltip content="Draw Polyline">
+                            <sl-tooltip content=${msg('Draw Polyline')}>
                                 <sl-button
                                     @click=${() => {
                                         if (this.mapMode === 'drawingPolyline') {
@@ -716,8 +738,8 @@ export class WwMap extends LitElementWw {
                                 </sl-button>
                             </sl-tooltip>
                         </sl-button-group>
-                        <sl-button-group label="Delete">
-                            <sl-tooltip content="Delete Object">
+                        <sl-button-group label=${msg('Delete')}>
+                            <sl-tooltip content=${msg('Delete Object')}>
                                 <sl-button
                                     @click=${() => {
                                         this.deleteSelectedObject();
@@ -729,8 +751,8 @@ export class WwMap extends LitElementWw {
                         </sl-button-group>
                     </div>
                     <div>
-                        <span>Border Color</span>
-                        <sl-tooltip content="Border Color">
+                        <span>${msg('Border Color')}</span>
+                        <sl-tooltip content=${msg('Border Color')}>
                             <sl-color-picker
                                 opacity
                                 value=${this.inputBorderColor}
@@ -738,13 +760,13 @@ export class WwMap extends LitElementWw {
                                     this.inputBorderColor = e.target.value;
                                 }}
                             >
-                                <span slot="label">Border Color</span>
+                                <span slot="label">${msg('Border Color')}</span>
                             </sl-color-picker>
                         </sl-tooltip>
                     </div>
                     <div>
-                        <span>Fill Color</span>
-                        <sl-tooltip content="Fill Color">
+                        <span>${msg('Fill Color')}</span>
+                        <sl-tooltip content=${msg('Fill Color')}>
                             <sl-color-picker
                                 opacity
                                 value=${this.inputFillColor}
@@ -752,13 +774,13 @@ export class WwMap extends LitElementWw {
                                     this.inputFillColor = e.target.value;
                                 }}
                             >
-                                <span slot="label">Fill Color</span>
+                                <span slot="label">${msg('Fill Color')}</span>
                             </sl-color-picker>
                         </sl-tooltip>
                     </div>
                     <div>
                         <sl-input
-                            label="Label"
+                            label=${msg('Label')}
                             value=${this.inputDrawObjectLabel}
                             @sl-change=${(e: any) => {
                                 this.inputDrawObjectLabel = e.target.value;
@@ -767,12 +789,12 @@ export class WwMap extends LitElementWw {
                     </div>
                 </sl-details>
 
-                <sl-details summary="Size" class="custom-icons">
+                <sl-details summary=${msg('Size')} class="custom-icons">
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
                     <sl-input
-                        label="Width"
+                        label=${msg('Width')}
                         value=${this.mapWidth}
                         @sl-change=${(e: any) => {
                             this.mapWidth = e.target.value;
@@ -781,7 +803,7 @@ export class WwMap extends LitElementWw {
                         <span slot="suffix">%</span></sl-input
                     >
                     <sl-input
-                        label="Height"
+                        label=${msg('Height')}
                         value=${this.mapHeight}
                         @sl-change=${(e: any) => {
                             this.mapHeight = e.target.value;
@@ -789,22 +811,22 @@ export class WwMap extends LitElementWw {
                         ><span slot="suffix">px</span></sl-input
                     >
                 </sl-details> -->
-                <sl-details summary="Movement" class="custom-icons">
+                <sl-details summary=${msg('Movement')} class="custom-icons">
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
-                    <sl-switch id="switchStudentPanning" size="small" @sl-change=${()=>{this.allowPanning = this.switchStudentPanning.checked}}>Allow student movement</sl-switch>
+                    <sl-switch id="switchStudentPanning" size="small" @sl-change=${()=>{this.allowPanning = this.switchStudentPanning.checked}}>${msg('Allow student movement')}</sl-switch>
                 </sl-details>
-                <sl-details summary="Advanced" class="custom-icons">
+                <sl-details summary=${msg('Advanced')} class="custom-icons">
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
-                    <p style="margin-top:-20px;margin-bottom:-2px; font-size:11.5pt">Map style</p>
-                    <sl-tooltip content="Default">
+                    <p style="margin-top:-20px;margin-bottom:-2px; font-size:11.5pt">${msg('Map style')}</p>
+                    <sl-tooltip content=${msg('Default')}>
                         <sl-button
                             @click=${() => {
                                 this.customTileUrl = undefined;
                             }}
-                            >User select</sl-button
+                            >${msg('User select')}</sl-button
                         >
                     </sl-tooltip>
                     <sl-tooltip content="OpenStreetMapDE">
@@ -833,7 +855,7 @@ export class WwMap extends LitElementWw {
                         >
                     </sl-tooltip>
                     <sl-input
-                        label="Custom Tile Url"
+                        label=${msg('Custom Tile Url')}
                         value=${this.customTileUrl}
                         @sl-change=${(e: any) => {
                             this.customTileUrl = e.target.value;
@@ -851,15 +873,15 @@ export class WwMap extends LitElementWw {
         `;
     }
 
-    dialogs() {
+    private dialogs() {
         return html`<sl-dialog id="pinDialog">
             <div slot="label">
-                Add Pin
+                ${msg('Add Pin')}
                 <div class="marker-icon marker-icon-red" style="position: relative"></div>
             </div>
             <sl-input
                 autofocus
-                placeholder="Text"
+                placeholder=${msg('Text')}
                 value=${this.pinTitle}
                 @sl-change=${(e: any) => {
                     this.pinTitle = e.target.value;
@@ -871,12 +893,12 @@ export class WwMap extends LitElementWw {
                 @click=${() => {
                     this.addLabel();
                 }}
-                >Add</sl-button
+                >${msg('Add')}</sl-button
             >
         </sl-dialog>`;
     }
 
-    addRectangel() {
+    private addRectangel() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'awaitDrawingRectangel';
@@ -930,7 +952,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    addCircle() {
+    private addCircle() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'awaitDrawingCircle';
@@ -983,7 +1005,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    addPolygon() {
+    private addPolygon() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'drawingPolygon';
@@ -1011,7 +1033,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    addPolyline() {
+    private addPolyline() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'drawingPolyline';
@@ -1039,7 +1061,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    getPolygonPoints(n: number) {
+    private getPolygonPoints(n: number) {
         const points = [];
         const centerLat = this.inputLat;
         const centerLng = this.inputLng;
@@ -1054,7 +1076,7 @@ export class WwMap extends LitElementWw {
         return points;
     }
 
-    getPolylinePoints(n: number) {
+    private getPolylinePoints(n: number) {
         const points = [];
         const centerLat = this.inputLat;
         const centerLng = this.inputLng;
@@ -1068,7 +1090,7 @@ export class WwMap extends LitElementWw {
         return points;
     }
 
-    onRectangleClick(e: any) {
+    private onRectangleClick(e: any) {
         if (!this.isEditable()) return;
 
         this.clearEditObject();
@@ -1148,7 +1170,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    onCircleClick(e: any) {
+    private onCircleClick(e: any) {
         if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
@@ -1207,7 +1229,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    onPolygonClick(e: any) {
+    private onPolygonClick(e: any) {
         if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
@@ -1238,7 +1260,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    onPolylineClick(e: any) {
+    private onPolylineClick(e: any) {
         if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
@@ -1269,7 +1291,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    setInitialPosition() {
+    private setInitialPosition() {
         this.loadMapPosition()
 
         this.initialPos = {
@@ -1279,13 +1301,13 @@ export class WwMap extends LitElementWw {
         this.initialZoom = this.inputZoom;
     }
 
-    loadMapPosition() {
+    private loadMapPosition() {
         this.inputLat = this.map?.getCenter().lat || 0;
         this.inputLng = this.map?.getCenter().lng || 0;
         this.inputZoom = this.map?.getZoom() || 0;
     }
 
-    loadGeoLocation() {
+    private loadGeoLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.map?.setView([position.coords.latitude, position.coords.longitude], 13);
@@ -1294,7 +1316,7 @@ export class WwMap extends LitElementWw {
         }
     }
 
-    addLabel() {
+    private addLabel() {
         if (this.pinTitle) {
             this.pinDialog.hide();
             const marker = L.marker([this.inputLat, this.inputLng], { icon: icons.RED })
