@@ -14,6 +14,7 @@
             {
               "kind": "field",
               "name": "localize",
+              "privacy": "protected",
               "default": "LOCALIZE"
             },
             {
@@ -21,21 +22,24 @@
               "name": "mapElement",
               "type": {
                 "text": "HTMLElement"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "pinDialog",
               "type": {
                 "text": "SlDialog"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "switchStudentPanning",
               "type": {
                 "text": "SlSwitch"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -43,6 +47,7 @@
               "type": {
                 "text": "L.Map | undefined"
               },
+              "privacy": "private",
               "attribute": "map"
             },
             {

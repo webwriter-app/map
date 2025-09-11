@@ -68,21 +68,21 @@ import 'fa-icons';
 @localized()
 export class WwMap extends LitElementWw {
     // styles = [leafletStyles];
-    styles = [style, leafletStyles];
+    private styles = [style, leafletStyles];
 
-	localize = LOCALIZE;
+	protected localize = LOCALIZE;
 
     @query('#map')
-    accessor mapElement!: HTMLElement;
+    private accessor mapElement!: HTMLElement;
 
     @query('#pinDialog')
-    accessor pinDialog!: SlDialog;
+    private accessor pinDialog!: SlDialog;
 
     @query('#switchStudentPanning')
-    accessor switchStudentPanning!: SlSwitch
+    private accessor switchStudentPanning!: SlSwitch
 
     @property({ type: Object })
-    accessor map: L.Map | undefined;
+    private accessor map: L.Map | undefined;
 
     /** Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{"lat":51,"lng":19}'). */
     @property({ type: Object, attribute: true, reflect: true })
