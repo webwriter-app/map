@@ -376,7 +376,6 @@ export class WwMap extends LitElementWw {
         
         setInterval(() => {
             this.setInitialPosition()
-            this.mapHeight = this.getBoundingClientRect().height
             if(!this.allowPanning && !this.hasAttribute("contenteditable")){
                 this.map.setZoom(this.fixedZoom)
             }
