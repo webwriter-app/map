@@ -1,0 +1,808 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
+          "name": "WwMap",
+          "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "mapElement",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "pinDialog",
+              "type": {
+                "text": "SlDialog"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "switchStudentPanning",
+              "type": {
+                "text": "SlSwitch"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "map",
+              "type": {
+                "text": "L.Map | undefined"
+              },
+              "attribute": "map"
+            },
+            {
+              "kind": "field",
+              "name": "initialPos",
+              "type": {
+                "text": "{\n        lat: number;\n        lng: number;\n    }"
+              },
+              "default": "{ lat: 51, lng: 19, }",
+              "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
+              "attribute": "initialPos",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "mapBounds",
+              "type": {
+                "text": "L.LatLngBoundsExpression"
+              },
+              "description": "Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]').",
+              "attribute": "mapBounds",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "maxZoom",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "attribute": "maxZoom",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "minZoom",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum zoom level allowed.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "attribute": "minZoom",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "initialZoom",
+              "type": {
+                "text": "number"
+              },
+              "default": "13",
+              "description": "Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "attribute": "initialZoom",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "fixedZoom",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "attribute": "fixedZoom"
+            },
+            {
+              "kind": "field",
+              "name": "markers",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "description": "Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string.",
+              "attribute": "markers",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "objects",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}",
+              "description": "Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string.",
+              "attribute": "objects",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "customTileUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used.",
+              "attribute": "customTileUrl",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "geoJSON",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "GeoJSON overlay to render on the map.<br>Expected value: stringified GeoJSON (Feature or FeatureCollection).<br>Optional; when empty/falsy, no GeoJSON overlay is shown.",
+              "attribute": "geoJSON",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "mapWidth",
+              "type": {
+                "text": "number"
+              },
+              "default": "100",
+              "description": "Map container width, as a percentage of the host element's width.<br>Expected value: number (0–100). Applied as CSS width: `${mapWidth}%`.<br>Optional.",
+              "attribute": "mapWidth",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "mapHeight",
+              "type": {
+                "text": "number"
+              },
+              "default": "500",
+              "description": "Map container height in pixels.<br>Expected value: number (pixels). Applied as CSS height: `${mapHeight}px`.<br>Optional.",
+              "attribute": "mapHeight",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "boundsActive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to enforce `mapBounds` and `maxZoom` constraints on the map.<br>Expected value: boolean; when true and `mapBounds` is set, panning is constrained to those bounds.<br>Optional.",
+              "attribute": "boundsActive",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "inputLat",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "attribute": "inputLat"
+            },
+            {
+              "kind": "field",
+              "name": "inputLng",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "attribute": "inputLng"
+            },
+            {
+              "kind": "field",
+              "name": "inputZoom",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "attribute": "inputZoom"
+            },
+            {
+              "kind": "field",
+              "name": "inputBorderColor",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "'#000000ff'",
+              "attribute": "inputBorderColor"
+            },
+            {
+              "kind": "field",
+              "name": "inputFillColor",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "'#000000ff'",
+              "attribute": "inputFillColor"
+            },
+            {
+              "kind": "field",
+              "name": "inputDrawObjectLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''",
+              "attribute": "inputDrawObjectLabel"
+            },
+            {
+              "kind": "field",
+              "name": "pinTitle",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''",
+              "attribute": "pinTitle"
+            },
+            {
+              "kind": "field",
+              "name": "mapMode",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "'view'",
+              "attribute": "mapMode"
+            },
+            {
+              "kind": "field",
+              "name": "mouseMarker",
+              "type": {
+                "text": "L.Marker | undefined"
+              },
+              "privacy": "private",
+              "attribute": "mouseMarker"
+            },
+            {
+              "kind": "field",
+              "name": "showBounds",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "attribute": "showBounds"
+            },
+            {
+              "kind": "field",
+              "name": "showBoundsLayer",
+              "type": {
+                "text": "L.Rectangle | undefined"
+              },
+              "privacy": "private",
+              "attribute": "showBoundsLayer"
+            },
+            {
+              "kind": "field",
+              "name": "editObject",
+              "privacy": "private",
+              "attribute": "editObject"
+            },
+            {
+              "kind": "field",
+              "name": "editObjectMarkers",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "private",
+              "default": "[]",
+              "attribute": "editObjectMarkers"
+            },
+            {
+              "kind": "field",
+              "name": "layerControl",
+              "privacy": "private",
+              "attribute": "layerControl"
+            },
+            {
+              "kind": "field",
+              "name": "drawObject",
+              "privacy": "private",
+              "attribute": "drawObject"
+            },
+            {
+              "kind": "field",
+              "name": "heightBuffer",
+              "privacy": "private",
+              "attribute": "heightBuffer"
+            },
+            {
+              "kind": "field",
+              "name": "allowPanning",
+              "privacy": "private",
+              "attribute": "allowPanning",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "isEditable",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onMapMove",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onMapClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "L.LeafletMouseEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toolbox",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "dialogs",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addRectangel",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addCircle",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addPolygon",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addPolyline",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getPolygonPoints",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getPolylinePoints",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "n",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onRectangleClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onCircleClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onPolygonClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onPolylineClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "any"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setInitialPosition",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "loadMapPosition",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "loadGeoLocation",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addLabel",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "clearEditObject",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "saveObject",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "o"
+                },
+                {
+                  "name": "id",
+                  "default": "undefined",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "deleteObject",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "loadObjects",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getOpacity",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "hex"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "deleteSelectedObject",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "map",
+              "type": {
+                "text": "L.Map | undefined"
+              },
+              "fieldName": "map"
+            },
+            {
+              "name": "initialPos",
+              "type": {
+                "text": "{\n        lat: number;\n        lng: number;\n    }"
+              },
+              "default": "{ lat: 51, lng: 19, }",
+              "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
+              "fieldName": "initialPos"
+            },
+            {
+              "name": "mapBounds",
+              "type": {
+                "text": "L.LatLngBoundsExpression"
+              },
+              "description": "Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]').",
+              "fieldName": "mapBounds"
+            },
+            {
+              "name": "maxZoom",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "fieldName": "maxZoom"
+            },
+            {
+              "name": "minZoom",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum zoom level allowed.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "fieldName": "minZoom"
+            },
+            {
+              "name": "initialZoom",
+              "type": {
+                "text": "number"
+              },
+              "default": "13",
+              "description": "Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "fieldName": "initialZoom"
+            },
+            {
+              "name": "fixedZoom",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional.",
+              "fieldName": "fixedZoom"
+            },
+            {
+              "name": "markers",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "description": "Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string.",
+              "fieldName": "markers"
+            },
+            {
+              "name": "objects",
+              "type": {
+                "text": "object"
+              },
+              "default": "{}",
+              "description": "Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string.",
+              "fieldName": "objects"
+            },
+            {
+              "name": "customTileUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used.",
+              "fieldName": "customTileUrl"
+            },
+            {
+              "name": "geoJSON",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "GeoJSON overlay to render on the map.<br>Expected value: stringified GeoJSON (Feature or FeatureCollection).<br>Optional; when empty/falsy, no GeoJSON overlay is shown.",
+              "fieldName": "geoJSON"
+            },
+            {
+              "name": "mapWidth",
+              "type": {
+                "text": "number"
+              },
+              "default": "100",
+              "description": "Map container width, as a percentage of the host element's width.<br>Expected value: number (0–100). Applied as CSS width: `${mapWidth}%`.<br>Optional.",
+              "fieldName": "mapWidth"
+            },
+            {
+              "name": "mapHeight",
+              "type": {
+                "text": "number"
+              },
+              "default": "500",
+              "description": "Map container height in pixels.<br>Expected value: number (pixels). Applied as CSS height: `${mapHeight}px`.<br>Optional.",
+              "fieldName": "mapHeight"
+            },
+            {
+              "name": "boundsActive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to enforce `mapBounds` and `maxZoom` constraints on the map.<br>Expected value: boolean; when true and `mapBounds` is set, panning is constrained to those bounds.<br>Optional.",
+              "fieldName": "boundsActive"
+            },
+            {
+              "name": "inputLat",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "inputLat"
+            },
+            {
+              "name": "inputLng",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "inputLng"
+            },
+            {
+              "name": "inputZoom",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "inputZoom"
+            },
+            {
+              "name": "inputBorderColor",
+              "type": {
+                "text": "string"
+              },
+              "default": "'#000000ff'",
+              "fieldName": "inputBorderColor"
+            },
+            {
+              "name": "inputFillColor",
+              "type": {
+                "text": "string"
+              },
+              "default": "'#000000ff'",
+              "fieldName": "inputFillColor"
+            },
+            {
+              "name": "inputDrawObjectLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "inputDrawObjectLabel"
+            },
+            {
+              "name": "pinTitle",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "pinTitle"
+            },
+            {
+              "name": "mapMode",
+              "type": {
+                "text": "string"
+              },
+              "default": "'view'",
+              "fieldName": "mapMode"
+            },
+            {
+              "name": "mouseMarker",
+              "type": {
+                "text": "L.Marker | undefined"
+              },
+              "fieldName": "mouseMarker"
+            },
+            {
+              "name": "showBounds",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "showBounds"
+            },
+            {
+              "name": "showBoundsLayer",
+              "type": {
+                "text": "L.Rectangle | undefined"
+              },
+              "fieldName": "showBoundsLayer"
+            },
+            {
+              "name": "editObject",
+              "fieldName": "editObject"
+            },
+            {
+              "name": "editObjectMarkers",
+              "type": {
+                "text": "array"
+              },
+              "default": "[]",
+              "fieldName": "editObjectMarkers"
+            },
+            {
+              "name": "layerControl",
+              "fieldName": "layerControl"
+            },
+            {
+              "name": "drawObject",
+              "fieldName": "drawObject"
+            },
+            {
+              "name": "heightBuffer",
+              "fieldName": "heightBuffer"
+            },
+            {
+              "name": "allowPanning",
+              "fieldName": "allowPanning"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-map",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "WwMap",
+          "declaration": {
+            "name": "WwMap",
+            "module": "index.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-map",
+          "declaration": {
+            "name": "WwMap",
+            "module": "index.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

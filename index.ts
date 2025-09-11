@@ -61,6 +61,9 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 import L from './leaflet/leaflet.js';
 import 'fa-icons';
 
+/**
+ * Geographical map with different terrain options including custom tiling, and GeoJSON support.
+ */
 @customElement('webwriter-map')
 @localized()
 export class WwMap extends LitElementWw {
@@ -81,6 +84,7 @@ export class WwMap extends LitElementWw {
     @property({ type: Object })
     accessor map: L.Map | undefined;
 
+    /** Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{"lat":51,"lng":19}'). */
     @property({ type: Object, attribute: true, reflect: true })
     accessor initialPos: {
         lat: number;
@@ -90,95 +94,109 @@ export class WwMap extends LitElementWw {
         lng: 19,
     };
 
+    /** Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]'). */
     @property({ type: Object, attribute: true, reflect: true })
     accessor mapBounds: L.LatLngBoundsExpression;
 
+    /** Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor maxZoom: number;
 
+    /** Minimum zoom level allowed.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor minZoom: number;
 
+    /** Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor initialZoom = 13;
 
+    /** Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true})
     accessor fixedZoom = 1;
 
+    /** Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string. */
     @property({ type: Array, attribute: true, reflect: true })
     accessor markers = [];
 
+    /** Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string. */
     @property({ type: Object, attribute: true, reflect: true })
     accessor objects = {};
 
+    /** Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used. */
     @property({ type: String, attribute: true, reflect: true })
     accessor customTileUrl = '';
 
+    /** GeoJSON overlay to render on the map.<br>Expected value: stringified GeoJSON (Feature or FeatureCollection).<br>Optional; when empty/falsy, no GeoJSON overlay is shown. */
     @property({ type: String, attribute: true, reflect: true })
     accessor geoJSON = '';
 
+    /** Map container width, as a percentage of the host element's width.<br>Expected value: number (0–100). Applied as CSS width: `${mapWidth}%`.<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor mapWidth = 100;
 
+    /** Map container height in pixels.<br>Expected value: number (pixels). Applied as CSS height: `${mapHeight}px`.<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
     accessor mapHeight = 500;
 
+    /** Whether to enforce `mapBounds` and `maxZoom` constraints on the map.<br>Expected value: boolean; when true and `mapBounds` is set, panning is constrained to those bounds.<br>Optional. */
     @property({ type: Boolean, attribute: true, reflect: true })
     accessor boundsActive = true;
 
     @property({ type: Number })
-    accessor inputLat = 0;
+    private accessor inputLat = 0;
 
     @property({ type: Number })
-    accessor inputLng = 0;
+    private accessor inputLng = 0;
 
     @property({ type: Number })
-    accessor inputZoom = 0;
+    private accessor inputZoom = 0;
 
     @property({ type: String })
-    accessor inputBorderColor = '#000000ff';
+    private accessor inputBorderColor = '#000000ff';
 
     @property({ type: String })
-    accessor inputFillColor = '#000000ff';
+    private accessor inputFillColor = '#000000ff';
 
     @property({ type: String })
-    accessor inputDrawObjectLabel = '';
+    private accessor inputDrawObjectLabel = '';
 
     @property({ type: String })
-    accessor pinTitle = '';
+    private accessor pinTitle = '';
 
     @property({ type: String })
-    accessor mapMode = 'view';
+    private accessor mapMode = 'view';
 
     @property({ type: Object })
-    accessor mouseMarker: L.Marker | undefined;
+    private accessor mouseMarker: L.Marker | undefined;
 
     @property({ type: Boolean })
-    accessor showBounds = false;
+    private accessor showBounds = false;
 
     @property({ type: Object })
-    accessor showBoundsLayer: L.Rectangle | undefined;
+    private accessor showBoundsLayer: L.Rectangle | undefined;
 
     @property({ type: Object })
-    accessor editObject;
+    private accessor editObject;
 
     @property({ type: Array })
-    accessor editObjectMarkers = [];
+    private accessor editObjectMarkers = [];
 
     @property({ type: Object })
-    accessor layerControl;
+    private accessor layerControl;
 
     @property({ type: Object })
-    accessor drawObject;
+    private accessor drawObject;
 
     @property({ type: Number })
-    accessor heightBuffer;
+    private accessor heightBuffer;
 
     @property({ type: Boolean, reflect: true })
-    accessor allowPanning;
+    private  accessor allowPanning;
 
+	/** @internal */
     static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
+	/** @internal */
     static get scopedElements() {
         return {
             'sl-button-group': SlButtonGroup,
@@ -391,11 +409,11 @@ export class WwMap extends LitElementWw {
         return this.contentEditable === 'true' || this.contentEditable === '';
     }
 
-    onMapMove() {
+    private onMapMove() {
         // this.setInitialPosition()
     }
 
-    onMapClick(e: L.LeafletMouseEvent) {
+    private onMapClick(e: L.LeafletMouseEvent) {
         // console.log('onMapClick');
         if (this.mapMode === 'mouseSelect') {
             if (this.mouseMarker) {
@@ -446,7 +464,7 @@ export class WwMap extends LitElementWw {
         `;
     }
 
-    toolbox() {
+    private toolbox() {
         return html`
             <div part="options" class="toolbox">
                 <!-- <div class="position">
@@ -855,7 +873,7 @@ export class WwMap extends LitElementWw {
         `;
     }
 
-    dialogs() {
+    private dialogs() {
         return html`<sl-dialog id="pinDialog">
             <div slot="label">
                 ${msg('Add Pin')}
@@ -880,7 +898,7 @@ export class WwMap extends LitElementWw {
         </sl-dialog>`;
     }
 
-    addRectangel() {
+    private addRectangel() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'awaitDrawingRectangel';
@@ -934,7 +952,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    addCircle() {
+    private addCircle() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'awaitDrawingCircle';
@@ -987,7 +1005,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    addPolygon() {
+    private addPolygon() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'drawingPolygon';
@@ -1015,7 +1033,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    addPolyline() {
+    private addPolyline() {
         //disable map dragging
         this.map?.dragging.disable();
         this.mapMode = 'drawingPolyline';
@@ -1043,7 +1061,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    getPolygonPoints(n: number) {
+    private getPolygonPoints(n: number) {
         const points = [];
         const centerLat = this.inputLat;
         const centerLng = this.inputLng;
@@ -1058,7 +1076,7 @@ export class WwMap extends LitElementWw {
         return points;
     }
 
-    getPolylinePoints(n: number) {
+    private getPolylinePoints(n: number) {
         const points = [];
         const centerLat = this.inputLat;
         const centerLng = this.inputLng;
@@ -1072,7 +1090,7 @@ export class WwMap extends LitElementWw {
         return points;
     }
 
-    onRectangleClick(e: any) {
+    private onRectangleClick(e: any) {
         if (!this.isEditable()) return;
 
         this.clearEditObject();
@@ -1152,7 +1170,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    onCircleClick(e: any) {
+    private onCircleClick(e: any) {
         if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
@@ -1211,7 +1229,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    onPolygonClick(e: any) {
+    private onPolygonClick(e: any) {
         if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
@@ -1242,7 +1260,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    onPolylineClick(e: any) {
+    private onPolylineClick(e: any) {
         if (!this.isEditable()) return;
 
         if (this.editObjectMarkers.length > 0) {
@@ -1273,7 +1291,7 @@ export class WwMap extends LitElementWw {
         });
     }
 
-    setInitialPosition() {
+    private setInitialPosition() {
         this.loadMapPosition()
 
         this.initialPos = {
@@ -1283,13 +1301,13 @@ export class WwMap extends LitElementWw {
         this.initialZoom = this.inputZoom;
     }
 
-    loadMapPosition() {
+    private loadMapPosition() {
         this.inputLat = this.map?.getCenter().lat || 0;
         this.inputLng = this.map?.getCenter().lng || 0;
         this.inputZoom = this.map?.getZoom() || 0;
     }
 
-    loadGeoLocation() {
+    private loadGeoLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.map?.setView([position.coords.latitude, position.coords.longitude], 13);
@@ -1298,7 +1316,7 @@ export class WwMap extends LitElementWw {
         }
     }
 
-    addLabel() {
+    private addLabel() {
         if (this.pinTitle) {
             this.pinDialog.hide();
             const marker = L.marker([this.inputLat, this.inputLng], { icon: icons.RED })
