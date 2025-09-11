@@ -1,0 +1,37 @@
+{
+  ".": {
+    "description": {
+      "de": "Geografische Karte mit verschiedenen Geländeoptionen, einschließlich benutzerdefinierter Kacheln, und GeoJSON-Unterstützung.",
+      "ar": "خريطة جغرافية بخيارات تضاريس مختلفة بما في ذلك تبليط مخصص ودعم GeoJSON.",
+      "bg": "Географска карта с различни опции за терена, включително потребителски плочки, и поддръжка на GeoJSON.",
+      "cs": "Geografická mapa s různými možnostmi terénu včetně vlastního dlaždicování a podporou GeoJSON.",
+      "da": "Geografisk kort med forskellige terrænindstillinger, herunder brugerdefinerede fliser, og GeoJSON-understøttelse.",
+      "nl": "Geografische kaart met verschillende terreinopties inclusief aangepaste betegeling en ondersteuning voor GeoJSON.",
+      "et": "Geograafiline kaart erinevate maastikuvõimalustega, sealhulgas kohandatud plaatidega, ja GeoJSONi tugi.",
+      "fi": "Maantieteellinen kartta, jossa on erilaisia maastovaihtoehtoja, mukaan lukien mukautettu laatoitus, ja GeoJSON-tuki.",
+      "el": "Γεωγραφικός χάρτης με διαφορετικές επιλογές εδάφους, συμπεριλαμβανομένης της προσαρμοσμένης τοποθέτησης πλακιδίων, και υποστήριξη GeoJSON.",
+      "fr": "Carte géographique avec différentes options de terrain, y compris des tuiles personnalisées, et prise en charge de GeoJSON.",
+      "hu": "Földrajzi térkép különböző terepbeállításokkal, beleértve az egyéni csempézést és a GeoJSON támogatást.",
+      "it": "Mappa geografica con diverse opzioni di terreno, tra cui il tiling personalizzato, e supporto GeoJSON.",
+      "lv": "Ģeogrāfiskā karte ar dažādām reljefa iespējām, tostarp pielāgotu flīzēšanu un GeoJSON atbalstu.",
+      "lt": "Geografinis žemėlapis su įvairiomis reljefo parinktimis, įskaitant pasirinktines plyteles, ir GeoJSON palaikymas.",
+      "nb": "Geografisk kart med ulike terrengalternativer, inkludert tilpasset flislegging og støtte for GeoJSON.",
+      "pl": "Mapa geograficzna z różnymi opcjami terenu, w tym niestandardowymi kafelkami i obsługą GeoJSON.",
+      "pt-PT": "Mapa geográfico com diferentes opções de terreno, incluindo mosaicos personalizados, e suporte GeoJSON.",
+      "ro": "Hartă geografică cu diferite opțiuni de teren, inclusiv tiling personalizat, și suport GeoJSON.",
+      "ru": "Географическая карта с различными вариантами рельефа, включая настраиваемую черепицу, и поддержкой GeoJSON.",
+      "sl": "Geografski zemljevid z različnimi možnostmi terena, vključno s ploščicami po meri, in podporo za GeoJSON.",
+      "sk": "Geografická mapa s rôznymi možnosťami terénu vrátane vlastných dlaždíc a podpory GeoJSON.",
+      "es": "Mapa geográfico con diferentes opciones de terreno, incluido el mosaico personalizado, y compatibilidad con GeoJSON.",
+      "sv": "Geografisk karta med olika terrängalternativ inklusive anpassad tiling och stöd för GeoJSON.",
+      "tr": "Özel döşeme ve GeoJSON desteği dahil olmak üzere farklı arazi seçeneklerine sahip coğrafi harita.",
+      "uk": "Географічна карта з різними варіантами рельєфу, включаючи користувацьку плитку, та підтримкою GeoJSON.",
+      "pt-BR": "Mapa geográfico com diferentes opções de terreno, incluindo ladrilhos personalizados e suporte a GeoJSON.",
+      "ko": "사용자 지정 타일링을 포함한 다양한 지형 옵션이 있는 지리적 지도와 GeoJSON을 지원합니다.",
+      "ja": "カスタムタイリングを含むさまざまな地形オプションとGeoJSONサポートを備えた地理マップ。",
+      "id": "Peta geografis dengan opsi medan yang berbeda termasuk ubin khusus, dan dukungan GeoJSON.",
+      "zh-hans": "地理地图具有不同的地形选项，包括自定义平铺和 GeoJSON 支持。",
+      "zh-hant": "具有不同地形選項（包括自訂平鋪）的地理地圖，並支援 GeoJSON。"
+    }
+  }
+}

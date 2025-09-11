@@ -1,0 +1,158 @@
+<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="zh-Hant">
+    <body>
+      <trans-unit id="s8af61807443f32a4">
+        <source>Actions</source>
+        <target>行動</target>
+      </trans-unit>
+      <trans-unit id="s1bcea0c68ac23efb">
+        <source>Add Pin</source>
+        <target>新增針腳</target>
+      </trans-unit>
+      <trans-unit id="sab904a167497cd3e">
+        <source>Set Position as initial</source>
+        <target>設定位置為初始值</target>
+      </trans-unit>
+      <trans-unit id="s3b5ddf60892a6a48">
+        <source>Bounds</source>
+        <target>邊界</target>
+      </trans-unit>
+      <trans-unit id="s8f3d223923b156c6">
+        <source>not set</source>
+        <target>未設定</target>
+      </trans-unit>
+      <trans-unit id="sf42ce409138b0d9c">
+        <source>activated</source>
+        <target>活性</target>
+      </trans-unit>
+      <trans-unit id="s25392c6d0eb63175">
+        <source>deactivated</source>
+        <target>停用</target>
+      </trans-unit>
+      <trans-unit id="sa9f2381c84bd9969">
+        <source>Set Top Left</source>
+        <target>設定左上方</target>
+      </trans-unit>
+      <trans-unit id="sd83da86c74147960">
+        <source>Set Bottom Right</source>
+        <target>設定右下方</target>
+      </trans-unit>
+      <trans-unit id="s6fc95ee75e407518">
+        <source>Set Max Zoom</source>
+        <target>設定最大變焦</target>
+      </trans-unit>
+      <trans-unit id="s0aee4705bcc0c15e">
+        <source>Set Min Zoom</source>
+        <target>設定最小變焦</target>
+      </trans-unit>
+      <trans-unit id="s936c17dcc2e04cf5">
+        <source>Fit Bounds</source>
+        <target>合身邊界</target>
+      </trans-unit>
+      <trans-unit id="sa53d08f6b088b54e">
+        <source>Visualize Bounds</source>
+        <target>可視化邊界</target>
+      </trans-unit>
+      <trans-unit id="s5488509fd37aa9fc">
+        <source>Disable Bounds</source>
+        <target>停用邊界</target>
+      </trans-unit>
+      <trans-unit id="s6beb392ed926ce5b">
+        <source>Enable Bounds</source>
+        <target>啟用邊界</target>
+      </trans-unit>
+      <trans-unit id="sdc9cf2d6e96526c1">
+        <source>Reset Bounds</source>
+        <target>重設邊界</target>
+      </trans-unit>
+      <trans-unit id="s1c0ea772de28e773">
+        <source>Draw</source>
+        <target>繪圖</target>
+      </trans-unit>
+      <trans-unit id="sd42752882536c15a">
+        <source>Draw Rectangle</source>
+        <target>繪製矩形</target>
+      </trans-unit>
+      <trans-unit id="s37c758bc19c67a4d">
+        <source>Draw Circle</source>
+        <target>畫圓</target>
+      </trans-unit>
+      <trans-unit id="saeeff153fba5364d">
+        <source>Draw Polygon</source>
+        <target>繪製多邊形</target>
+      </trans-unit>
+      <trans-unit id="sc539af8ae925acc1">
+        <source>Draw Polyline</source>
+        <target>繪製多重曲線</target>
+      </trans-unit>
+      <trans-unit id="sdc673e73b5c13aea">
+        <source>Delete</source>
+        <target>刪除</target>
+      </trans-unit>
+      <trans-unit id="sca9faebc773bf95d">
+        <source>Delete Object</source>
+        <target>刪除物件</target>
+      </trans-unit>
+      <trans-unit id="s6ba44d4d5d284468">
+        <source>Border Color</source>
+        <target>邊框顏色</target>
+      </trans-unit>
+      <trans-unit id="sdd253aec6b88b6af">
+        <source>Fill Color</source>
+        <target>填充顏色</target>
+      </trans-unit>
+      <trans-unit id="s5590dbf7e425789d">
+        <source>Label</source>
+        <target>標籤</target>
+      </trans-unit>
+      <trans-unit id="s78789724e789221c">
+        <source>Size</source>
+        <target>尺寸</target>
+      </trans-unit>
+      <trans-unit id="sf21fb4f4b9e8911f">
+        <source>Width</source>
+        <target>寬度</target>
+      </trans-unit>
+      <trans-unit id="sffdadf0a576fd802">
+        <source>Height</source>
+        <target>高度</target>
+      </trans-unit>
+      <trans-unit id="s71218539d83e0ab8">
+        <source>Movement</source>
+        <target>運動</target>
+      </trans-unit>
+      <trans-unit id="sa88dfb051be09d0e">
+        <source>Allow student movement</source>
+        <target>允許學生活動</target>
+      </trans-unit>
+      <trans-unit id="s21b06c38fc4164db">
+        <source>Advanced</source>
+        <target>進階</target>
+      </trans-unit>
+      <trans-unit id="s32689d1d09608f54">
+        <source>Map style</source>
+        <target>地圖風格</target>
+      </trans-unit>
+      <trans-unit id="s11326fd2590f4e5e">
+        <source>Default</source>
+        <target>預設</target>
+      </trans-unit>
+      <trans-unit id="s3011241149f8d10e">
+        <source>User select</source>
+        <target>使用者選擇</target>
+      </trans-unit>
+      <trans-unit id="s8abdd4fbc8368253">
+        <source>Custom Tile Url</source>
+        <target>自訂磁磚網址</target>
+      </trans-unit>
+      <trans-unit id="s2492f5fb1b05b45e">
+        <source>Text</source>
+        <target>正文</target>
+      </trans-unit>
+      <trans-unit id="sf9aee319a006c9b4">
+        <source>Add</source>
+        <target>新增</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
