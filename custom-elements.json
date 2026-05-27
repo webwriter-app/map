@@ -54,7 +54,7 @@
               "kind": "field",
               "name": "initialPos",
               "type": {
-                "text": "{\n        lat: number;\n        lng: number;\n    }"
+                "text": "{\r\n        lat: number;\r\n        lng: number;\r\n    }"
               },
               "default": "{ lat: 51, lng: 19, }",
               "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
@@ -327,9 +327,13 @@
             },
             {
               "kind": "field",
-              "name": "heightBuffer",
+              "name": "isFullscreen",
+              "type": {
+                "text": "boolean"
+              },
               "privacy": "private",
-              "attribute": "heightBuffer"
+              "default": "false",
+              "attribute": "isFullscreen"
             },
             {
               "kind": "field",
@@ -556,7 +560,7 @@
             {
               "name": "initialPos",
               "type": {
-                "text": "{\n        lat: number;\n        lng: number;\n    }"
+                "text": "{\r\n        lat: number;\r\n        lng: number;\r\n    }"
               },
               "default": "{ lat: 51, lng: 19, }",
               "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
@@ -774,8 +778,12 @@
               "fieldName": "drawObject"
             },
             {
-              "name": "heightBuffer",
-              "fieldName": "heightBuffer"
+              "name": "isFullscreen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "isFullscreen"
             },
             {
               "name": "allowPanning",
@@ -787,7 +795,9 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-map",
-          "customElement": true
+          "customElement": true,
+          "modulePath": "index.ts",
+          "definitionPath": "index.ts"
         }
       ],
       "exports": [

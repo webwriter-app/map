@@ -54,6 +54,7 @@ import SlDivider from '@shoelace-style/shoelace/dist/components/divider/divider.
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.component.js';
 import SlColorPicker from '@shoelace-style/shoelace/dist/components/color-picker/color-picker.component.js';
 
+// @ts-ignore
 import '@shoelace-style/shoelace/dist/themes/light.css';
 
 // import leafletStyles from './leaflet/leaflet.css.js';

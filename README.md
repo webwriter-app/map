@@ -1,5 +1,5 @@
-# Map (`@webwriter/map@2.1.1`)
-[License: MIT](LICENSE) | Version: 2.1.1
+# Map (`@webwriter/map@2.1.2`)
+[License: MIT](LICENSE) | Version: 2.1.2
 
 Geographical map with different terrain options including custom tiling, and GeoJSON support.
 
@@ -8,7 +8,7 @@ Geographical map with different terrain options including custom tiling, and Geo
 
 | Name | Import Path |
 | :--: | :---------: |
-| Example Location | @webwriter/map/snippets/Example-Location.html |
+| Example Location | `@webwriter/map/snippets/Example-Location.html` |
 
 
 
@@ -55,8 +55,15 @@ npm install @webwriter/map
 
 *Fields including [properties](https://developer.mozilla.org/en-US/docs/Glossary/Property/JavaScript) and [attributes](https://developer.mozilla.org/en-US/docs/Glossary/Attribute) define the current state of the widget and offer customization options.*
 
-*No public methods, slots, events, custom CSS properties, CSS parts, or editing config.*
+## Editing config
+| Name | Value |
+| :--: | :---------: |
+
+
+*The [editing config](https://webwriter.app/docs/packages/configuring/#editingconfig) defines how explorable authoring tools such as [WebWriter](https://webwriter.app) treat the widget.*
+
+*No public methods, slots, events, custom CSS properties, or CSS parts.*
 
 
 ---
-*Generated with @webwriter/build@1.6.0*
+*Generated with @webwriter/build@1.9.0*
