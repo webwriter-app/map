@@ -367,8 +367,8 @@ export class WwMap extends LitElementWw {
         });
 
         this.map.on('move', this.onMapMove.bind(this));
+        this.map.on('moveend', this.setInitialPosition.bind(this));
         this.map.on('click', this.onMapClick.bind(this));
-
         this.inputLat = this.initialPos.lat;
         this.inputLng = this.initialPos.lng;
         this.inputZoom = this.initialZoom;
@@ -384,6 +384,8 @@ export class WwMap extends LitElementWw {
                 this.map.keyboard.disable();
                 this.mapElement.style.pointerEvents = "none"
                 this.fixedZoom = this.initialZoom
+                this.map.setMinZoom(this.fixedZoom);
+                this.map.setMaxZoom(this.fixedZoom);
             }else{
                 this.switchStudentPanning.removeAttribute("checked")  
             }
@@ -393,13 +395,6 @@ export class WwMap extends LitElementWw {
                 this.switchStudentPanning.setAttribute("checked", "")
             }
         }
-
-        
-        setInterval(() => {
-            if(!this.allowPanning && !this.hasAttribute("contenteditable")){
-                this.map.setZoom(this.fixedZoom)
-            }
-        }, 250);
 
         new ResizeObserver(() => {
             const fullscreen = this.ownerDocument.fullscreenElement === this;
