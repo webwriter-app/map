@@ -59,7 +59,8 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 
 // import leafletStyles from './leaflet/leaflet.css.js';
 
-import L from './leaflet/leaflet.js';
+import L from 'leaflet';
+import '@maplibre/maplibre-gl-leaflet';
 import 'fa-icons';
 
 /**
@@ -126,6 +127,10 @@ export class WwMap extends LitElementWw {
     /** Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used. */
     @property({ type: String, attribute: true, reflect: true })
     accessor customTileUrl = '';
+
+    /** MapLibre GL style URL for vector tile rendering (e.g. OpenFreeMap).<br>Expected value: URL to a MapLibre style JSON (e.g. 'https://tiles.openfreemap.org/styles/liberty').<br>When set, this takes priority over customTileUrl and the default raster layers. */
+    @property({ type: String, attribute: true, reflect: true })
+    accessor vectorStyle: string | undefined = undefined;
 
     /** GeoJSON overlay to render on the map.<br>Expected value: stringified GeoJSON (Feature or FeatureCollection).<br>Optional; when empty/falsy, no GeoJSON overlay is shown. */
     @property({ type: String, attribute: true, reflect: true })
@@ -194,6 +199,9 @@ export class WwMap extends LitElementWw {
     @property({ type: Boolean, reflect: true })
     private  accessor allowPanning;
 
+    private _vectorLayer: L.Layer | undefined;
+    private _vectorAttributions: string[] = [];
+
 	/** @internal */
     static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
@@ -239,46 +247,8 @@ export class WwMap extends LitElementWw {
         // console.log('updated');
         super.updated(changedProperties);
 
-        if (this.map && changedProperties.has('customTileUrl')) {
-            this.map.eachLayer((layer) => {
-                if (layer instanceof L.TileLayer) this.map.removeLayer(layer);
-            });
-
-            if (this.layerControl) {
-                this.map.removeControl(this.layerControl);
-            }
-
-            if (this.customTileUrl) {
-                L.tileLayer(this.customTileUrl, {
-                    attribution: '',
-                }).addTo(this.map);
-            } else {
-                const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution:
-                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                });
-                const otm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
-                });
-                const sat = L.tileLayer(
-                    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                    {
-                        attribution: '&copy; <a href="https://www.esri.com/">Esri</a> contributors',
-                    }
-                );
-                const baseLayers = {
-                    OpenStreetMap: osm,
-                    OpenTopoMap: otm,
-                    Satellite: sat,
-                };
-
-                this.layerControl = L.control.layers(baseLayers).addTo(this.map);
-                osm.addTo(this.map);
-            }
-            this.markers?.forEach((marker) => {
-                const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
-                m.bindPopup(marker.title);
-            });
+        if (this.map && (changedProperties.has('customTileUrl') || changedProperties.has('vectorStyle'))) {
+            this.updateBaseLayer();
         }
 
         if (this.map && changedProperties.has('geoJSON')) {
@@ -348,15 +318,7 @@ export class WwMap extends LitElementWw {
         // console.log(this.styles);
 
         this.map = L.map(this.mapElement).setView([this.initialPos.lat, this.initialPos.lng], this.initialZoom);
-        if (this.customTileUrl) {
-            L.tileLayer(this.customTileUrl, {
-                attribution: '',
-            }).addTo(this.map);
-        } else {
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }).addTo(this.map);
-        }
+        this.updateBaseLayer();
 
         if (this.geoJSON) {
             L.geoJSON(JSON.parse(this.geoJSON)).addTo(this.map);
@@ -411,6 +373,71 @@ export class WwMap extends LitElementWw {
 
     private isEditable() {
         return this.contentEditable === 'true' || this.contentEditable === '';
+    }
+
+    private updateBaseLayer() {
+        this.map.eachLayer((layer) => {
+            if (layer instanceof L.TileLayer) this.map.removeLayer(layer);
+        });
+        
+        if (this._vectorLayer) {
+            for (const attr of this._vectorAttributions) {
+                this.map.attributionControl?.removeAttribution(attr);
+            }
+            this._vectorAttributions = [];
+            this.map.removeLayer(this._vectorLayer);
+            this._vectorLayer = undefined;
+        }
+
+        if (this.layerControl) {
+            this.map.removeControl(this.layerControl);
+            this.layerControl = undefined;
+        }
+
+        if (this.vectorStyle) {
+            this._vectorLayer = L.maplibreGL({ style: this.vectorStyle });
+            this._vectorLayer.addTo(this.map);
+
+            const glMap = (this._vectorLayer as L.MaplibreGL).getMaplibreMap();
+
+            glMap.once('load', () => {
+                const attr = (this._vectorLayer as L.MaplibreGL)?.getAttribution();
+                if (attr) this._vectorAttributions = [attr];
+            });
+
+            // suppress "image could not be loaded" warnings
+            glMap.on('styleimagemissing', (e: { id: string }) => {
+                if (!glMap.hasImage(e.id)) {
+                    glMap.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) } as any);
+                }
+            });
+        } else if (this.customTileUrl) {
+            L.tileLayer(this.customTileUrl, {
+                attribution: '',
+            }).addTo(this.map);
+        } else {
+            const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            });
+            const otm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
+            });
+            const sat = L.tileLayer(
+                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                { attribution: '&copy; <a href="https://www.esri.com/">Esri</a> contributors' }
+            );
+            const baseLayers = {
+                OpenStreetMap: osm,
+                OpenTopoMap: otm,
+                Satellite: sat,
+            };
+            this.layerControl = L.control.layers(baseLayers).addTo(this.map);
+            osm.addTo(this.map);
+        }
+        this.markers?.forEach((marker) => {
+            const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
+            m.bindPopup(marker.title);
+        });
     }
 
     private onMapMove() {
@@ -821,6 +848,7 @@ export class WwMap extends LitElementWw {
                         <sl-button
                             @click=${() => {
                                 this.customTileUrl = undefined;
+                                this.vectorStyle = undefined;
                             }}
                             >${msg('User select')}</sl-button
                         >
@@ -828,6 +856,7 @@ export class WwMap extends LitElementWw {
                     <sl-tooltip content="OpenStreetMapDE">
                         <sl-button
                             @click=${() => {
+                                this.vectorStyle = undefined;
                                 this.customTileUrl = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
                             }}
                             >OpenStreetMapDE</sl-button
@@ -836,6 +865,7 @@ export class WwMap extends LitElementWw {
                     <sl-tooltip content="OpenTopoMap">
                         <sl-button
                             @click=${() => {
+                                this.vectorStyle = undefined;
                                 this.customTileUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
                             }}
                             >OpenTopoMap</sl-button
@@ -844,16 +874,55 @@ export class WwMap extends LitElementWw {
                     <sl-tooltip content="WorldImagery">
                         <sl-button
                             @click=${() => {
+                                this.vectorStyle = undefined;
                                 this.customTileUrl =
                                     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
                             }}
                             >WorldImagery</sl-button
                         >
                     </sl-tooltip>
+                    <p style="margin-bottom:-2px; font-size:11.5pt">OpenFreeMap</p>
+                    <sl-tooltip content="OpenFreeMap Liberty">
+                        <sl-button
+                            @click=${() => {
+                                this.customTileUrl = '';
+                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/liberty';
+                            }}
+                            >OFM Liberty</sl-button
+                        >
+                    </sl-tooltip>
+                    <sl-tooltip content="OpenFreeMap Bright">
+                        <sl-button
+                            @click=${() => {
+                                this.customTileUrl = '';
+                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/bright';
+                            }}
+                            >OFM Bright</sl-button
+                        >
+                    </sl-tooltip>
+                    <sl-tooltip content="OpenFreeMap Positron">
+                        <sl-button
+                            @click=${() => {
+                                this.customTileUrl = '';
+                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/positron';
+                            }}
+                            >OFM Positron</sl-button
+                        >
+                    </sl-tooltip>
+                    <sl-tooltip content="OpenFreeMap Fiord">
+                        <sl-button
+                            @click=${() => {
+                                this.customTileUrl = '';
+                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/fiord';
+                            }}
+                            >OFM Fiord</sl-button
+                        >
+                    </sl-tooltip>
                     <sl-input
                         label=${msg('Custom Tile Url')}
                         value=${this.customTileUrl}
                         @sl-change=${(e: any) => {
+                            this.vectorStyle = undefined;
                             this.customTileUrl = e.target.value;
                         }}
                     ></sl-input>
