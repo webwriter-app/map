@@ -272,9 +272,11 @@ export class WwMap extends LitElementWw {
             }
         }
 
-        if (this.map && changedProperties.has('maxZoom')) {
+        if (this.map && (changedProperties.has('maxZoom') || changedProperties.has('vectorStyle'))) {
             if (this.maxZoom && this.boundsActive) {
                 this.map.setMaxZoom(this.maxZoom);
+            } else if (this.vectorStyle) {
+                this.map.setMaxZoom(20);
             } else {
                 this.map.setMaxZoom(Infinity);
             }
