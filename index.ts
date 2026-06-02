@@ -66,12 +66,77 @@ import L from 'leaflet';
 import '@maplibre/maplibre-gl-leaflet';
 import 'fa-icons';
 
-const ATTRIBUTIONS: Record<string, string> = {
-    'https://tile.openstreetmap.org/{z}/{x}/{y}.png': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    'https://tile.openstreetmap.de/{z}/{x}/{y}.png': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png': '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
-    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}': '&copy; <a href="https://www.esri.com/">Esri</a> contributors',
-};
+interface RasterTiles {
+    name: string;
+    url: string;
+    attribution: string;
+    maxZoom: number;
+    userSelect?: boolean;
+}
+
+interface VectorTiles {
+    name: string;
+    url: string;
+    maxZoom: number;
+}
+
+const RASTER_TILES: RasterTiles[] = [
+    {
+        name: 'OpenStreetMap',
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+        userSelect: true,
+    },
+    {
+        name: 'OpenStreetMapDE',
+        url: 'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    },
+    {
+        name: 'OpenTopoMap',
+        url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
+        maxZoom: 17,
+        userSelect: true,
+    },
+    {
+        name: 'WorldImagery',
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attribution: '&copy; <a href="https://www.esri.com/">Esri</a> contributors',
+        maxZoom: 18,
+        userSelect: true,
+    },
+];
+
+const VECTOR_TILES: VectorTiles[] = [
+    {
+        name: 'OFM Liberty',
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Bright',
+        url: 'https://tiles.openfreemap.org/styles/bright',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Positron',
+        url: 'https://tiles.openfreemap.org/styles/positron',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Dark',
+        url: 'https://tiles.openfreemap.org/styles/dark',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Fiord',
+        url: 'https://tiles.openfreemap.org/styles/fiord',
+        maxZoom: 20,
+    },
+];
 
 /**
  * Geographical map with different terrain options including custom tiling, and GeoJSON support.
@@ -288,7 +353,11 @@ export class WwMap extends LitElementWw {
             if (this.maxZoom && this.boundsActive) {
                 this.map.setMaxZoom(this.maxZoom);
             } else {
-                this.map.setMaxZoom(this.vectorStyle || !this.customTileUrl ? 20 : 18);
+                const defaultMaxZoom =
+                    VECTOR_TILES.find(s => s.url === this.vectorStyle)?.maxZoom
+                    ?? RASTER_TILES.find(t => t.url === this.customTileUrl)?.maxZoom
+                    ?? 20;
+                this.map.setMaxZoom(defaultMaxZoom);
             }
         }
 
@@ -387,10 +456,20 @@ export class WwMap extends LitElementWw {
         return this.contentEditable === 'true' || this.contentEditable === '';
     }
 
-    private createMaplibreLayer(style: string): L.MaplibreGL {
-        const layer = L.maplibreGL({ style });
+    private createRasterLayer(tileDef: RasterTiles): L.TileLayer {
+        const layer = L.tileLayer(tileDef.url, { attribution: tileDef.attribution });
+        layer.on('add', () => {
+            if (!this.maxZoom || !this.boundsActive) this.map?.setMaxZoom(tileDef.maxZoom);
+        });
+        return layer;
+    }
+
+    private createMaplibreLayer(styleUrl: string): L.MaplibreGL {
+        const maxZoom = VECTOR_TILES.find(s => s.url === styleUrl)?.maxZoom ?? 20;
+        const layer = L.maplibreGL({ style: styleUrl });
         let attribution: string | null = null;
         layer.on('add', () => {
+            if (!this.maxZoom || !this.boundsActive) this.map?.setMaxZoom(maxZoom);
             const glMap = (layer as L.MaplibreGL).getMaplibreMap();
             if (glMap) {
                 glMap.on('styleimagemissing', (e: { id: string }) => {
@@ -433,37 +512,16 @@ export class WwMap extends LitElementWw {
             this._vectorLayer = this.createMaplibreLayer(this.vectorStyle);
             this._vectorLayer.addTo(this.map);
         } else if (this.customTileUrl) {
+            const tileDef = RASTER_TILES.find(t => t.url === this.customTileUrl);
             L.tileLayer(this.customTileUrl, {
-                attribution: ATTRIBUTIONS[this.customTileUrl] ?? '',
+                attribution: tileDef?.attribution ?? '',
             }).addTo(this.map);
         } else {
-            const liberty = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/liberty');
-            const bright = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/bright');
-            const positron = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/positron');
-            const dark = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/dark');
-            const fiord = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/fiord');
-            const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: ATTRIBUTIONS['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-            });
-            const otm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                attribution: ATTRIBUTIONS['https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'],
-            });
-            const sat = L.tileLayer(
-                'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                { attribution: ATTRIBUTIONS['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'] }
-            );
-            const baseLayers = {
-                'OFM Liberty': liberty,
-                'OFM Bright': bright,
-                'OFM Positron': positron,
-                'OFM Dark': dark,
-                'OFM Fiord': fiord,
-                OpenStreetMap: osm,
-                OpenTopoMap: otm,
-                Satellite: sat,
-            };
+            const vectorLayers = VECTOR_TILES.map(s => [s.name, this.createMaplibreLayer(s.url)] as const);
+            const rasterLayers = RASTER_TILES.filter(t => t.userSelect).map(t => [t.name, this.createRasterLayer(t)] as const);
+            const baseLayers = Object.fromEntries([...vectorLayers, ...rasterLayers]);
             this.layerControl = L.control.layers(baseLayers).addTo(this.map);
-            liberty.addTo(this.map);
+            vectorLayers[0][1].addTo(this.map);
         }
         this.markers?.forEach((marker) => {
             const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
@@ -882,7 +940,7 @@ export class WwMap extends LitElementWw {
                             if (v === 'user-select') {
                                 this.customTileUrl = undefined;
                                 this.vectorStyle = undefined;
-                            } else if (v.includes('openfreemap.org')) {
+                            } else if (VECTOR_TILES.some(s => s.url === v)) {
                                 this.customTileUrl = '';
                                 this.vectorStyle = v;
                             } else {
@@ -893,15 +951,9 @@ export class WwMap extends LitElementWw {
                     >
                         <sl-radio value="user-select">${msg('User select')}</sl-radio>
                         <sl-menu-label>${msg('OpenFreeMap vector tiles')}</sl-menu-label>
-                        <sl-radio value="https://tiles.openfreemap.org/styles/liberty">OFM Liberty</sl-radio>
-                        <sl-radio value="https://tiles.openfreemap.org/styles/bright">OFM Bright</sl-radio>
-                        <sl-radio value="https://tiles.openfreemap.org/styles/positron">OFM Positron</sl-radio>
-                        <sl-radio value="https://tiles.openfreemap.org/styles/dark">OFM Dark</sl-radio>
-                        <sl-radio value="https://tiles.openfreemap.org/styles/fiord">OFM Fiord</sl-radio>
+                        ${VECTOR_TILES.map(s => html`<sl-radio value=${s.url}>${s.name}</sl-radio>`)}
                         <sl-menu-label>${msg('Raster tiles')}</sl-menu-label>
-                        <sl-radio value="https://tile.openstreetmap.de/{z}/{x}/{y}.png">OpenStreetMapDE</sl-radio>
-                        <sl-radio value="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png">OpenTopoMap</sl-radio>
-                        <sl-radio value="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}">WorldImagery</sl-radio>
+                        ${RASTER_TILES.map(t => html`<sl-radio value=${t.url}>${t.name}</sl-radio>`)}
                     </sl-radio-group>
                     <sl-input
                         label=${msg('Custom Tile Url')}
