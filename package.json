@@ -1,6 +1,6 @@
 {
   "name": "@webwriter/map",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
   "keywords": [
     "webwriter-widget",
@@ -58,6 +58,7 @@
     "widget-lang-zh-hant"
   ],
   "license": "MIT",
+  "repository": "github:webwriter-app/map",
   "author": "Jorik van Genuchten",
   "contributors": [
     "Jorik van Genuchten"
