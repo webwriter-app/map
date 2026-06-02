@@ -46,6 +46,7 @@ import SlIcon from '@shoelace-style/shoelace/dist/components/icon/icon.component
 import SlDialog from '@shoelace-style/shoelace/dist/components/dialog/dialog.component.js';
 import SlMenu from '@shoelace-style/shoelace/dist/components/menu/menu.component.js';
 import SlMenuItem from '@shoelace-style/shoelace/dist/components/menu-item/menu-item.component.js';
+import SlMenuLabel from '@shoelace-style/shoelace/dist/components/menu-label/menu-label.component.js';
 import SlDropdown from '@shoelace-style/shoelace/dist/components/dropdown/dropdown.component.js';
 import SlRange from '@shoelace-style/shoelace/dist/components/range/range.component.js';
 import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
@@ -53,14 +54,89 @@ import SlCard from '@shoelace-style/shoelace/dist/components/card/card.component
 import SlDivider from '@shoelace-style/shoelace/dist/components/divider/divider.component.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.component.js';
 import SlColorPicker from '@shoelace-style/shoelace/dist/components/color-picker/color-picker.component.js';
+import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/radio-group.component.js';
+import SlRadio from '@shoelace-style/shoelace/dist/components/radio/radio.component.js';
 
 // @ts-ignore
 import '@shoelace-style/shoelace/dist/themes/light.css';
 
 // import leafletStyles from './leaflet/leaflet.css.js';
 
-import L from './leaflet/leaflet.js';
+import L from 'leaflet';
+import '@maplibre/maplibre-gl-leaflet';
 import 'fa-icons';
+
+interface RasterTiles {
+    name: string;
+    url: string;
+    attribution: string;
+    maxZoom: number;
+    userSelect?: boolean;
+}
+
+interface VectorTiles {
+    name: string;
+    url: string;
+    maxZoom: number;
+}
+
+const RASTER_TILES: RasterTiles[] = [
+    {
+        name: 'OpenStreetMap',
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+        userSelect: true,
+    },
+    {
+        name: 'OpenStreetMapDE',
+        url: 'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    },
+    {
+        name: 'OpenTopoMap',
+        url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+        attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
+        maxZoom: 17,
+        userSelect: true,
+    },
+    {
+        name: 'WorldImagery',
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attribution: '&copy; <a href="https://www.esri.com/">Esri</a> contributors',
+        maxZoom: 18,
+        userSelect: true,
+    },
+];
+
+const VECTOR_TILES: VectorTiles[] = [
+    {
+        name: 'OFM Liberty',
+        url: 'https://tiles.openfreemap.org/styles/liberty',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Bright',
+        url: 'https://tiles.openfreemap.org/styles/bright',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Positron',
+        url: 'https://tiles.openfreemap.org/styles/positron',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Dark',
+        url: 'https://tiles.openfreemap.org/styles/dark',
+        maxZoom: 20,
+    },
+    {
+        name: 'OFM Fiord',
+        url: 'https://tiles.openfreemap.org/styles/fiord',
+        maxZoom: 20,
+    },
+];
 
 /**
  * Geographical map with different terrain options including custom tiling, and GeoJSON support.
@@ -92,7 +168,7 @@ export class WwMap extends LitElementWw {
         lng: number;
     } = {
         lat: 51,
-        lng: 19,
+        lng: 10,
     };
 
     /** Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]'). */
@@ -109,7 +185,7 @@ export class WwMap extends LitElementWw {
 
     /** Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
-    accessor initialZoom = 13;
+    accessor initialZoom = 5;
 
     /** Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true})
@@ -126,6 +202,10 @@ export class WwMap extends LitElementWw {
     /** Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used. */
     @property({ type: String, attribute: true, reflect: true })
     accessor customTileUrl = '';
+
+    /** MapLibre GL style URL for vector tile rendering (e.g. OpenFreeMap).<br>Expected value: URL to a MapLibre style JSON (e.g. 'https://tiles.openfreemap.org/styles/liberty').<br>When set, this takes priority over customTileUrl and the default raster layers. */
+    @property({ type: String, attribute: true, reflect: true })
+    accessor vectorStyle: string | undefined = undefined;
 
     /** GeoJSON overlay to render on the map.<br>Expected value: stringified GeoJSON (Feature or FeatureCollection).<br>Optional; when empty/falsy, no GeoJSON overlay is shown. */
     @property({ type: String, attribute: true, reflect: true })
@@ -194,6 +274,8 @@ export class WwMap extends LitElementWw {
     @property({ type: Boolean, reflect: true })
     private  accessor allowPanning;
 
+    private _vectorLayer: L.Layer | undefined;
+
 	/** @internal */
     static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
 
@@ -213,10 +295,13 @@ export class WwMap extends LitElementWw {
             'sl-switch': SlSwitch,
             'sl-menu': SlMenu,
             'sl-menu-item': SlMenuItem,
+            'sl-menu-label': SlMenuLabel,
             'sl-dropdown': SlDropdown,
             'sl-tooltip': SlTooltip,
             'sl-dialog': SlDialog,
             'sl-color-picker': SlColorPicker,
+            'sl-radio-group': SlRadioGroup,
+            'sl-radio': SlRadio,
         };
     }
 
@@ -239,46 +324,8 @@ export class WwMap extends LitElementWw {
         // console.log('updated');
         super.updated(changedProperties);
 
-        if (this.map && changedProperties.has('customTileUrl')) {
-            this.map.eachLayer((layer) => {
-                if (layer instanceof L.TileLayer) this.map.removeLayer(layer);
-            });
-
-            if (this.layerControl) {
-                this.map.removeControl(this.layerControl);
-            }
-
-            if (this.customTileUrl) {
-                L.tileLayer(this.customTileUrl, {
-                    attribution: '',
-                }).addTo(this.map);
-            } else {
-                const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution:
-                        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                });
-                const otm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
-                });
-                const sat = L.tileLayer(
-                    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                    {
-                        attribution: '&copy; <a href="https://www.esri.com/">Esri</a> contributors',
-                    }
-                );
-                const baseLayers = {
-                    OpenStreetMap: osm,
-                    OpenTopoMap: otm,
-                    Satellite: sat,
-                };
-
-                this.layerControl = L.control.layers(baseLayers).addTo(this.map);
-                osm.addTo(this.map);
-            }
-            this.markers?.forEach((marker) => {
-                const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
-                m.bindPopup(marker.title);
-            });
+        if (this.map && (changedProperties.has('customTileUrl') || changedProperties.has('vectorStyle'))) {
+            this.updateBaseLayer();
         }
 
         if (this.map && changedProperties.has('geoJSON')) {
@@ -302,11 +349,15 @@ export class WwMap extends LitElementWw {
             }
         }
 
-        if (this.map && changedProperties.has('maxZoom')) {
+        if (this.map && (changedProperties.has('maxZoom') || changedProperties.has('vectorStyle') || changedProperties.has('customTileUrl'))) {
             if (this.maxZoom && this.boundsActive) {
                 this.map.setMaxZoom(this.maxZoom);
             } else {
-                this.map.setMaxZoom(Infinity);
+                const defaultMaxZoom =
+                    VECTOR_TILES.find(s => s.url === this.vectorStyle)?.maxZoom
+                    ?? RASTER_TILES.find(t => t.url === this.customTileUrl)?.maxZoom
+                    ?? 20;
+                this.map.setMaxZoom(defaultMaxZoom);
             }
         }
 
@@ -348,15 +399,7 @@ export class WwMap extends LitElementWw {
         // console.log(this.styles);
 
         this.map = L.map(this.mapElement).setView([this.initialPos.lat, this.initialPos.lng], this.initialZoom);
-        if (this.customTileUrl) {
-            L.tileLayer(this.customTileUrl, {
-                attribution: '',
-            }).addTo(this.map);
-        } else {
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            }).addTo(this.map);
-        }
+        this.updateBaseLayer();
 
         if (this.geoJSON) {
             L.geoJSON(JSON.parse(this.geoJSON)).addTo(this.map);
@@ -411,6 +454,79 @@ export class WwMap extends LitElementWw {
 
     private isEditable() {
         return this.contentEditable === 'true' || this.contentEditable === '';
+    }
+
+    private createRasterLayer(tileDef: RasterTiles): L.TileLayer {
+        const layer = L.tileLayer(tileDef.url, { attribution: tileDef.attribution });
+        layer.on('add', () => {
+            if (!this.maxZoom || !this.boundsActive) this.map?.setMaxZoom(tileDef.maxZoom);
+        });
+        return layer;
+    }
+
+    private createMaplibreLayer(styleUrl: string): L.MaplibreGL {
+        const maxZoom = VECTOR_TILES.find(s => s.url === styleUrl)?.maxZoom ?? 20;
+        const layer = L.maplibreGL({ style: styleUrl });
+        let attribution: string | null = null;
+        layer.on('add', () => {
+            if (!this.maxZoom || !this.boundsActive) this.map?.setMaxZoom(maxZoom);
+            const glMap = (layer as L.MaplibreGL).getMaplibreMap();
+            if (glMap) {
+                glMap.on('styleimagemissing', (e: { id: string }) => {
+                    if (!glMap.hasImage(e.id)) {
+                        glMap.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) } as any);
+                    }
+                });
+                if (!attribution) {
+                    glMap.once('load', () => {
+                        attribution = (layer as L.MaplibreGL).getAttribution() ?? null;
+                    });
+                }
+            }
+        });
+        layer.on('remove', () => {
+            if (attribution) {
+                this.map?.attributionControl?.removeAttribution(attribution);
+            }
+        });
+        return layer;
+    }
+
+    private updateBaseLayer() {
+        this.map.eachLayer((layer) => {
+            if (layer instanceof L.TileLayer || typeof (layer as any).getMaplibreMap === 'function') {
+                this.map.removeLayer(layer);
+            }
+        });
+
+        if (this._vectorLayer) {
+            this._vectorLayer = undefined;
+        }
+
+        if (this.layerControl) {
+            this.map.removeControl(this.layerControl);
+            this.layerControl = undefined;
+        }
+
+        if (this.vectorStyle) {
+            this._vectorLayer = this.createMaplibreLayer(this.vectorStyle);
+            this._vectorLayer.addTo(this.map);
+        } else if (this.customTileUrl) {
+            const tileDef = RASTER_TILES.find(t => t.url === this.customTileUrl);
+            L.tileLayer(this.customTileUrl, {
+                attribution: tileDef?.attribution ?? '',
+            }).addTo(this.map);
+        } else {
+            const vectorLayers = VECTOR_TILES.map(s => [s.name, this.createMaplibreLayer(s.url)] as const);
+            const rasterLayers = RASTER_TILES.filter(t => t.userSelect).map(t => [t.name, this.createRasterLayer(t)] as const);
+            const baseLayers = Object.fromEntries([...vectorLayers, ...rasterLayers]);
+            this.layerControl = L.control.layers(baseLayers).addTo(this.map);
+            vectorLayers[0][1].addTo(this.map);
+        }
+        this.markers?.forEach((marker) => {
+            const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
+            m.bindPopup(marker.title);
+        });
     }
 
     private onMapMove() {
@@ -816,44 +932,34 @@ export class WwMap extends LitElementWw {
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
-                    <p style="margin-top:-20px;margin-bottom:-2px; font-size:11.5pt">${msg('Map style')}</p>
-                    <sl-tooltip content=${msg('Default')}>
-                        <sl-button
-                            @click=${() => {
+                    <sl-radio-group
+                        label=${msg('Map style')}
+                        value=${this.vectorStyle ?? (this.customTileUrl || 'user-select')}
+                        @sl-change=${(e: any) => {
+                            const v = e.target.value;
+                            if (v === 'user-select') {
                                 this.customTileUrl = undefined;
-                            }}
-                            >${msg('User select')}</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenStreetMapDE">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
-                            }}
-                            >OpenStreetMapDE</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenTopoMap">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
-                            }}
-                            >OpenTopoMap</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="WorldImagery">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl =
-                                    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-                            }}
-                            >WorldImagery</sl-button
-                        >
-                    </sl-tooltip>
+                                this.vectorStyle = undefined;
+                            } else if (VECTOR_TILES.some(s => s.url === v)) {
+                                this.customTileUrl = '';
+                                this.vectorStyle = v;
+                            } else {
+                                this.vectorStyle = undefined;
+                                this.customTileUrl = v;
+                            }
+                        }}
+                    >
+                        <sl-radio value="user-select">${msg('User select')}</sl-radio>
+                        <sl-menu-label>${msg('OpenFreeMap vector tiles')}</sl-menu-label>
+                        ${VECTOR_TILES.map(s => html`<sl-radio value=${s.url}>${s.name}</sl-radio>`)}
+                        <sl-menu-label>${msg('Raster tiles')}</sl-menu-label>
+                        ${RASTER_TILES.map(t => html`<sl-radio value=${t.url}>${t.name}</sl-radio>`)}
+                    </sl-radio-group>
                     <sl-input
                         label=${msg('Custom Tile Url')}
                         value=${this.customTileUrl}
                         @sl-change=${(e: any) => {
+                            this.vectorStyle = undefined;
                             this.customTileUrl = e.target.value;
                         }}
                     ></sl-input>

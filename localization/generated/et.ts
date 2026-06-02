@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Min Zoomi määramine`,
-'s11326fd2590f4e5e': `Vaikimisi`,
 's1bcea0c68ac23efb': `Lisa PIN-koodi`,
 's1c0ea772de28e773': `Joonista`,
 's21b06c38fc4164db': `Täiustatud`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Suurus`,
 's8abdd4fbc8368253': `Custom Tile Url`,
 's8af61807443f32a4': `Meetmed`,
+'s8af7951ebf77cbed': `Rasterkaarditükid`,
 's8f3d223923b156c6': `ei ole määratud`,
+'s9132eff33fb5ed73': `OpenFreeMapi vektorkartid`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Visualiseeri piire`,
 'sa88dfb051be09d0e': `Võimaldage õpilaste liikumine`,

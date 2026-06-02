@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Min. zoom instellen`,
-'s11326fd2590f4e5e': `Standaard`,
 's1bcea0c68ac23efb': `Speld toevoegen`,
 's1c0ea772de28e773': `Teken`,
 's21b06c38fc4164db': `Geavanceerd`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Maat`,
 's8abdd4fbc8368253': `Aangepaste tegel-url`,
 's8af61807443f32a4': `Acties`,
+'s8af7951ebf77cbed': `Rastertegels`,
 's8f3d223923b156c6': `niet ingesteld`,
+'s9132eff33fb5ed73': `OpenFreeMap-vectortegels`,
 's936c17dcc2e04cf5': `Fitte banden`,
 'sa53d08f6b088b54e': `Grenzen visualiseren`,
 'sa88dfb051be09d0e': `Laat studenten bewegen`,

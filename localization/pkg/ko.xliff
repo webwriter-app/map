@@ -1,1 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ko"><file id="." original="."><unit id="description"><segment><source>Geographical map with different terrain options including custom tiling, and GeoJSON support.</source><target>사용자 지정 타일링을 포함한 다양한 지형 옵션이 있는 지리적 지도와 GeoJSON을 지원합니다.</target></segment></unit></file></xliff>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ko">
+<file id="." original="."><metadata xmlns="urn:oasis:names:tc:xliff:metadata:2.0"><metaGroup category="urn:deepl:xliff:extensions:document-properties" id="0"><meta type="source-language-auto-detected">false</meta></metaGroup></metadata>
+<unit id="description"><segment><source>Geographical map with different terrain options including custom tiling, and GeoJSON support.</source><target>사용자 정의 타일링을 비롯한 다양한 지형 옵션을 제공하는 지리적 지도이며, GeoJSON을 지원합니다.</target></segment></unit>
+</file>
+</xliff>

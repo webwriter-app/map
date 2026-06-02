@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Nastavenie min. priblíženia`,
-'s11326fd2590f4e5e': `Predvolené nastavenie`,
 's1bcea0c68ac23efb': `Pridať kolík`,
 's1c0ea772de28e773': `Kreslenie`,
 's21b06c38fc4164db': `Pokročilé`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Veľkosť`,
 's8abdd4fbc8368253': `Vlastná adresa URL dlaždíc`,
 's8af61807443f32a4': `Činnosti`,
+'s8af7951ebf77cbed': `Rastrové dlaždice`,
 's8f3d223923b156c6': `nie je nastavený`,
+'s9132eff33fb5ed73': `Vektorové dlaždice OpenFreeMap`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Vizualizácia hraníc`,
 'sa88dfb051be09d0e': `Umožniť pohyb študentov`,

@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Ställ in Min Zoom`,
-'s11326fd2590f4e5e': `Standard`,
 's1bcea0c68ac23efb': `Lägg till stift`,
 's1c0ea772de28e773': `Dragning`,
 's21b06c38fc4164db': `Avancerad`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Storlek`,
 's8abdd4fbc8368253': `Url för anpassade plattor`,
 's8af61807443f32a4': `Åtgärder`,
+'s8af7951ebf77cbed': `Rasterplattor`,
 's8f3d223923b156c6': `inte inställd`,
+'s9132eff33fb5ed73': `Vektorkartrutor från OpenFreeMap`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Visualisera gränser`,
 'sa88dfb051be09d0e': `Tillåt studenter att röra på sig`,

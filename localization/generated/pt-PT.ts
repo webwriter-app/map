@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Definir zoom mínimo`,
-'s11326fd2590f4e5e': `Predefinição`,
 's1bcea0c68ac23efb': `Adicionar pino`,
 's1c0ea772de28e773': `Desenhar`,
 's21b06c38fc4164db': `Avançado`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Tamanho`,
 's8abdd4fbc8368253': `Url de mosaico personalizado`,
 's8af61807443f32a4': `Acções`,
+'s8af7951ebf77cbed': `Mosaicos raster`,
 's8f3d223923b156c6': `não definido`,
+'s9132eff33fb5ed73': `Mosaicos vetoriais do OpenFreeMap`,
 's936c17dcc2e04cf5': `Limites de forma`,
 'sa53d08f6b088b54e': `Visualizar limites`,
 'sa88dfb051be09d0e': `Permitir o movimento dos alunos`,

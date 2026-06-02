@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Mengatur Zoom Min`,
-'s11326fd2590f4e5e': `Default`,
 's1bcea0c68ac23efb': `Tambahkan Pin`,
 's1c0ea772de28e773': `Menggambar`,
 's21b06c38fc4164db': `Lanjutan`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Ukuran`,
 's8abdd4fbc8368253': `Url Ubin Khusus`,
 's8af61807443f32a4': `Tindakan`,
+'s8af7951ebf77cbed': `Ubin raster`,
 's8f3d223923b156c6': `tidak ditetapkan`,
+'s9132eff33fb5ed73': `Ubin vektor OpenFreeMap`,
 's936c17dcc2e04cf5': `Batas yang Sesuai`,
 'sa53d08f6b088b54e': `Memvisualisasikan Batas`,
 'sa88dfb051be09d0e': `Memungkinkan pergerakan siswa`,

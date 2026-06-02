@@ -133,10 +133,6 @@
         <source>Map style</source>
         <target>지도 스타일</target>
       </trans-unit>
-      <trans-unit id="s11326fd2590f4e5e">
-        <source>Default</source>
-        <target>기본값</target>
-      </trans-unit>
       <trans-unit id="s3011241149f8d10e">
         <source>User select</source>
         <target>사용자 선택</target>
@@ -152,6 +148,14 @@
       <trans-unit id="sf9aee319a006c9b4">
         <source>Add</source>
         <target>추가</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>OpenFreeMap 벡터 타일</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>래스터 타일</target>
       </trans-unit>
     </body>
   </file>

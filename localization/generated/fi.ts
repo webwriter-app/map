@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Aseta Min Zoom`,
-'s11326fd2590f4e5e': `Oletus`,
 's1bcea0c68ac23efb': `Lisää tappi`,
 's1c0ea772de28e773': `Piirrä`,
 's21b06c38fc4164db': `Edistynyt`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Koko`,
 's8abdd4fbc8368253': `Custom Tile Url`,
 's8af61807443f32a4': `Toimet`,
+'s8af7951ebf77cbed': `Rasteriruudut`,
 's8f3d223923b156c6': `ei asetettu`,
+'s9132eff33fb5ed73': `OpenFreeMap-vektorikarttalaatat`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Visualisoi rajat`,
 'sa88dfb051be09d0e': `Salli opiskelijoiden liikkuminen`,

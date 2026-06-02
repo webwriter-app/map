@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Angi min. zoom`,
-'s11326fd2590f4e5e': `Standard`,
 's1bcea0c68ac23efb': `Legg til nål`,
 's1c0ea772de28e773': `Uavgjort`,
 's21b06c38fc4164db': `Avansert`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Størrelse`,
 's8abdd4fbc8368253': `Tilpasset flis-URL`,
 's8af61807443f32a4': `Handlinger`,
+'s8af7951ebf77cbed': `Rasterfliser`,
 's8f3d223923b156c6': `ikke satt`,
+'s9132eff33fb5ed73': `OpenFreeMap-vektortiler`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Visualiser grenser`,
 'sa88dfb051be09d0e': `Tillat elevene å bevege seg`,

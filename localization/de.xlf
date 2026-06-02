@@ -43,11 +43,11 @@
       </trans-unit>
       <trans-unit id="s0aee4705bcc0c15e">
         <source>Set Min Zoom</source>
-        <target>Min-Zoom einstellen</target>
+        <target>Min. Zoom einstellen</target>
       </trans-unit>
       <trans-unit id="s936c17dcc2e04cf5">
         <source>Fit Bounds</source>
-        <target>Fit Bounds</target>
+        <target>Grenzen anpassen</target>
       </trans-unit>
       <trans-unit id="sa53d08f6b088b54e">
         <source>Visualize Bounds</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="s6beb392ed926ce5b">
         <source>Enable Bounds</source>
-        <target>Freigabe von Grenzen</target>
+        <target>Grenzen aktivieren</target>
       </trans-unit>
       <trans-unit id="sdc9cf2d6e96526c1">
         <source>Reset Bounds</source>
@@ -67,7 +67,7 @@
       </trans-unit>
       <trans-unit id="s1c0ea772de28e773">
         <source>Draw</source>
-        <target>Zeichnen Sie</target>
+        <target>Zeichnen</target>
       </trans-unit>
       <trans-unit id="sd42752882536c15a">
         <source>Draw Rectangle</source>
@@ -95,15 +95,15 @@
       </trans-unit>
       <trans-unit id="s6ba44d4d5d284468">
         <source>Border Color</source>
-        <target>Farbe der Umrandung</target>
+        <target>Kantenfarbe</target>
       </trans-unit>
       <trans-unit id="sdd253aec6b88b6af">
         <source>Fill Color</source>
-        <target>Füllung Farbe</target>
+        <target>Füllfarbe</target>
       </trans-unit>
       <trans-unit id="s5590dbf7e425789d">
         <source>Label</source>
-        <target>Etikett</target>
+        <target>Beschriftung</target>
       </trans-unit>
       <trans-unit id="s78789724e789221c">
         <source>Size</source>
@@ -123,27 +123,23 @@
       </trans-unit>
       <trans-unit id="sa88dfb051be09d0e">
         <source>Allow student movement</source>
-        <target>Bewegung der Schüler zulassen</target>
+        <target>Bewegung durch Schüler zulassen</target>
       </trans-unit>
       <trans-unit id="s21b06c38fc4164db">
         <source>Advanced</source>
-        <target>Fortgeschrittene</target>
+        <target>Fortgeschritten</target>
       </trans-unit>
       <trans-unit id="s32689d1d09608f54">
         <source>Map style</source>
-        <target>Karte Stil</target>
-      </trans-unit>
-      <trans-unit id="s11326fd2590f4e5e">
-        <source>Default</source>
-        <target>Standard</target>
+        <target>Kartenstil</target>
       </trans-unit>
       <trans-unit id="s3011241149f8d10e">
         <source>User select</source>
-        <target>Benutzer auswählen</target>
+        <target>Benutzerauswahl</target>
       </trans-unit>
       <trans-unit id="s8abdd4fbc8368253">
         <source>Custom Tile Url</source>
-        <target>Benutzerdefinierte Kachel Url</target>
+        <target>Benutzerdefinierte Kachel-URL</target>
       </trans-unit>
       <trans-unit id="s2492f5fb1b05b45e">
         <source>Text</source>
@@ -152,6 +148,14 @@
       <trans-unit id="sf9aee319a006c9b4">
         <source>Add</source>
         <target>hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>OpenFreeMap-Vektorkacheln</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>Rasterkacheln</target>
       </trans-unit>
     </body>
   </file>

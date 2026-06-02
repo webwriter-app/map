@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Définir le zoom minimum`,
-'s11326fd2590f4e5e': `Défaut`,
 's1bcea0c68ac23efb': `Ajouter une épingle`,
 's1c0ea772de28e773': `Dessiner`,
 's21b06c38fc4164db': `Avancé`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Taille`,
 's8abdd4fbc8368253': `Url de la tuile personnalisée`,
 's8af61807443f32a4': `Actions`,
+'s8af7951ebf77cbed': `Mosaïques raster`,
 's8f3d223923b156c6': `non défini`,
+'s9132eff33fb5ed73': `Tuiles vectorielles OpenFreeMap`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Visualiser les limites`,
 'sa88dfb051be09d0e': `Permettre aux élèves de se déplacer`,

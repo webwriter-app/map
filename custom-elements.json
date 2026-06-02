@@ -56,7 +56,7 @@
               "type": {
                 "text": "{\r\n        lat: number;\r\n        lng: number;\r\n    }"
               },
-              "default": "{ lat: 51, lng: 19, }",
+              "default": "{ lat: 51, lng: 10, }",
               "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
               "attribute": "initialPos",
               "reflects": true
@@ -97,7 +97,7 @@
               "type": {
                 "text": "number"
               },
-              "default": "13",
+              "default": "5",
               "description": "Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "attribute": "initialZoom",
               "reflects": true
@@ -143,6 +143,17 @@
               "default": "''",
               "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used.",
               "attribute": "customTileUrl",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "vectorStyle",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "description": "MapLibre GL style URL for vector tile rendering (e.g. OpenFreeMap).<br>Expected value: URL to a MapLibre style JSON (e.g. 'https://tiles.openfreemap.org/styles/liberty').<br>When set, this takes priority over customTileUrl and the default raster layers.",
+              "attribute": "vectorStyle",
               "reflects": true
             },
             {
@@ -343,8 +354,57 @@
               "reflects": true
             },
             {
+              "kind": "field",
+              "name": "_vectorLayer",
+              "type": {
+                "text": "L.Layer | undefined"
+              },
+              "privacy": "private"
+            },
+            {
               "kind": "method",
               "name": "isEditable",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "createRasterLayer",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "L.TileLayer"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tileDef",
+                  "type": {
+                    "text": "RasterTiles"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "createMaplibreLayer",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "L.MaplibreGL"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "styleUrl",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updateBaseLayer",
               "privacy": "private"
             },
             {
@@ -562,7 +622,7 @@
               "type": {
                 "text": "{\r\n        lat: number;\r\n        lng: number;\r\n    }"
               },
-              "default": "{ lat: 51, lng: 19, }",
+              "default": "{ lat: 51, lng: 10, }",
               "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
               "fieldName": "initialPos"
             },
@@ -595,7 +655,7 @@
               "type": {
                 "text": "number"
               },
-              "default": "13",
+              "default": "5",
               "description": "Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "fieldName": "initialZoom"
             },
@@ -634,6 +694,15 @@
               "default": "''",
               "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used.",
               "fieldName": "customTileUrl"
+            },
+            {
+              "name": "vectorStyle",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "description": "MapLibre GL style URL for vector tile rendering (e.g. OpenFreeMap).<br>Expected value: URL to a MapLibre style JSON (e.g. 'https://tiles.openfreemap.org/styles/liberty').<br>When set, this takes priority over customTileUrl and the default raster layers.",
+              "fieldName": "vectorStyle"
             },
             {
               "name": "geoJSON",

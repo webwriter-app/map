@@ -1,1 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="fr"><file id="." original="."><unit id="description"><segment><source>Geographical map with different terrain options including custom tiling, and GeoJSON support.</source><target>Carte géographique avec différentes options de terrain, y compris des tuiles personnalisées, et prise en charge de GeoJSON.</target></segment></unit></file></xliff>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="fr">
+<file id="." original="."><metadata xmlns="urn:oasis:names:tc:xliff:metadata:2.0"><metaGroup category="urn:deepl:xliff:extensions:document-properties" id="0"><meta type="source-language-auto-detected">false</meta></metaGroup></metadata>
+<unit id="description"><segment><source>Geographical map with different terrain options including custom tiling, and GeoJSON support.</source><target>Carte géographique proposant différentes options de relief, notamment la création de tuiles personnalisées, et la prise en charge du format GeoJSON.</target></segment></unit>
+</file>
+</xliff>
