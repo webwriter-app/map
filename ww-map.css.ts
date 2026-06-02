@@ -106,4 +106,23 @@ export const style = css`
     sl-button::part(base){
         line-height: normal
     }
+    sl-details::part(content) {
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--sl-spacing-small);
+    }
+    sl-menu-label::part(base) {
+        padding: var(--sl-spacing-x-small) 0 0 var(--sl-spacing-x-large);
+        line-height: var(--sl-line-height-dense);
+    }
+    sl-menu-label::part(base)::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background-color: var(--sl-color-primary);
+    }
 `;

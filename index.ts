@@ -46,6 +46,7 @@ import SlIcon from '@shoelace-style/shoelace/dist/components/icon/icon.component
 import SlDialog from '@shoelace-style/shoelace/dist/components/dialog/dialog.component.js';
 import SlMenu from '@shoelace-style/shoelace/dist/components/menu/menu.component.js';
 import SlMenuItem from '@shoelace-style/shoelace/dist/components/menu-item/menu-item.component.js';
+import SlMenuLabel from '@shoelace-style/shoelace/dist/components/menu-label/menu-label.component.js';
 import SlDropdown from '@shoelace-style/shoelace/dist/components/dropdown/dropdown.component.js';
 import SlRange from '@shoelace-style/shoelace/dist/components/range/range.component.js';
 import SlProgressBar from '@shoelace-style/shoelace/dist/components/progress-bar/progress-bar.component.js';
@@ -53,6 +54,8 @@ import SlCard from '@shoelace-style/shoelace/dist/components/card/card.component
 import SlDivider from '@shoelace-style/shoelace/dist/components/divider/divider.component.js';
 import SlSwitch from '@shoelace-style/shoelace/dist/components/switch/switch.component.js';
 import SlColorPicker from '@shoelace-style/shoelace/dist/components/color-picker/color-picker.component.js';
+import SlRadioGroup from '@shoelace-style/shoelace/dist/components/radio-group/radio-group.component.js';
+import SlRadio from '@shoelace-style/shoelace/dist/components/radio/radio.component.js';
 
 // @ts-ignore
 import '@shoelace-style/shoelace/dist/themes/light.css';
@@ -221,10 +224,13 @@ export class WwMap extends LitElementWw {
             'sl-switch': SlSwitch,
             'sl-menu': SlMenu,
             'sl-menu-item': SlMenuItem,
+            'sl-menu-label': SlMenuLabel,
             'sl-dropdown': SlDropdown,
             'sl-tooltip': SlTooltip,
             'sl-dialog': SlDialog,
             'sl-color-picker': SlColorPicker,
+            'sl-radio-group': SlRadioGroup,
+            'sl-radio': SlRadio,
         };
     }
 
@@ -275,10 +281,8 @@ export class WwMap extends LitElementWw {
         if (this.map && (changedProperties.has('maxZoom') || changedProperties.has('vectorStyle'))) {
             if (this.maxZoom && this.boundsActive) {
                 this.map.setMaxZoom(this.maxZoom);
-            } else if (this.vectorStyle) {
-                this.map.setMaxZoom(20);
             } else {
-                this.map.setMaxZoom(Infinity);
+                this.map.setMaxZoom(this.vectorStyle ? 20 : 18);
             }
         }
 
@@ -845,81 +849,35 @@ export class WwMap extends LitElementWw {
                     <span name="plus-square" slot="expand-icon">${faSquarePlus}</span>
                     <span name="dash-square" slot="collapse-icon">${faSquareMinus}</span>
 
-                    <p style="margin-top:-20px;margin-bottom:-2px; font-size:11.5pt">${msg('Map style')}</p>
-                    <sl-tooltip content=${msg('Default')}>
-                        <sl-button
-                            @click=${() => {
+                    <sl-radio-group
+                        label=${msg('Map style')}
+                        value=${this.vectorStyle ?? (this.customTileUrl || 'user-select')}
+                        @sl-change=${(e: any) => {
+                            const v = e.target.value;
+                            if (v === 'user-select') {
                                 this.customTileUrl = undefined;
                                 this.vectorStyle = undefined;
-                            }}
-                            >${msg('User select')}</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenStreetMapDE">
-                        <sl-button
-                            @click=${() => {
+                            } else if (v.includes('openfreemap.org')) {
+                                this.customTileUrl = '';
+                                this.vectorStyle = v;
+                            } else {
                                 this.vectorStyle = undefined;
-                                this.customTileUrl = 'https://tile.openstreetmap.de/{z}/{x}/{y}.png';
-                            }}
-                            >OpenStreetMapDE</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenTopoMap">
-                        <sl-button
-                            @click=${() => {
-                                this.vectorStyle = undefined;
-                                this.customTileUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
-                            }}
-                            >OpenTopoMap</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="WorldImagery">
-                        <sl-button
-                            @click=${() => {
-                                this.vectorStyle = undefined;
-                                this.customTileUrl =
-                                    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-                            }}
-                            >WorldImagery</sl-button
-                        >
-                    </sl-tooltip>
-                    <p style="margin-bottom:-2px; font-size:11.5pt">OpenFreeMap</p>
-                    <sl-tooltip content="OpenFreeMap Liberty">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl = '';
-                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/liberty';
-                            }}
-                            >OFM Liberty</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenFreeMap Bright">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl = '';
-                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/bright';
-                            }}
-                            >OFM Bright</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenFreeMap Positron">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl = '';
-                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/positron';
-                            }}
-                            >OFM Positron</sl-button
-                        >
-                    </sl-tooltip>
-                    <sl-tooltip content="OpenFreeMap Fiord">
-                        <sl-button
-                            @click=${() => {
-                                this.customTileUrl = '';
-                                this.vectorStyle = 'https://tiles.openfreemap.org/styles/fiord';
-                            }}
-                            >OFM Fiord</sl-button
-                        >
-                    </sl-tooltip>
+                                this.customTileUrl = v;
+                            }
+                        }}
+                    >
+                        <sl-radio value="user-select">${msg('User select')}</sl-radio>
+                        <sl-menu-label>${msg('OpenFreeMap vector tiles')}</sl-menu-label>
+                        <sl-radio value="https://tiles.openfreemap.org/styles/liberty">OFM Liberty</sl-radio>
+                        <sl-radio value="https://tiles.openfreemap.org/styles/bright">OFM Bright</sl-radio>
+                        <sl-radio value="https://tiles.openfreemap.org/styles/positron">OFM Positron</sl-radio>
+                        <sl-radio value="https://tiles.openfreemap.org/styles/dark">OFM Dark</sl-radio>
+                        <sl-radio value="https://tiles.openfreemap.org/styles/fiord">OFM Fiord</sl-radio>
+                        <sl-menu-label>${msg('Raster tiles')}</sl-menu-label>
+                        <sl-radio value="https://tile.openstreetmap.de/{z}/{x}/{y}.png">OpenStreetMapDE</sl-radio>
+                        <sl-radio value="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png">OpenTopoMap</sl-radio>
+                        <sl-radio value="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}">WorldImagery</sl-radio>
+                    </sl-radio-group>
                     <sl-input
                         label=${msg('Custom Tile Url')}
                         value=${this.customTileUrl}
