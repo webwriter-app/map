@@ -168,7 +168,7 @@ export class WwMap extends LitElementWw {
         lng: number;
     } = {
         lat: 51,
-        lng: 19,
+        lng: 10,
     };
 
     /** Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]'). */
@@ -185,7 +185,7 @@ export class WwMap extends LitElementWw {
 
     /** Initial zoom level when the map is created.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true, reflect: true })
-    accessor initialZoom = 13;
+    accessor initialZoom = 5;
 
     /** Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional. */
     @property({ type: Number, attribute: true})
