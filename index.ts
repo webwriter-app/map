@@ -66,6 +66,13 @@ import L from 'leaflet';
 import '@maplibre/maplibre-gl-leaflet';
 import 'fa-icons';
 
+const ATTRIBUTIONS: Record<string, string> = {
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    'https://tile.openstreetmap.de/{z}/{x}/{y}.png': '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png': '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}': '&copy; <a href="https://www.esri.com/">Esri</a> contributors',
+};
+
 /**
  * Geographical map with different terrain options including custom tiling, and GeoJSON support.
  */
@@ -203,7 +210,6 @@ export class WwMap extends LitElementWw {
     private  accessor allowPanning;
 
     private _vectorLayer: L.Layer | undefined;
-    private _vectorAttributions: string[] = [];
 
 	/** @internal */
     static shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
@@ -278,11 +284,11 @@ export class WwMap extends LitElementWw {
             }
         }
 
-        if (this.map && (changedProperties.has('maxZoom') || changedProperties.has('vectorStyle'))) {
+        if (this.map && (changedProperties.has('maxZoom') || changedProperties.has('vectorStyle') || changedProperties.has('customTileUrl'))) {
             if (this.maxZoom && this.boundsActive) {
                 this.map.setMaxZoom(this.maxZoom);
             } else {
-                this.map.setMaxZoom(this.vectorStyle ? 20 : 18);
+                this.map.setMaxZoom(this.vectorStyle || !this.customTileUrl ? 20 : 18);
             }
         }
 
@@ -381,17 +387,40 @@ export class WwMap extends LitElementWw {
         return this.contentEditable === 'true' || this.contentEditable === '';
     }
 
+    private createMaplibreLayer(style: string): L.MaplibreGL {
+        const layer = L.maplibreGL({ style });
+        let attribution: string | null = null;
+        layer.on('add', () => {
+            const glMap = (layer as L.MaplibreGL).getMaplibreMap();
+            if (glMap) {
+                glMap.on('styleimagemissing', (e: { id: string }) => {
+                    if (!glMap.hasImage(e.id)) {
+                        glMap.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) } as any);
+                    }
+                });
+                if (!attribution) {
+                    glMap.once('load', () => {
+                        attribution = (layer as L.MaplibreGL).getAttribution() ?? null;
+                    });
+                }
+            }
+        });
+        layer.on('remove', () => {
+            if (attribution) {
+                this.map?.attributionControl?.removeAttribution(attribution);
+            }
+        });
+        return layer;
+    }
+
     private updateBaseLayer() {
         this.map.eachLayer((layer) => {
-            if (layer instanceof L.TileLayer) this.map.removeLayer(layer);
-        });
-        
-        if (this._vectorLayer) {
-            for (const attr of this._vectorAttributions) {
-                this.map.attributionControl?.removeAttribution(attr);
+            if (layer instanceof L.TileLayer || typeof (layer as any).getMaplibreMap === 'function') {
+                this.map.removeLayer(layer);
             }
-            this._vectorAttributions = [];
-            this.map.removeLayer(this._vectorLayer);
+        });
+
+        if (this._vectorLayer) {
             this._vectorLayer = undefined;
         }
 
@@ -401,44 +430,40 @@ export class WwMap extends LitElementWw {
         }
 
         if (this.vectorStyle) {
-            this._vectorLayer = L.maplibreGL({ style: this.vectorStyle });
+            this._vectorLayer = this.createMaplibreLayer(this.vectorStyle);
             this._vectorLayer.addTo(this.map);
-
-            const glMap = (this._vectorLayer as L.MaplibreGL).getMaplibreMap();
-
-            glMap.once('load', () => {
-                const attr = (this._vectorLayer as L.MaplibreGL)?.getAttribution();
-                if (attr) this._vectorAttributions = [attr];
-            });
-
-            // suppress "image could not be loaded" warnings
-            glMap.on('styleimagemissing', (e: { id: string }) => {
-                if (!glMap.hasImage(e.id)) {
-                    glMap.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) } as any);
-                }
-            });
         } else if (this.customTileUrl) {
             L.tileLayer(this.customTileUrl, {
-                attribution: '',
+                attribution: ATTRIBUTIONS[this.customTileUrl] ?? '',
             }).addTo(this.map);
         } else {
+            const liberty = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/liberty');
+            const bright = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/bright');
+            const positron = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/positron');
+            const dark = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/dark');
+            const fiord = this.createMaplibreLayer('https://tiles.openfreemap.org/styles/fiord');
             const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                attribution: ATTRIBUTIONS['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
             });
             const otm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.opentopomap.org">OpenTopoMap</a> contributors',
+                attribution: ATTRIBUTIONS['https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'],
             });
             const sat = L.tileLayer(
                 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                { attribution: '&copy; <a href="https://www.esri.com/">Esri</a> contributors' }
+                { attribution: ATTRIBUTIONS['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'] }
             );
             const baseLayers = {
+                'OFM Liberty': liberty,
+                'OFM Bright': bright,
+                'OFM Positron': positron,
+                'OFM Dark': dark,
+                'OFM Fiord': fiord,
                 OpenStreetMap: osm,
                 OpenTopoMap: otm,
                 Satellite: sat,
             };
             this.layerControl = L.control.layers(baseLayers).addTo(this.map);
-            osm.addTo(this.map);
+            liberty.addTo(this.map);
         }
         this.markers?.forEach((marker) => {
             const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
