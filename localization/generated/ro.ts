@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Setați zoom minim`,
-'s11326fd2590f4e5e': `Implicit`,
 's1bcea0c68ac23efb': `Adaugă știft`,
 's1c0ea772de28e773': `Trage`,
 's21b06c38fc4164db': `Avansat`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Mărime`,
 's8abdd4fbc8368253': `Url țiglă personalizat`,
 's8af61807443f32a4': `Acțiuni`,
+'s8af7951ebf77cbed': `Segmente raster`,
 's8f3d223923b156c6': `nu este setat`,
+'s9132eff33fb5ed73': `Plăci vectoriale OpenFreeMap`,
 's936c17dcc2e04cf5': `Limite Fit`,
 'sa53d08f6b088b54e': `Vizualizarea limitelor`,
 'sa88dfb051be09d0e': `Permiteți mișcarea elevilor`,

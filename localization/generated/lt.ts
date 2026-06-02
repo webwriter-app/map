@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Nustatyti mažiausią priartinimą`,
-'s11326fd2590f4e5e': `Numatytoji`,
 's1bcea0c68ac23efb': `Pridėti smeigtuką`,
 's1c0ea772de28e773': `Piešinys`,
 's21b06c38fc4164db': `Išplėstinė`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Dydis`,
 's8abdd4fbc8368253': `Pasirinktinis plytelių URL`,
 's8af61807443f32a4': `Veiksmai`,
+'s8af7951ebf77cbed': `Rastro plytelės`,
 's8f3d223923b156c6': `nenustatyta`,
+'s9132eff33fb5ed73': `„OpenFreeMap“ vektorinės plytelės`,
 's936c17dcc2e04cf5': `"Fit Bounds`,
 'sa53d08f6b088b54e': `Vizualizuoti ribas`,
 'sa88dfb051be09d0e': `Leisti mokiniams judėti`,

@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Min. zoom beállítása`,
-'s11326fd2590f4e5e': `Alapértelmezett`,
 's1bcea0c68ac23efb': `Tű hozzáadása`,
 's1c0ea772de28e773': `Draw`,
 's21b06c38fc4164db': `Haladó`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Méret`,
 's8abdd4fbc8368253': `Custom Tile Url`,
 's8af61807443f32a4': `Tevékenységek`,
+'s8af7951ebf77cbed': `Raszteres csempék`,
 's8f3d223923b156c6': `nincs beállítva`,
+'s9132eff33fb5ed73': `OpenFreeMap vektoros csempék`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Vizualizálja a határokat`,
 'sa88dfb051be09d0e': `Engedélyezze a diákok mozgását`,

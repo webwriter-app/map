@@ -133,10 +133,6 @@
         <source>Map style</source>
         <target>Estilo del mapa</target>
       </trans-unit>
-      <trans-unit id="s11326fd2590f4e5e">
-        <source>Default</source>
-        <target>Por defecto</target>
-      </trans-unit>
       <trans-unit id="s3011241149f8d10e">
         <source>User select</source>
         <target>Selección de usuario</target>
@@ -152,6 +148,14 @@
       <trans-unit id="sf9aee319a006c9b4">
         <source>Add</source>
         <target>Añadir</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>Mosaicos vectoriales de OpenFreeMap</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>Mosaicos ráster</target>
       </trans-unit>
     </body>
   </file>

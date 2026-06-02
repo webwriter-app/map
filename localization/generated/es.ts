@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Fijar zoom mínimo`,
-'s11326fd2590f4e5e': `Por defecto`,
 's1bcea0c68ac23efb': `Añadir alfiler`,
 's1c0ea772de28e773': `Dibujar`,
 's21b06c38fc4164db': `Avanzado`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Talla`,
 's8abdd4fbc8368253': `Url de azulejos personalizada`,
 's8af61807443f32a4': `Acciones`,
+'s8af7951ebf77cbed': `Mosaicos ráster`,
 's8f3d223923b156c6': `no fijado`,
+'s9132eff33fb5ed73': `Mosaicos vectoriales de OpenFreeMap`,
 's936c17dcc2e04cf5': `En forma`,
 'sa53d08f6b088b54e': `Visualizar límites`,
 'sa88dfb051be09d0e': `Permitir el movimiento de los alumnos`,

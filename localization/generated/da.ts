@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Indstil min. zoom`,
-'s11326fd2590f4e5e': `Standard`,
 's1bcea0c68ac23efb': `Tilføj pin`,
 's1c0ea772de28e773': `Lodtrækning`,
 's21b06c38fc4164db': `Avanceret`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Størrelse`,
 's8abdd4fbc8368253': `Brugerdefineret flise-url`,
 's8af61807443f32a4': `Handlinger`,
+'s8af7951ebf77cbed': `Rasterfliser`,
 's8f3d223923b156c6': `ikke indstillet`,
+'s9132eff33fb5ed73': `OpenFreeMap-vektorfliser`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Visualiser grænser`,
 'sa88dfb051be09d0e': `Tillad elevernes bevægelse`,

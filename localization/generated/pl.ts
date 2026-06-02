@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Ustaw minimalny zoom`,
-'s11326fd2590f4e5e': `Domyślne`,
 's1bcea0c68ac23efb': `Dodaj pin`,
 's1c0ea772de28e773': `Rysunek`,
 's21b06c38fc4164db': `Zaawansowany`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Rozmiar`,
 's8abdd4fbc8368253': `Niestandardowy adres URL kafelka`,
 's8af61807443f32a4': `Działania`,
+'s8af7951ebf77cbed': `Płytki rastrowe`,
 's8f3d223923b156c6': `nie ustawiony`,
+'s9132eff33fb5ed73': `Płytki wektorowe OpenFreeMap`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Wizualizacja granic`,
 'sa88dfb051be09d0e': `Zezwalaj na ruch uczniów`,

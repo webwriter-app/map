@@ -1,1 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-Hans"><file id="." original="."><unit id="description"><segment><source>Geographical map with different terrain options including custom tiling, and GeoJSON support.</source><target>地理地图具有不同的地形选项，包括自定义平铺和 GeoJSON 支持。</target></segment></unit></file></xliff>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-Hans">
+<file id="." original="."><metadata xmlns="urn:oasis:names:tc:xliff:metadata:2.0"><metaGroup category="urn:deepl:xliff:extensions:document-properties" id="0"><meta type="source-language-auto-detected">false</meta></metaGroup></metadata>
+<unit id="description"><segment><source>Geographical map with different terrain options including custom tiling, and GeoJSON support.</source><target>支持多种地形选项（包括自定义瓦片）及GeoJSON格式的地理地图。</target></segment></unit>
+</file>
+</xliff>

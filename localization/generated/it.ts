@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Imposta zoom minimo`,
-'s11326fd2590f4e5e': `Predefinito`,
 's1bcea0c68ac23efb': `Aggiungi Pin`,
 's1c0ea772de28e773': `Disegno`,
 's21b06c38fc4164db': `Avanzato`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Dimensione`,
 's8abdd4fbc8368253': `Url di piastrelle personalizzate`,
 's8af61807443f32a4': `Azioni`,
+'s8af7951ebf77cbed': `Tessere raster`,
 's8f3d223923b156c6': `non impostato`,
+'s9132eff33fb5ed73': `Tessere vettoriali di OpenFreeMap`,
 's936c17dcc2e04cf5': `Limiti di forma`,
 'sa53d08f6b088b54e': `Visualizzare i limiti`,
 'sa88dfb051be09d0e': `Consentire il movimento degli studenti`,

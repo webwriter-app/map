@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Min Yakınlaştırmayı Ayarla`,
-'s11326fd2590f4e5e': `Varsayılan`,
 's1bcea0c68ac23efb': `Pin Ekle`,
 's1c0ea772de28e773': `Çizmek`,
 's21b06c38fc4164db': `Gelişmiş`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Boyut`,
 's8abdd4fbc8368253': `Özel Karo Url`,
 's8af61807443f32a4': `Eylemler`,
+'s8af7951ebf77cbed': `Raster döşemeler`,
 's8f3d223923b156c6': `ayarlanmamış`,
+'s9132eff33fb5ed73': `OpenFreeMap vektör döşemeleri`,
 's936c17dcc2e04cf5': `Fit Bounds`,
 'sa53d08f6b088b54e': `Sınırları Görselleştirin`,
 'sa88dfb051be09d0e': `Öğrenci hareketine izin verin`,

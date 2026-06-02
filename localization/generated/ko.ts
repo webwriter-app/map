@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `최소 줌 설정`,
-'s11326fd2590f4e5e': `기본값`,
 's1bcea0c68ac23efb': `핀 추가`,
 's1c0ea772de28e773': `그리기`,
 's21b06c38fc4164db': `고급`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `크기`,
 's8abdd4fbc8368253': `사용자 지정 타일 URL`,
 's8af61807443f32a4': `작업`,
+'s8af7951ebf77cbed': `래스터 타일`,
 's8f3d223923b156c6': `설정되지 않음`,
+'s9132eff33fb5ed73': `OpenFreeMap 벡터 타일`,
 's936c17dcc2e04cf5': `맞춤 바운드`,
 'sa53d08f6b088b54e': `바운드 시각화`,
 'sa88dfb051be09d0e': `학생 이동 허용`,

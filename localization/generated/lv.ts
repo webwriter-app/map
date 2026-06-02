@@ -10,7 +10,6 @@
 
     export const templates = {
       's0aee4705bcc0c15e': `Iestatīt minimālo tālummaiņu`,
-'s11326fd2590f4e5e': `Noklusējuma`,
 's1bcea0c68ac23efb': `Pievienot tapu`,
 's1c0ea772de28e773': `Zīmēt`,
 's21b06c38fc4164db': `Advanced`,
@@ -29,7 +28,9 @@
 's78789724e789221c': `Izmērs`,
 's8abdd4fbc8368253': `Pielāgotais flīžu url`,
 's8af61807443f32a4': `Darbības`,
+'s8af7951ebf77cbed': `Rastra flīzes`,
 's8f3d223923b156c6': `nav iestatīts`,
+'s9132eff33fb5ed73': `OpenFreeMap vektoru flīzes`,
 's936c17dcc2e04cf5': `Fit robežas`,
 'sa53d08f6b088b54e': `Vizualizēt robežas`,
 'sa88dfb051be09d0e': `Atļaut skolēnu pārvietošanos`,
