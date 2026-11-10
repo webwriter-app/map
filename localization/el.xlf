@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="el">
     <body>
       <trans-unit id="s8af61807443f32a4">
@@ -157,6 +158,33 @@
         <source>Raster tiles</source>
         <target>Πλακίδια ράστερ</target>
       </trans-unit>
-    </body>
+    <trans-unit id="sc8f38d904797cd0e">
+  <source>Initial zoom</source>
+<target>Αρχική μεγέθυνση</target></trans-unit>
+<trans-unit id="s22c01523df47ee0b">
+  <source>Map width (%)</source>
+<target>Πλάτος χάρτη (%)</target></trans-unit>
+<trans-unit id="s342ff2d65f30029f">
+  <source>Map height (px)</source>
+<target>Ύψος χάρτη (px)</target></trans-unit>
+<trans-unit id="sf23555c6213a109d">
+  <source>Constrain panning to bounds</source>
+<target>Περιορισμός μετακίνησης στα όρια του χάρτη</target></trans-unit>
+<trans-unit id="s10ef8df6dd94e473">
+  <source>Custom tile URL</source>
+<target>URL προσαρμοσμένων πλακιδίων χάρτη</target></trans-unit>
+<trans-unit id="s6d4de8ac6f00f238">
+  <source>Vector map style URL</source>
+<target>URL στυλ διανυσματικού χάρτη</target></trans-unit>
+<trans-unit id="s82b042b76a395dee">
+  <source>Map settings</source>
+<target>Ρυθμίσεις χάρτη</target></trans-unit>
+<trans-unit id="s5762120510bc3df3">
+  <source>Reset map bounds</source>
+<target>Επαναφορά ορίων χάρτη</target></trans-unit>
+<trans-unit id="s126e8d634c216da7">
+  <source>Import GeoJSON</source>
+<target>Εισαγωγή GeoJSON</target></trans-unit>
+</body>
   </file>
 </xliff>

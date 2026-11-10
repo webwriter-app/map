@@ -2,30 +2,37 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
       's0aee4705bcc0c15e': `Nastavitev min. povečave`,
+'s10ef8df6dd94e473': `URL ploščic zemljevida po meri`,
+'s126e8d634c216da7': `Uvozi GeoJSON`,
 's1bcea0c68ac23efb': `Dodajanje zatiča`,
 's1c0ea772de28e773': `Risanje`,
 's21b06c38fc4164db': `Napredni`,
+'s22c01523df47ee0b': `Širina zemljevida (%)`,
 's2492f5fb1b05b45e': `Besedilo`,
 's25392c6d0eb63175': `deaktivirano`,
 's3011241149f8d10e': `Izberite uporabnika`,
 's32689d1d09608f54': `Slog zemljevida`,
+'s342ff2d65f30029f': `Višina zemljevida (px)`,
 's37c758bc19c67a4d': `Narišite krog`,
 's3b5ddf60892a6a48': `Omejitve`,
 's5488509fd37aa9fc': `Onemogočite meje`,
 's5590dbf7e425789d': `Oznaka`,
+'s5762120510bc3df3': `Ponastavi meje zemljevida`,
 's6ba44d4d5d284468': `Barva meje`,
 's6beb392ed926ce5b': `Omogočite meje`,
+'s6d4de8ac6f00f238': `URL sloga vektorskega zemljevida`,
 's6fc95ee75e407518': `Nastavitev največje povečave`,
 's71218539d83e0ab8': `Gibanje`,
 's78789724e789221c': `Velikost`,
+'s82b042b76a395dee': `Nastavitve zemljevida`,
 's8abdd4fbc8368253': `Po meri ploščice Url`,
 's8af61807443f32a4': `Ukrepi`,
 's8af7951ebf77cbed': `Rasterske ploščice`,
@@ -38,6 +45,7 @@
 'sab904a167497cd3e': `Nastavite položaj kot začetni`,
 'saeeff153fba5364d': `Nariši poligon`,
 'sc539af8ae925acc1': `Draw Polyline`,
+'sc8f38d904797cd0e': `Začetna povečava`,
 'sca9faebc773bf95d': `Izbriši predmet`,
 'sd42752882536c15a': `Nariši pravokotnik`,
 'sd83da86c74147960': `Nastavite spodnji desni del`,
@@ -45,8 +53,8 @@
 'sdc9cf2d6e96526c1': `Ponastavitev meja`,
 'sdd253aec6b88b6af': `Barva polnila`,
 'sf21fb4f4b9e8911f': `Širina`,
+'sf23555c6213a109d': `Omeji premikanje na meje zemljevida`,
 'sf42ce409138b0d9c': `aktivirani`,
 'sf9aee319a006c9b4': `Dodaj`,
 'sffdadf0a576fd802': `Višina`,
     };
-  

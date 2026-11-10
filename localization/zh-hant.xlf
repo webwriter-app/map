@@ -1,5 +1,6 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="zh-Hant">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="zh-hant">
     <body>
       <trans-unit id="s8af61807443f32a4">
         <source>Actions</source>
@@ -157,6 +158,33 @@
         <source>Raster tiles</source>
         <target>柵格圖塊</target>
       </trans-unit>
-    </body>
+    <trans-unit id="sc8f38d904797cd0e">
+  <source>Initial zoom</source>
+<target>初始縮放層級</target></trans-unit>
+<trans-unit id="s22c01523df47ee0b">
+  <source>Map width (%)</source>
+<target>地圖寬度（%）</target></trans-unit>
+<trans-unit id="s342ff2d65f30029f">
+  <source>Map height (px)</source>
+<target>地圖高度（像素）</target></trans-unit>
+<trans-unit id="sf23555c6213a109d">
+  <source>Constrain panning to bounds</source>
+<target>將平移限制在地圖範圍內</target></trans-unit>
+<trans-unit id="s10ef8df6dd94e473">
+  <source>Custom tile URL</source>
+<target>自訂地圖圖磚網址</target></trans-unit>
+<trans-unit id="s6d4de8ac6f00f238">
+  <source>Vector map style URL</source>
+<target>向量地圖樣式網址</target></trans-unit>
+<trans-unit id="s82b042b76a395dee">
+  <source>Map settings</source>
+<target>地圖設定</target></trans-unit>
+<trans-unit id="s5762120510bc3df3">
+  <source>Reset map bounds</source>
+<target>重設地圖範圍</target></trans-unit>
+<trans-unit id="s126e8d634c216da7">
+  <source>Import GeoJSON</source>
+<target>匯入 GeoJSON</target></trans-unit>
+</body>
   </file>
 </xliff>

@@ -2,30 +2,37 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
       's0aee4705bcc0c15e': `Définir le zoom minimum`,
+'s10ef8df6dd94e473': `URL personnalisée des tuiles`,
+'s126e8d634c216da7': `Importer du GeoJSON`,
 's1bcea0c68ac23efb': `Ajouter une épingle`,
 's1c0ea772de28e773': `Dessiner`,
 's21b06c38fc4164db': `Avancé`,
+'s22c01523df47ee0b': `Largeur de la carte (%)`,
 's2492f5fb1b05b45e': `Texte`,
 's25392c6d0eb63175': `désactivé`,
 's3011241149f8d10e': `Sélection de l'utilisateur`,
 's32689d1d09608f54': `Style de carte`,
+'s342ff2d65f30029f': `Hauteur de la carte (px)`,
 's37c758bc19c67a4d': `Tracer un cercle`,
 's3b5ddf60892a6a48': `Limites`,
 's5488509fd37aa9fc': `Désactiver les limites`,
 's5590dbf7e425789d': `Étiquette`,
+'s5762120510bc3df3': `Réinitialiser les limites de la carte`,
 's6ba44d4d5d284468': `Couleur de la bordure`,
 's6beb392ed926ce5b': `Activer les limites`,
+'s6d4de8ac6f00f238': `URL du style de carte vectorielle`,
 's6fc95ee75e407518': `Définir le zoom maximum`,
 's71218539d83e0ab8': `Mouvement`,
 's78789724e789221c': `Taille`,
+'s82b042b76a395dee': `Paramètres de la carte`,
 's8abdd4fbc8368253': `Url de la tuile personnalisée`,
 's8af61807443f32a4': `Actions`,
 's8af7951ebf77cbed': `Mosaïques raster`,
@@ -38,6 +45,7 @@
 'sab904a167497cd3e': `Définir la position comme initiale`,
 'saeeff153fba5364d': `Dessiner un polygone`,
 'sc539af8ae925acc1': `Dessiner une polyligne`,
+'sc8f38d904797cd0e': `Zoom initial`,
 'sca9faebc773bf95d': `Supprimer l'objet`,
 'sd42752882536c15a': `Dessiner un rectangle`,
 'sd83da86c74147960': `Set Bottom Right`,
@@ -45,8 +53,8 @@
 'sdc9cf2d6e96526c1': `Réinitialiser les limites`,
 'sdd253aec6b88b6af': `Couleur de remplissage`,
 'sf21fb4f4b9e8911f': `Largeur`,
+'sf23555c6213a109d': `Limiter le déplacement aux limites de la carte`,
 'sf42ce409138b0d9c': `activés`,
 'sf9aee319a006c9b4': `Ajouter`,
 'sffdadf0a576fd802': `Hauteur`,
     };
-  
