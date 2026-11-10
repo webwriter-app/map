@@ -65,6 +65,7 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 import L from 'leaflet';
 import '@maplibre/maplibre-gl-leaflet';
 import 'fa-icons';
+import { readData, writeData } from './data';
 
 interface RasterTiles {
     name: string;
@@ -144,6 +145,44 @@ const VECTOR_TILES: VectorTiles[] = [
 @customElement('webwriter-map')
 @localized()
 export class WwMap extends LitElementWw {
+    static dataType = 'application/json';
+    readonly options = WwMap.options;
+    readonly actions = WwMap.actions;
+    static options: Record<string, any> = {
+        initialZoom: { type: "number", group: "map", label: { _: "Initial zoom" }, min: 0, max: 22, step: 1 },
+        mapWidth: { type: "number", group: "map", label: { _: "Map width (%)" }, min: 10, max: 100, step: 1 },
+        mapHeight: { type: "number", group: "map", label: { _: "Map height (px)" }, min: 100, max: 1200, step: 10 },
+        boundsActive: { type: "boolean", group: "map", label: { _: "Constrain panning to bounds" } },
+        customTileUrl: { type: "string", group: "map", label: { _: "Custom tile URL" } },
+        vectorStyle: { type: "string", group: "map", label: { _: "Vector map style URL" } },
+    };
+
+    static optionGroups: Record<string, any> = {
+        map: { label: { _: "Map settings" }, collapsible: true, advanced: false },
+    };
+
+    static actions: Record<string, any> = {
+        resetBounds: { label: { _: "Reset map bounds" }, group: "map", icon: "Restore", intent: "default" },
+        importGeoJSON: { label: { _: "Import GeoJSON" }, group: "map", icon: "Upload", input: { type: "file", accept: ".json,.geojson,application/json,application/geo+json" } },
+    };
+
+    async importGeoJSON(files: File[]): Promise<void> {
+        const file = files[0];
+        if (!file) return;
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        if (!parsed || typeof parsed !== "object" || !["Feature", "FeatureCollection", "GeometryCollection"].includes(parsed.type)) {
+            throw new TypeError("The selected file does not contain GeoJSON.");
+        }
+        this.geoJSON = JSON.stringify(parsed);
+    }
+
+    resetBounds(): void {
+        this.mapBounds = undefined;
+        this.maxZoom = undefined;
+        this.minZoom = undefined;
+        this.boundsActive = false;
+    }
     // styles = [leafletStyles];
     private styles = [style, leafletStyles];
 
@@ -162,7 +201,7 @@ export class WwMap extends LitElementWw {
     private accessor map: L.Map | undefined;
 
     /** Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{"lat":51,"lng":19}'). */
-    @property({ type: Object, attribute: true, reflect: true })
+    @property({ type: Object, attribute: false, state: true })
     accessor initialPos: {
         lat: number;
         lng: number;
@@ -172,7 +211,7 @@ export class WwMap extends LitElementWw {
     };
 
     /** Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]'). */
-    @property({ type: Object, attribute: true, reflect: true })
+    @property({ type: Object, attribute: false, state: true })
     accessor mapBounds: L.LatLngBoundsExpression;
 
     /** Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional. */
@@ -192,15 +231,15 @@ export class WwMap extends LitElementWw {
     accessor fixedZoom = 1;
 
     /** Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string. */
-    @property({ type: Array, attribute: true, reflect: true })
+    @property({ type: Array, attribute: false, state: true })
     accessor markers = [];
 
     /** Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string. */
-    @property({ type: Object, attribute: true, reflect: true })
+    @property({ type: Object, attribute: false, state: true })
     accessor objects = {};
 
     /** Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used. */
-    @property({ type: String, attribute: true, reflect: true })
+    @property({ type: String, attribute: false, state: true })
     accessor customTileUrl = '';
 
     /** MapLibre GL style URL for vector tile rendering (e.g. OpenFreeMap).<br>Expected value: URL to a MapLibre style JSON (e.g. 'https://tiles.openfreemap.org/styles/liberty').<br>When set, this takes priority over customTileUrl and the default raster layers. */
@@ -307,7 +346,33 @@ export class WwMap extends LitElementWw {
 
     connectedCallback(): void {
         // console.log('connectedCallback');
+        const data = readData<{
+            initialPos: { lat: number; lng: number };
+            mapBounds: L.LatLngBoundsExpression;
+            markers: Array<{ lat: number; lng: number; title?: string }>;
+            objects: Record<string, unknown>;
+            geoJSON: string;
+        }>(this);
+        if (data.initialPos !== undefined) this.initialPos = data.initialPos;
+        if (data.mapBounds !== undefined) this.mapBounds = data.mapBounds;
+        if (data.markers !== undefined) this.markers = data.markers;
+        if (data.objects !== undefined) this.objects = data.objects;
+        if (data.geoJSON !== undefined) this.geoJSON = data.geoJSON;
         super.connectedCallback();
+    }
+
+    dataChanged(text: string | null): void {
+        if (!text) return;
+        try {
+            const data = JSON.parse(text);
+            if (data.initialPos !== undefined) this.initialPos = data.initialPos;
+            if (data.mapBounds !== undefined) this.mapBounds = data.mapBounds;
+            if (Array.isArray(data.markers)) this.markers = data.markers;
+            if (data.objects && typeof data.objects === 'object') this.objects = data.objects;
+            if (typeof data.geoJSON === 'string') this.geoJSON = data.geoJSON;
+        } catch {
+            // Keep malformed authored data available for repair.
+        }
     }
 
     disconnectedCallback(): void {
@@ -323,6 +388,16 @@ export class WwMap extends LitElementWw {
     protected updated(changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
         // console.log('updated');
         super.updated(changedProperties);
+
+        if (['initialPos', 'mapBounds', 'markers', 'objects', 'geoJSON'].some((key) => changedProperties.has(key))) {
+            writeData(this, {
+                initialPos: this.initialPos,
+                mapBounds: this.mapBounds,
+                markers: this.markers,
+                objects: this.objects,
+                geoJSON: this.geoJSON,
+            });
+        }
 
         if (this.map && (changedProperties.has('customTileUrl') || changedProperties.has('vectorStyle'))) {
             this.updateBaseLayer();
@@ -578,7 +653,7 @@ export class WwMap extends LitElementWw {
 
     private toolbox() {
         return html`
-            <div part="options" class="toolbox">
+            <div class="toolbox">
                 <!-- <div class="position">
                     <sl-input
                         class="label-on-left"
