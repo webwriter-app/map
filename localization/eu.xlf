@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="eu" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s8af61807443f32a4">
+  <source>Actions</source>
+<target>Ekintzak</target></trans-unit>
+<trans-unit id="s1bcea0c68ac23efb">
+  <source>Add Pin</source>
+<target>Gehitu marka</target></trans-unit>
+<trans-unit id="sab904a167497cd3e">
+  <source>Set Position as initial</source>
+<target>Ezarri kokapena hasierako gisa</target></trans-unit>
+<trans-unit id="s3b5ddf60892a6a48">
+  <source>Bounds</source>
+<target>Mugak</target></trans-unit>
+<trans-unit id="s8f3d223923b156c6">
+  <source>not set</source>
+<target>ezarri gabe</target></trans-unit>
+<trans-unit id="sf42ce409138b0d9c">
+  <source>activated</source>
+<target>aktibatuta</target></trans-unit>
+<trans-unit id="s25392c6d0eb63175">
+  <source>deactivated</source>
+<target>desaktibatuta</target></trans-unit>
+<trans-unit id="sa9f2381c84bd9969">
+  <source>Set Top Left</source>
+<target>Ezarri goiko ezkerreko izkina</target></trans-unit>
+<trans-unit id="sd83da86c74147960">
+  <source>Set Bottom Right</source>
+<target>Ezarri beheko eskuineko izkina</target></trans-unit>
+<trans-unit id="s6fc95ee75e407518">
+  <source>Set Max Zoom</source>
+<target>Ezarri gehieneko zooma</target></trans-unit>
+<trans-unit id="s0aee4705bcc0c15e">
+  <source>Set Min Zoom</source>
+<target>Ezarri gutxieneko zooma</target></trans-unit>
+<trans-unit id="s936c17dcc2e04cf5">
+  <source>Fit Bounds</source>
+<target>Doitu mugetara</target></trans-unit>
+<trans-unit id="sa53d08f6b088b54e">
+  <source>Visualize Bounds</source>
+<target>Erakutsi mugak</target></trans-unit>
+<trans-unit id="s5488509fd37aa9fc">
+  <source>Disable Bounds</source>
+<target>Desgaitu mugak</target></trans-unit>
+<trans-unit id="s6beb392ed926ce5b">
+  <source>Enable Bounds</source>
+<target>Gaitu mugak</target></trans-unit>
+<trans-unit id="sdc9cf2d6e96526c1">
+  <source>Reset Bounds</source>
+<target>Berrezarri mugak</target></trans-unit>
+<trans-unit id="s1c0ea772de28e773">
+  <source>Draw</source>
+<target>Marraztu</target></trans-unit>
+<trans-unit id="sd42752882536c15a">
+  <source>Draw Rectangle</source>
+<target>Marraztu laukizuzena</target></trans-unit>
+<trans-unit id="s37c758bc19c67a4d">
+  <source>Draw Circle</source>
+<target>Marraztu zirkulua</target></trans-unit>
+<trans-unit id="saeeff153fba5364d">
+  <source>Draw Polygon</source>
+<target>Marraztu poligonoa</target></trans-unit>
+<trans-unit id="sc539af8ae925acc1">
+  <source>Draw Polyline</source>
+<target>Marraztu polilinea</target></trans-unit>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+<target>Ezabatu</target></trans-unit>
+<trans-unit id="sca9faebc773bf95d">
+  <source>Delete Object</source>
+<target>Ezabatu objektua</target></trans-unit>
+<trans-unit id="s6ba44d4d5d284468">
+  <source>Border Color</source>
+<target>Ertzaren kolorea</target></trans-unit>
+<trans-unit id="sdd253aec6b88b6af">
+  <source>Fill Color</source>
+<target>Betegarriaren kolorea</target></trans-unit>
+<trans-unit id="s5590dbf7e425789d">
+  <source>Label</source>
+<target>Etiketa</target></trans-unit>
+<trans-unit id="s78789724e789221c">
+  <source>Size</source>
+<target>Tamaina</target></trans-unit>
+<trans-unit id="sf21fb4f4b9e8911f">
+  <source>Width</source>
+<target>Zabalera</target></trans-unit>
+<trans-unit id="sffdadf0a576fd802">
+  <source>Height</source>
+<target>Altuera</target></trans-unit>
+<trans-unit id="s71218539d83e0ab8">
+  <source>Movement</source>
+<target>Mugimendua</target></trans-unit>
+<trans-unit id="sa88dfb051be09d0e">
+  <source>Allow student movement</source>
+<target>Baimendu ikasleei mugitzea</target></trans-unit>
+<trans-unit id="s21b06c38fc4164db">
+  <source>Advanced</source>
+<target>Aurreratua</target></trans-unit>
+<trans-unit id="s32689d1d09608f54">
+  <source>Map style</source>
+<target>Maparen estiloa</target></trans-unit>
+<trans-unit id="s3011241149f8d10e">
+  <source>User select</source>
+<target>Erabiltzailearen hautapena</target></trans-unit>
+<trans-unit id="s9132eff33fb5ed73">
+  <source>OpenFreeMap vector tiles</source>
+<target>OpenFreeMap bektore-lauzak</target></trans-unit>
+<trans-unit id="s8af7951ebf77cbed">
+  <source>Raster tiles</source>
+<target>Raster-lauzak</target></trans-unit>
+<trans-unit id="s8abdd4fbc8368253">
+  <source>Custom Tile Url</source>
+<target>Lauza pertsonalizatuaren URLa</target></trans-unit>
+<trans-unit id="s2492f5fb1b05b45e">
+  <source>Text</source>
+<target>Testua</target></trans-unit>
+<trans-unit id="sf9aee319a006c9b4">
+  <source>Add</source>
+<target>Gehitu</target></trans-unit>
+<trans-unit id="sc8f38d904797cd0e">
+  <source>Initial zoom</source>
+<target>Hasierako zooma</target></trans-unit>
+<trans-unit id="s22c01523df47ee0b">
+  <source>Map width (%)</source>
+<target>Maparen zabalera (%)</target></trans-unit>
+<trans-unit id="s342ff2d65f30029f">
+  <source>Map height (px)</source>
+<target>Maparen altuera (px)</target></trans-unit>
+<trans-unit id="sf23555c6213a109d">
+  <source>Constrain panning to bounds</source>
+<target>Mugatu panoramika mugetara</target></trans-unit>
+<trans-unit id="s10ef8df6dd94e473">
+  <source>Custom tile URL</source>
+<target>Lauza pertsonalizatuaren URLa</target></trans-unit>
+<trans-unit id="s6d4de8ac6f00f238">
+  <source>Vector map style URL</source>
+<target>Mapa bektorialaren estiloaren URLa</target></trans-unit>
+<trans-unit id="s82b042b76a395dee">
+  <source>Map settings</source>
+<target>Maparen ezarpenak</target></trans-unit>
+<trans-unit id="s5762120510bc3df3">
+  <source>Reset map bounds</source>
+<target>Berrezarri maparen mugak</target></trans-unit>
+<trans-unit id="s126e8d634c216da7">
+  <source>Import GeoJSON</source>
+<target>Inportatu GeoJSON</target></trans-unit>
+</body>
+</file>
+</xliff>

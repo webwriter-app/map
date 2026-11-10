@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="uz" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s8af61807443f32a4">
+  <source>Actions</source>
+<target>Amallar</target></trans-unit>
+<trans-unit id="s1bcea0c68ac23efb">
+  <source>Add Pin</source>
+<target>Belgi qo‘shish</target></trans-unit>
+<trans-unit id="sab904a167497cd3e">
+  <source>Set Position as initial</source>
+<target>Joylashuvni boshlang‘ich qilib belgilash</target></trans-unit>
+<trans-unit id="s3b5ddf60892a6a48">
+  <source>Bounds</source>
+<target>Chegaralar</target></trans-unit>
+<trans-unit id="s8f3d223923b156c6">
+  <source>not set</source>
+<target>o‘rnatilmagan</target></trans-unit>
+<trans-unit id="sf42ce409138b0d9c">
+  <source>activated</source>
+<target>faollashtirilgan</target></trans-unit>
+<trans-unit id="s25392c6d0eb63175">
+  <source>deactivated</source>
+<target>faolsizlantirilgan</target></trans-unit>
+<trans-unit id="sa9f2381c84bd9969">
+  <source>Set Top Left</source>
+<target>Yuqori chapni belgilash</target></trans-unit>
+<trans-unit id="sd83da86c74147960">
+  <source>Set Bottom Right</source>
+<target>Quyi o‘ngni belgilash</target></trans-unit>
+<trans-unit id="s6fc95ee75e407518">
+  <source>Set Max Zoom</source>
+<target>Maksimal masshtabni belgilash</target></trans-unit>
+<trans-unit id="s0aee4705bcc0c15e">
+  <source>Set Min Zoom</source>
+<target>Minimal masshtabni belgilash</target></trans-unit>
+<trans-unit id="s936c17dcc2e04cf5">
+  <source>Fit Bounds</source>
+<target>Chegaralarga moslashtirish</target></trans-unit>
+<trans-unit id="sa53d08f6b088b54e">
+  <source>Visualize Bounds</source>
+<target>Chegaralarni ko‘rsatish</target></trans-unit>
+<trans-unit id="s5488509fd37aa9fc">
+  <source>Disable Bounds</source>
+<target>Chegaralarni o‘chirish</target></trans-unit>
+<trans-unit id="s6beb392ed926ce5b">
+  <source>Enable Bounds</source>
+<target>Chegaralarni yoqish</target></trans-unit>
+<trans-unit id="sdc9cf2d6e96526c1">
+  <source>Reset Bounds</source>
+<target>Chegaralarni tiklash</target></trans-unit>
+<trans-unit id="s1c0ea772de28e773">
+  <source>Draw</source>
+<target>Chizish</target></trans-unit>
+<trans-unit id="sd42752882536c15a">
+  <source>Draw Rectangle</source>
+<target>To‘rtburchak chizish</target></trans-unit>
+<trans-unit id="s37c758bc19c67a4d">
+  <source>Draw Circle</source>
+<target>Doira chizish</target></trans-unit>
+<trans-unit id="saeeff153fba5364d">
+  <source>Draw Polygon</source>
+<target>Ko‘pburchak chizish</target></trans-unit>
+<trans-unit id="sc539af8ae925acc1">
+  <source>Draw Polyline</source>
+<target>Siniq chiziq chizish</target></trans-unit>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+<target>O‘chirish</target></trans-unit>
+<trans-unit id="sca9faebc773bf95d">
+  <source>Delete Object</source>
+<target>Obyektni o‘chirish</target></trans-unit>
+<trans-unit id="s6ba44d4d5d284468">
+  <source>Border Color</source>
+<target>Chegara rangi</target></trans-unit>
+<trans-unit id="sdd253aec6b88b6af">
+  <source>Fill Color</source>
+<target>To‘ldirish rangi</target></trans-unit>
+<trans-unit id="s5590dbf7e425789d">
+  <source>Label</source>
+<target>Yorliq</target></trans-unit>
+<trans-unit id="s78789724e789221c">
+  <source>Size</source>
+<target>O‘lcham</target></trans-unit>
+<trans-unit id="sf21fb4f4b9e8911f">
+  <source>Width</source>
+<target>Eni</target></trans-unit>
+<trans-unit id="sffdadf0a576fd802">
+  <source>Height</source>
+<target>Bo‘yi</target></trans-unit>
+<trans-unit id="s71218539d83e0ab8">
+  <source>Movement</source>
+<target>Harakat</target></trans-unit>
+<trans-unit id="sa88dfb051be09d0e">
+  <source>Allow student movement</source>
+<target>O‘quvchiga siljitishga ruxsat berish</target></trans-unit>
+<trans-unit id="s21b06c38fc4164db">
+  <source>Advanced</source>
+<target>Kengaytirilgan</target></trans-unit>
+<trans-unit id="s32689d1d09608f54">
+  <source>Map style</source>
+<target>Xarita uslubi</target></trans-unit>
+<trans-unit id="s3011241149f8d10e">
+  <source>User select</source>
+<target>Foydalanuvchi tanlovi</target></trans-unit>
+<trans-unit id="s9132eff33fb5ed73">
+  <source>OpenFreeMap vector tiles</source>
+<target>OpenFreeMap vektor plitkalari</target></trans-unit>
+<trans-unit id="s8af7951ebf77cbed">
+  <source>Raster tiles</source>
+<target>Rastr plitkalar</target></trans-unit>
+<trans-unit id="s8abdd4fbc8368253">
+  <source>Custom Tile Url</source>
+<target>Maxsus plitka URL manzili</target></trans-unit>
+<trans-unit id="s2492f5fb1b05b45e">
+  <source>Text</source>
+<target>Matn</target></trans-unit>
+<trans-unit id="sf9aee319a006c9b4">
+  <source>Add</source>
+<target>Qo‘shish</target></trans-unit>
+<trans-unit id="sc8f38d904797cd0e">
+  <source>Initial zoom</source>
+<target>Boshlang‘ich masshtab</target></trans-unit>
+<trans-unit id="s22c01523df47ee0b">
+  <source>Map width (%)</source>
+<target>Xarita eni (%)</target></trans-unit>
+<trans-unit id="s342ff2d65f30029f">
+  <source>Map height (px)</source>
+<target>Xarita bo‘yi (px)</target></trans-unit>
+<trans-unit id="sf23555c6213a109d">
+  <source>Constrain panning to bounds</source>
+<target>Xaritani surishni chegaralar bilan cheklash</target></trans-unit>
+<trans-unit id="s10ef8df6dd94e473">
+  <source>Custom tile URL</source>
+<target>Maxsus plitka URL manzili</target></trans-unit>
+<trans-unit id="s6d4de8ac6f00f238">
+  <source>Vector map style URL</source>
+<target>Vektor xarita uslubi URL manzili</target></trans-unit>
+<trans-unit id="s82b042b76a395dee">
+  <source>Map settings</source>
+<target>Xarita sozlamalari</target></trans-unit>
+<trans-unit id="s5762120510bc3df3">
+  <source>Reset map bounds</source>
+<target>Xarita chegaralarini tiklash</target></trans-unit>
+<trans-unit id="s126e8d634c216da7">
+  <source>Import GeoJSON</source>
+<target>GeoJSON import qilish</target></trans-unit>
+</body>
+</file>
+</xliff>
