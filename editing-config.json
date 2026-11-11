@@ -105,7 +105,16 @@
       "ka": "გეოგრაფიული რუკა რელიეფის სხვადასხვა ვარიანტით, მორგებული ფილებით და GeoJSON-ის მხარდაჭერით.",
       "tk": "Dürli ýer görnüşleri, ýörite plitkalar we GeoJSON goldawy bolan geografik karta.",
       "tpi": "Map bilong graun i gat ol kain kain luk bilong graun, ol map hap yu yet i makim na sapot bilong GeoJSON.",
-      "hy": "Աշխարհագրական քարտեզ՝ տեղանքի տարբեր ընտրանքներով, անհատական սալիկներով և GeoJSON-ի աջակցությամբ։"
+      "hy": "Աշխարհագրական քարտեզ՝ տեղանքի տարբեր ընտրանքներով, անհատական սալիկներով և GeoJSON-ի աջակցությամբ։",
+      "yue-Hans": "具备多种地形选项嘅地理地图，支援自订拼接同 GeoJSON。",
+      "yue-Hant": "具備多種地形選項嘅地理地圖，支援自訂拼接同 GeoJSON。",
+      "kmr": "Nexşeya erdnîgarî bi vebijarkên cureyên erdê yên cihêreng, di nav de çînkirina taybet û piştgiriya GeoJSON.",
+      "kmr-Latn": "Nexşeya erdnîgarî bi vebijarkên cureyên erdê yên cihêreng, di nav de çînkirina taybet û piştgiriya GeoJSON.",
+      "kmr-Arab": "نەخشەیا ئەردنیگاری ب ڤەبژارکێن جورەیێن ئەردێ یێن جهێرەنگ, د ناڤ دە چینکرنا تایبەت ئوو پشتگریا GeoJSON.",
+      "ckb": "نەخشەی جوگرافیایی بە هەڵبژاردە جیاوازەکانی زەوی، لەوانە نەخشەسازیی تایبەت و پشتیوانی GeoJSON.",
+      "ckb-Arab": "نەخشەی جوگرافیایی بە هەڵبژاردە جیاوازەکانی زەوی، لەوانە نەخشەسازیی تایبەت و پشتیوانی GeoJSON.",
+      "af-ZA": "Geografiese kaart met verskillende terreinkeuses, insluitend pasgemaakte kaartteëls, en ondersteuning vir GeoJSON.",
+      "af-NA": "Geografiese kaart met verskillende terreinkeuses, insluitend pasgemaakte kaartteëls, en ondersteuning vir GeoJSON."
     },
     "label": {
       "_": "Map",
@@ -210,7 +219,16 @@
       "ka": "რუკა",
       "tk": "Karta",
       "tpi": "Map",
-      "hy": "Քարտեզ"
+      "hy": "Քարտեզ",
+      "yue-Hans": "地图",
+      "yue-Hant": "地圖",
+      "kmr": "Nexşe",
+      "kmr-Latn": "Nexşe",
+      "kmr-Arab": "نەخشە",
+      "ckb": "نەخشە",
+      "ckb-Arab": "نەخشە",
+      "af-ZA": "Kaart",
+      "af-NA": "Kaart"
     }
   },
   "./widgets/webwriter-map": {
@@ -317,7 +335,16 @@
       "ka": "რუკა",
       "tk": "Karta",
       "tpi": "Map",
-      "hy": "Քարտեզ"
+      "hy": "Քարտեզ",
+      "yue-Hans": "地图",
+      "yue-Hant": "地圖",
+      "kmr": "Nexşe",
+      "kmr-Latn": "Nexşe",
+      "kmr-Arab": "نەخشە",
+      "ckb": "نەخشە",
+      "ckb-Arab": "نەخشە",
+      "af-ZA": "Kaart",
+      "af-NA": "Kaart"
     }
   },
   "./snippets/Example-Location": {
@@ -424,7 +451,16 @@
       "ka": "მდებარეობის მაგალითი",
       "tk": "Mysal ýerleşiş",
       "tpi": "Ples bilong eksampel",
-      "hy": "Օրինակային տեղադրություն"
+      "hy": "Օրինակային տեղադրություն",
+      "yue-Hans": "地点例子",
+      "yue-Hant": "地點例子",
+      "kmr": "Cihê Mînakê",
+      "kmr-Latn": "Cihê Mînakê",
+      "kmr-Arab": "جهێ میناکێ",
+      "ckb": "شوێنی نموونە",
+      "ckb-Arab": "شوێنی نموونە",
+      "af-ZA": "Voorbeeldligging",
+      "af-NA": "Voorbeeldligging"
     }
   }
 }
