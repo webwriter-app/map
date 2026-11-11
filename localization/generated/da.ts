@@ -2,30 +2,37 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
       's0aee4705bcc0c15e': `Indstil min. zoom`,
+'s10ef8df6dd94e473': `URL til brugerdefinerede kortfliser`,
+'s126e8d634c216da7': `Importér GeoJSON`,
 's1bcea0c68ac23efb': `Tilføj pin`,
 's1c0ea772de28e773': `Lodtrækning`,
 's21b06c38fc4164db': `Avanceret`,
+'s22c01523df47ee0b': `Kortbredde (%)`,
 's2492f5fb1b05b45e': `Tekst`,
 's25392c6d0eb63175': `deaktiveret`,
 's3011241149f8d10e': `Vælg bruger`,
 's32689d1d09608f54': `Kort-stil`,
+'s342ff2d65f30029f': `Korthøjde (px)`,
 's37c758bc19c67a4d': `Tegn en cirkel`,
 's3b5ddf60892a6a48': `Grænser`,
 's5488509fd37aa9fc': `Deaktiver grænser`,
 's5590dbf7e425789d': `Etiket`,
+'s5762120510bc3df3': `Nulstil kortgrænser`,
 's6ba44d4d5d284468': `Farve på kant`,
 's6beb392ed926ce5b': `Aktiver grænser`,
+'s6d4de8ac6f00f238': `URL til vektorkortets stil`,
 's6fc95ee75e407518': `Indstil maks. zoom`,
 's71218539d83e0ab8': `Bevægelse`,
 's78789724e789221c': `Størrelse`,
+'s82b042b76a395dee': `Kortindstillinger`,
 's8abdd4fbc8368253': `Brugerdefineret flise-url`,
 's8af61807443f32a4': `Handlinger`,
 's8af7951ebf77cbed': `Rasterfliser`,
@@ -38,6 +45,7 @@
 'sab904a167497cd3e': `Sæt position som udgangspunkt`,
 'saeeff153fba5364d': `Tegn polygon`,
 'sc539af8ae925acc1': `Tegn polylinje`,
+'sc8f38d904797cd0e': `Oprindeligt zoomniveau`,
 'sca9faebc773bf95d': `Slet objekt`,
 'sd42752882536c15a': `Tegn et rektangel`,
 'sd83da86c74147960': `Indstil nederst til højre`,
@@ -45,8 +53,8 @@
 'sdc9cf2d6e96526c1': `Nulstil grænser`,
 'sdd253aec6b88b6af': `Fyld farve`,
 'sf21fb4f4b9e8911f': `Bredde`,
+'sf23555c6213a109d': `Begræns panorering til kortets grænser`,
 'sf42ce409138b0d9c': `aktiveret`,
 'sf9aee319a006c9b4': `Tilføj`,
 'sffdadf0a576fd802': `Højde`,
     };
-  

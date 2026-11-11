@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ko">
     <body>
       <trans-unit id="s8af61807443f32a4">
@@ -157,6 +158,33 @@
         <source>Raster tiles</source>
         <target>래스터 타일</target>
       </trans-unit>
-    </body>
+    <trans-unit id="sc8f38d904797cd0e">
+  <source>Initial zoom</source>
+<target>초기 확대 수준</target></trans-unit>
+<trans-unit id="s22c01523df47ee0b">
+  <source>Map width (%)</source>
+<target>지도 너비(%)</target></trans-unit>
+<trans-unit id="s342ff2d65f30029f">
+  <source>Map height (px)</source>
+<target>지도 높이(px)</target></trans-unit>
+<trans-unit id="sf23555c6213a109d">
+  <source>Constrain panning to bounds</source>
+<target>이동을 지도 범위 안으로 제한</target></trans-unit>
+<trans-unit id="s10ef8df6dd94e473">
+  <source>Custom tile URL</source>
+<target>사용자 지정 지도 타일 URL</target></trans-unit>
+<trans-unit id="s6d4de8ac6f00f238">
+  <source>Vector map style URL</source>
+<target>벡터 지도 스타일 URL</target></trans-unit>
+<trans-unit id="s82b042b76a395dee">
+  <source>Map settings</source>
+<target>지도 설정</target></trans-unit>
+<trans-unit id="s5762120510bc3df3">
+  <source>Reset map bounds</source>
+<target>지도 범위 재설정</target></trans-unit>
+<trans-unit id="s126e8d634c216da7">
+  <source>Import GeoJSON</source>
+<target>GeoJSON 가져오기</target></trans-unit>
+</body>
   </file>
 </xliff>

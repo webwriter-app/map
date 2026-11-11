@@ -2,30 +2,37 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
       's0aee4705bcc0c15e': `Min. zoom instellen`,
+'s10ef8df6dd94e473': `URL voor aangepaste kaarttegels`,
+'s126e8d634c216da7': `GeoJSON importeren`,
 's1bcea0c68ac23efb': `Speld toevoegen`,
 's1c0ea772de28e773': `Teken`,
 's21b06c38fc4164db': `Geavanceerd`,
+'s22c01523df47ee0b': `Kaartbreedte (%)`,
 's2492f5fb1b05b45e': `Tekst`,
 's25392c6d0eb63175': `gedeactiveerd`,
 's3011241149f8d10e': `Gebruiker selecteren`,
 's32689d1d09608f54': `Stijl kaart`,
+'s342ff2d65f30029f': `Kaarthoogte (px)`,
 's37c758bc19c67a4d': `Cirkel tekenen`,
 's3b5ddf60892a6a48': `Grenzen`,
 's5488509fd37aa9fc': `Banden uitschakelen`,
 's5590dbf7e425789d': `Label`,
+'s5762120510bc3df3': `Kaartgrenzen terugzetten`,
 's6ba44d4d5d284468': `Kleur rand`,
 's6beb392ed926ce5b': `Bounds inschakelen`,
+'s6d4de8ac6f00f238': `URL voor de stijl van de vectorkaart`,
 's6fc95ee75e407518': `Max. zoom instellen`,
 's71218539d83e0ab8': `Beweging`,
 's78789724e789221c': `Maat`,
+'s82b042b76a395dee': `Kaartinstellingen`,
 's8abdd4fbc8368253': `Aangepaste tegel-url`,
 's8af61807443f32a4': `Acties`,
 's8af7951ebf77cbed': `Rastertegels`,
@@ -38,6 +45,7 @@
 'sab904a167497cd3e': `Stel Positie in als beginwaarde`,
 'saeeff153fba5364d': `Veelhoek tekenen`,
 'sc539af8ae925acc1': `Polylijn tekenen`,
+'sc8f38d904797cd0e': `Beginniveau voor zoomen`,
 'sca9faebc773bf95d': `Object verwijderen`,
 'sd42752882536c15a': `Rechthoek tekenen`,
 'sd83da86c74147960': `Rechtsonder instellen`,
@@ -45,8 +53,8 @@
 'sdc9cf2d6e96526c1': `Grenzen opnieuw instellen`,
 'sdd253aec6b88b6af': `Vulkleur`,
 'sf21fb4f4b9e8911f': `Breedte`,
+'sf23555c6213a109d': `Verschuiven beperken tot de kaartgrenzen`,
 'sf42ce409138b0d9c': `geactiveerd`,
 'sf9aee319a006c9b4': `Voeg  toe`,
 'sffdadf0a576fd802': `Hoogte`,
     };
-  

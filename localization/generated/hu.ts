@@ -2,30 +2,37 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
       's0aee4705bcc0c15e': `Min. zoom beállítása`,
+'s10ef8df6dd94e473': `Egyéni térképcsempék URL-címe`,
+'s126e8d634c216da7': `GeoJSON importálása`,
 's1bcea0c68ac23efb': `Tű hozzáadása`,
 's1c0ea772de28e773': `Draw`,
 's21b06c38fc4164db': `Haladó`,
+'s22c01523df47ee0b': `Térkép szélessége (%)`,
 's2492f5fb1b05b45e': `Szöveg`,
 's25392c6d0eb63175': `deaktiválva`,
 's3011241149f8d10e': `Felhasználó kiválasztása`,
 's32689d1d09608f54': `Térkép stílus`,
+'s342ff2d65f30029f': `Térkép magassága (px)`,
 's37c758bc19c67a4d': `Rajzolj kört`,
 's3b5ddf60892a6a48': `Bounds`,
 's5488509fd37aa9fc': `Határok letiltása`,
 's5590dbf7e425789d': `Címke`,
+'s5762120510bc3df3': `Térképhatárok visszaállítása`,
 's6ba44d4d5d284468': `Határ színe`,
 's6beb392ed926ce5b': `Határok engedélyezése`,
+'s6d4de8ac6f00f238': `Vektoros térképstílus URL-címe`,
 's6fc95ee75e407518': `Maximális zoom beállítása`,
 's71218539d83e0ab8': `Mozgás`,
 's78789724e789221c': `Méret`,
+'s82b042b76a395dee': `Térképbeállítások`,
 's8abdd4fbc8368253': `Custom Tile Url`,
 's8af61807443f32a4': `Tevékenységek`,
 's8af7951ebf77cbed': `Raszteres csempék`,
@@ -38,6 +45,7 @@
 'sab904a167497cd3e': `Pozíció beállítása kezdeti értékként`,
 'saeeff153fba5364d': `Poligon rajzolása`,
 'sc539af8ae925acc1': `Polivonal rajzolása`,
+'sc8f38d904797cd0e': `Kezdeti nagyítás`,
 'sca9faebc773bf95d': `Objektum törlése`,
 'sd42752882536c15a': `Téglalap rajzolása`,
 'sd83da86c74147960': `Állítsa be a jobb alsó részt`,
@@ -45,8 +53,8 @@
 'sdc9cf2d6e96526c1': `Határok visszaállítása`,
 'sdd253aec6b88b6af': `Kitöltés színe`,
 'sf21fb4f4b9e8911f': `Szélesség`,
+'sf23555c6213a109d': `Mozgatás korlátozása a térkép határaira`,
 'sf42ce409138b0d9c': `aktivált`,
 'sf9aee319a006c9b4': `Add`,
 'sffdadf0a576fd802': `Magasság`,
     };
-  

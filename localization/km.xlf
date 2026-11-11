@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="km" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s8af61807443f32a4">
+  <source>Actions</source>
+<target>សកម្មភាព</target></trans-unit>
+<trans-unit id="s1bcea0c68ac23efb">
+  <source>Add Pin</source>
+<target>បន្ថែមម្ជុល</target></trans-unit>
+<trans-unit id="sab904a167497cd3e">
+  <source>Set Position as initial</source>
+<target>កំណត់ទីតាំងនេះជាទីតាំងដំបូង</target></trans-unit>
+<trans-unit id="s3b5ddf60892a6a48">
+  <source>Bounds</source>
+<target>ដែនកំណត់</target></trans-unit>
+<trans-unit id="s8f3d223923b156c6">
+  <source>not set</source>
+<target>មិនទាន់កំណត់</target></trans-unit>
+<trans-unit id="sf42ce409138b0d9c">
+  <source>activated</source>
+<target>បានបើក</target></trans-unit>
+<trans-unit id="s25392c6d0eb63175">
+  <source>deactivated</source>
+<target>បានបិទ</target></trans-unit>
+<trans-unit id="sa9f2381c84bd9969">
+  <source>Set Top Left</source>
+<target>កំណត់ជ្រុងឆ្វេងខាងលើ</target></trans-unit>
+<trans-unit id="sd83da86c74147960">
+  <source>Set Bottom Right</source>
+<target>កំណត់ជ្រុងស្តាំខាងក្រោម</target></trans-unit>
+<trans-unit id="s6fc95ee75e407518">
+  <source>Set Max Zoom</source>
+<target>កំណត់ការពង្រីកអតិបរមា</target></trans-unit>
+<trans-unit id="s0aee4705bcc0c15e">
+  <source>Set Min Zoom</source>
+<target>កំណត់ការពង្រីកអប្បបរមា</target></trans-unit>
+<trans-unit id="s936c17dcc2e04cf5">
+  <source>Fit Bounds</source>
+<target>លៃតម្រូវឱ្យសមដែនកំណត់</target></trans-unit>
+<trans-unit id="sa53d08f6b088b54e">
+  <source>Visualize Bounds</source>
+<target>បង្ហាញដែនកំណត់</target></trans-unit>
+<trans-unit id="s5488509fd37aa9fc">
+  <source>Disable Bounds</source>
+<target>បិទដែនកំណត់</target></trans-unit>
+<trans-unit id="s6beb392ed926ce5b">
+  <source>Enable Bounds</source>
+<target>បើកដែនកំណត់</target></trans-unit>
+<trans-unit id="sdc9cf2d6e96526c1">
+  <source>Reset Bounds</source>
+<target>កំណត់ដែនកំណត់ឡើងវិញ</target></trans-unit>
+<trans-unit id="s1c0ea772de28e773">
+  <source>Draw</source>
+<target>គូរ</target></trans-unit>
+<trans-unit id="sd42752882536c15a">
+  <source>Draw Rectangle</source>
+<target>គូរចតុកោណកែង</target></trans-unit>
+<trans-unit id="s37c758bc19c67a4d">
+  <source>Draw Circle</source>
+<target>គូររង្វង់</target></trans-unit>
+<trans-unit id="saeeff153fba5364d">
+  <source>Draw Polygon</source>
+<target>គូរពហុកោណ</target></trans-unit>
+<trans-unit id="sc539af8ae925acc1">
+  <source>Draw Polyline</source>
+<target>គូរបន្ទាត់តភ្ជាប់</target></trans-unit>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+<target>លុប</target></trans-unit>
+<trans-unit id="sca9faebc773bf95d">
+  <source>Delete Object</source>
+<target>លុបវត្ថុ</target></trans-unit>
+<trans-unit id="s6ba44d4d5d284468">
+  <source>Border Color</source>
+<target>ពណ៌គែម</target></trans-unit>
+<trans-unit id="sdd253aec6b88b6af">
+  <source>Fill Color</source>
+<target>ពណ៌បំពេញ</target></trans-unit>
+<trans-unit id="s5590dbf7e425789d">
+  <source>Label</source>
+<target>ស្លាក</target></trans-unit>
+<trans-unit id="s78789724e789221c">
+  <source>Size</source>
+<target>ទំហំ</target></trans-unit>
+<trans-unit id="sf21fb4f4b9e8911f">
+  <source>Width</source>
+<target>ទទឹង</target></trans-unit>
+<trans-unit id="sffdadf0a576fd802">
+  <source>Height</source>
+<target>កម្ពស់</target></trans-unit>
+<trans-unit id="s71218539d83e0ab8">
+  <source>Movement</source>
+<target>ការផ្លាស់ទី</target></trans-unit>
+<trans-unit id="sa88dfb051be09d0e">
+  <source>Allow student movement</source>
+<target>អនុញ្ញាតឱ្យសិស្សផ្លាស់ទីផែនទី</target></trans-unit>
+<trans-unit id="s21b06c38fc4164db">
+  <source>Advanced</source>
+<target>កម្រិតខ្ពស់</target></trans-unit>
+<trans-unit id="s32689d1d09608f54">
+  <source>Map style</source>
+<target>រចនាប័ទ្មផែនទី</target></trans-unit>
+<trans-unit id="s3011241149f8d10e">
+  <source>User select</source>
+<target>ឱ្យអ្នកប្រើជ្រើសរើស</target></trans-unit>
+<trans-unit id="s9132eff33fb5ed73">
+  <source>OpenFreeMap vector tiles</source>
+<target>ក្រឡាវ៉ិចទ័រ OpenFreeMap</target></trans-unit>
+<trans-unit id="s8af7951ebf77cbed">
+  <source>Raster tiles</source>
+<target>ក្រឡារ៉ាស្ទ័រ</target></trans-unit>
+<trans-unit id="s8abdd4fbc8368253">
+  <source>Custom Tile Url</source>
+<target>URL ក្រឡាផែនទីផ្ទាល់ខ្លួន</target></trans-unit>
+<trans-unit id="s2492f5fb1b05b45e">
+  <source>Text</source>
+<target>អត្ថបទ</target></trans-unit>
+<trans-unit id="sf9aee319a006c9b4">
+  <source>Add</source>
+<target>បន្ថែម</target></trans-unit>
+<trans-unit id="sc8f38d904797cd0e">
+  <source>Initial zoom</source>
+<target>ការពង្រីកដំបូង</target></trans-unit>
+<trans-unit id="s22c01523df47ee0b">
+  <source>Map width (%)</source>
+<target>ទទឹងផែនទី (%)</target></trans-unit>
+<trans-unit id="s342ff2d65f30029f">
+  <source>Map height (px)</source>
+<target>កម្ពស់ផែនទី (px)</target></trans-unit>
+<trans-unit id="sf23555c6213a109d">
+  <source>Constrain panning to bounds</source>
+<target>កំណត់ការអូសផែនទីឱ្យនៅក្នុងដែនកំណត់</target></trans-unit>
+<trans-unit id="s10ef8df6dd94e473">
+  <source>Custom tile URL</source>
+<target>URL ក្រឡាផែនទីផ្ទាល់ខ្លួន</target></trans-unit>
+<trans-unit id="s6d4de8ac6f00f238">
+  <source>Vector map style URL</source>
+<target>URL រចនាប័ទ្មផែនទីវ៉ិចទ័រ</target></trans-unit>
+<trans-unit id="s82b042b76a395dee">
+  <source>Map settings</source>
+<target>ការកំណត់ផែនទី</target></trans-unit>
+<trans-unit id="s5762120510bc3df3">
+  <source>Reset map bounds</source>
+<target>កំណត់ដែនផែនទីឡើងវិញ</target></trans-unit>
+<trans-unit id="s126e8d634c216da7">
+  <source>Import GeoJSON</source>
+<target>នាំចូល GeoJSON</target></trans-unit>
+</body>
+</file>
+</xliff>

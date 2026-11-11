@@ -2,30 +2,37 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
       's0aee4705bcc0c15e': `Imposta zoom minimo`,
+'s10ef8df6dd94e473': `URL delle tessere personalizzate`,
+'s126e8d634c216da7': `Importa GeoJSON`,
 's1bcea0c68ac23efb': `Aggiungi Pin`,
 's1c0ea772de28e773': `Disegno`,
 's21b06c38fc4164db': `Avanzato`,
+'s22c01523df47ee0b': `Larghezza della mappa (%)`,
 's2492f5fb1b05b45e': `Testo`,
 's25392c6d0eb63175': `disattivato`,
 's3011241149f8d10e': `Selezione dell'utente`,
 's32689d1d09608f54': `Stile della mappa`,
+'s342ff2d65f30029f': `Altezza della mappa (px)`,
 's37c758bc19c67a4d': `Disegnare il cerchio`,
 's3b5ddf60892a6a48': `Limiti`,
 's5488509fd37aa9fc': `Disattivare i limiti`,
 's5590dbf7e425789d': `Etichetta`,
+'s5762120510bc3df3': `Ripristina i confini della mappa`,
 's6ba44d4d5d284468': `Colore del bordo`,
 's6beb392ed926ce5b': `Abilitazione dei limiti`,
+'s6d4de8ac6f00f238': `URL dello stile della mappa vettoriale`,
 's6fc95ee75e407518': `Imposta zoom massimo`,
 's71218539d83e0ab8': `Movimento`,
 's78789724e789221c': `Dimensione`,
+'s82b042b76a395dee': `Impostazioni della mappa`,
 's8abdd4fbc8368253': `Url di piastrelle personalizzate`,
 's8af61807443f32a4': `Azioni`,
 's8af7951ebf77cbed': `Tessere raster`,
@@ -38,6 +45,7 @@
 'sab904a167497cd3e': `Impostare la posizione come iniziale`,
 'saeeff153fba5364d': `Disegna poligono`,
 'sc539af8ae925acc1': `Disegnare una polilinea`,
+'sc8f38d904797cd0e': `Zoom iniziale`,
 'sca9faebc773bf95d': `Eliminare l'oggetto`,
 'sd42752882536c15a': `Disegnare un rettangolo`,
 'sd83da86c74147960': `Imposta in basso a destra`,
@@ -45,8 +53,8 @@
 'sdc9cf2d6e96526c1': `Azzeramento dei limiti`,
 'sdd253aec6b88b6af': `Colore di riempimento`,
 'sf21fb4f4b9e8911f': `Larghezza`,
+'sf23555c6213a109d': `Limita lo spostamento ai confini della mappa`,
 'sf42ce409138b0d9c': `attivato`,
 'sf9aee319a006c9b4': `Aggiungi`,
 'sffdadf0a576fd802': `Altezza`,
     };
-  
