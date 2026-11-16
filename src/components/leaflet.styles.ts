@@ -1,6 +1,6 @@
 /* required styles */
 
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 export const leafletStyles = css`
     .leaflet-pane,

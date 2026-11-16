@@ -78,6 +78,10 @@ export const style = css`
         display: block; 
     }
 
+    #fsButton sl-icon{
+        font-size: 18px;
+    }
+
     #fsButton{
         pointer-events: auto;
         position: absolute;

@@ -4,78 +4,110 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "index.ts",
+      "path": "src/widgets/webwriter-map.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
-          "name": "WwMap",
+          "name": "WebwriterMap",
           "members": [
             {
               "kind": "field",
+              "name": "dataType",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'application/json'"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRootOptions",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ ...LitElement.shadowRootOptions, delegatesFocus: true }"
+            },
+            {
+              "kind": "field",
+              "name": "options",
+              "static": true,
+              "default": "{ initialZoom: { type: \"number\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Initial zoom\"), min: 0, max: 22, step: 1 }, mapWidth: { type: \"number\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Map width (%)\"), min: 10, max: 100, step: 1 }, mapHeight: { type: \"number\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Map height (px)\"), min: 100, max: 1200, step: 10 }, boundsActive: { type: \"boolean\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Constrain panning to bounds\") }, customTileUrl: { type: \"string\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Custom tile URL\") }, vectorStyle: { type: \"string\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Vector map style URL\") }, }",
+              "type": {
+                "text": "{\n        initialZoom: { type: \"number\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Initial zoom\"), min: 0, max: 22, step: 1 },\n        mapWidth: { type: \"number\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Map width (%)\"), min: 10, max: 100, step: 1 },\n        mapHeight: { type: \"number\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Map height (px)\"), min: 100, max: 1200, step: 10 },\n        boundsActive: { type: \"boolean\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Constrain panning to bounds\") },\n        customTileUrl: { type: \"string\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Custom tile URL\") },\n        vectorStyle: { type: \"string\", group: \"map\", label: (widget: { msg: MsgFn }) => widget.msg(\"Vector map style URL\") },\n    }"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "optionGroups",
+              "static": true,
+              "default": "{ map: { label: (widget: { msg: MsgFn }) => widget.msg(\"Map settings\"), collapsible: true, advanced: false }, }",
+              "type": {
+                "text": "{\n        map: { label: (widget: { msg: MsgFn }) => widget.msg(\"Map settings\"), collapsible: true, advanced: false },\n    }"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "permissions",
+              "static": true,
+              "default": "{ allowPanning: { label: (widget: { msg: MsgFn }) => widget.msg(\"Allow student movement\") }, }",
+              "type": {
+                "text": "{\n        allowPanning: { label: (widget: { msg: MsgFn }) => widget.msg(\"Allow student movement\") },\n    }"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "actions",
+              "static": true,
+              "default": "{ resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg(\"Reset map bounds\"), group: \"map\", icon: \"Restore\", intent: \"default\" }, importGeoJSON: { label: (widget: { msg: MsgFn }) => widget.msg(\"Import GeoJSON\"), group: \"map\", icon: \"Upload\", input: { type: \"file\", accept: \".json,.geojson,application/json,application/geo+json\" }, }, }",
+              "type": {
+                "text": "{\n        resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg(\"Reset map bounds\"), group: \"map\", icon: \"Restore\", intent: \"default\" },\n        importGeoJSON: {\n            label: (widget: { msg: MsgFn }) => widget.msg(\"Import GeoJSON\"),\n            group: \"map\",\n            icon: \"Upload\",\n            input: { type: \"file\", accept: \".json,.geojson,application/json,application/geo+json\" },\n        },\n    }"
+              }
+            },
+            {
+              "kind": "field",
               "name": "localize",
-              "privacy": "protected",
-              "default": "LOCALIZE"
+              "privacy": "protected"
             },
             {
               "kind": "field",
-              "name": "mapElement",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "private"
+              "name": "msg",
+              "readonly": true
             },
             {
               "kind": "field",
-              "name": "pinDialog",
-              "type": {
-                "text": "SlDialog"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "switchStudentPanning",
-              "type": {
-                "text": "SlSwitch"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "map",
-              "type": {
-                "text": "L.Map | undefined"
-              },
+              "name": "#permissions",
               "privacy": "private",
-              "attribute": "map"
+              "default": "new Permissions(this)"
+            },
+            {
+              "kind": "field",
+              "name": "#data",
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "initialPos",
               "type": {
-                "text": "{\r\n        lat: number;\r\n        lng: number;\r\n    }"
+                "text": "Point"
               },
-              "default": "{ lat: 51, lng: 10, }",
-              "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
-              "attribute": "initialPos",
-              "reflects": true
+              "default": "{ lat: 51, lng: 10 }",
+              "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}')."
             },
             {
               "kind": "field",
               "name": "mapBounds",
               "type": {
-                "text": "L.LatLngBoundsExpression"
+                "text": "L.LatLngBoundsExpression | undefined"
               },
-              "description": "Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]').",
-              "attribute": "mapBounds",
-              "reflects": true
+              "description": "Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]')."
             },
             {
               "kind": "field",
               "name": "maxZoom",
               "type": {
-                "text": "number"
+                "text": "number | undefined"
               },
               "description": "Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "attribute": "maxZoom",
@@ -85,7 +117,7 @@
               "kind": "field",
               "name": "minZoom",
               "type": {
-                "text": "number"
+                "text": "number | undefined"
               },
               "description": "Minimum zoom level allowed.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "attribute": "minZoom",
@@ -116,34 +148,28 @@
               "kind": "field",
               "name": "markers",
               "type": {
-                "text": "array"
+                "text": "Pin[]"
               },
               "default": "[]",
-              "description": "Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string.",
-              "attribute": "markers",
-              "reflects": true
+              "description": "Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string."
             },
             {
               "kind": "field",
               "name": "objects",
               "type": {
-                "text": "object"
+                "text": "Record<string, DrawnObject>"
               },
               "default": "{}",
-              "description": "Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string.",
-              "attribute": "objects",
-              "reflects": true
+              "description": "Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string."
             },
             {
               "kind": "field",
               "name": "customTileUrl",
               "type": {
-                "text": "string"
+                "text": "string | undefined"
               },
               "default": "''",
-              "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used.",
-              "attribute": "customTileUrl",
-              "reflects": true
+              "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used."
             },
             {
               "kind": "field",
@@ -202,6 +228,39 @@
             },
             {
               "kind": "field",
+              "name": "mapElement",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "pinDialog",
+              "type": {
+                "text": "SlDialog"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "switchStudentPanning",
+              "type": {
+                "text": "SlSwitch"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "map",
+              "type": {
+                "text": "L.Map"
+              },
+              "privacy": "private",
+              "attribute": "map"
+            },
+            {
+              "kind": "field",
               "name": "inputLat",
               "type": {
                 "text": "number"
@@ -229,26 +288,6 @@
               "privacy": "private",
               "default": "0",
               "attribute": "inputZoom"
-            },
-            {
-              "kind": "field",
-              "name": "inputBorderColor",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "'#000000ff'",
-              "attribute": "inputBorderColor"
-            },
-            {
-              "kind": "field",
-              "name": "inputFillColor",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "'#000000ff'",
-              "attribute": "inputFillColor"
             },
             {
               "kind": "field",
@@ -291,26 +330,10 @@
             },
             {
               "kind": "field",
-              "name": "showBounds",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "attribute": "showBounds"
-            },
-            {
-              "kind": "field",
-              "name": "showBoundsLayer",
-              "type": {
-                "text": "L.Rectangle | undefined"
-              },
-              "privacy": "private",
-              "attribute": "showBoundsLayer"
-            },
-            {
-              "kind": "field",
               "name": "editObject",
+              "type": {
+                "text": "DrawLayer | undefined"
+              },
               "privacy": "private",
               "attribute": "editObject"
             },
@@ -318,7 +341,7 @@
               "kind": "field",
               "name": "editObjectMarkers",
               "type": {
-                "text": "array"
+                "text": "L.Marker[]"
               },
               "privacy": "private",
               "default": "[]",
@@ -327,14 +350,11 @@
             {
               "kind": "field",
               "name": "layerControl",
+              "type": {
+                "text": "L.Control.Layers | undefined"
+              },
               "privacy": "private",
               "attribute": "layerControl"
-            },
-            {
-              "kind": "field",
-              "name": "drawObject",
-              "privacy": "private",
-              "attribute": "drawObject"
             },
             {
               "kind": "field",
@@ -349,7 +369,9 @@
             {
               "kind": "field",
               "name": "allowPanning",
-              "privacy": "private",
+              "type": {
+                "text": "boolean | undefined"
+              },
               "attribute": "allowPanning",
               "reflects": true
             },
@@ -362,54 +384,43 @@
               "privacy": "private"
             },
             {
-              "kind": "method",
-              "name": "isEditable",
-              "privacy": "private"
+              "kind": "field",
+              "name": "layerHost",
+              "type": {
+                "text": "BaseLayerHost"
+              },
+              "privacy": "private",
+              "default": "{ getMap: () => this.map, useLayerMaxZoom: (maxZoom) => { if (!this.maxZoom || !this.boundsActive) this.map?.setMaxZoom(maxZoom); }, }"
             },
             {
               "kind": "method",
-              "name": "createRasterLayer",
-              "privacy": "private",
+              "name": "importGeoJSON",
               "return": {
                 "type": {
-                  "text": "L.TileLayer"
+                  "text": "Promise<void>"
                 }
               },
               "parameters": [
                 {
-                  "name": "tileDef",
+                  "name": "files",
                   "type": {
-                    "text": "RasterTiles"
+                    "text": "File[]"
                   }
                 }
               ]
             },
             {
               "kind": "method",
-              "name": "createMaplibreLayer",
-              "privacy": "private",
+              "name": "resetBounds",
               "return": {
                 "type": {
-                  "text": "L.MaplibreGL"
+                  "text": "void"
                 }
-              },
-              "parameters": [
-                {
-                  "name": "styleUrl",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
+              }
             },
             {
               "kind": "method",
               "name": "updateBaseLayer",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "onMapMove",
               "privacy": "private"
             },
             {
@@ -427,69 +438,13 @@
             },
             {
               "kind": "method",
-              "name": "toolbox",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "dialogs",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "addRectangel",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "addCircle",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "addPolygon",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "addPolyline",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "getPolygonPoints",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "n",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getPolylinePoints",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "n",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
               "name": "onRectangleClick",
               "privacy": "private",
               "parameters": [
                 {
                   "name": "e",
                   "type": {
-                    "text": "any"
+                    "text": "L.LeafletEvent"
                   }
                 }
               ]
@@ -502,7 +457,7 @@
                 {
                   "name": "e",
                   "type": {
-                    "text": "any"
+                    "text": "L.LeafletEvent"
                   }
                 }
               ]
@@ -515,7 +470,7 @@
                 {
                   "name": "e",
                   "type": {
-                    "text": "any"
+                    "text": "L.LeafletEvent"
                   }
                 }
               ]
@@ -528,7 +483,7 @@
                 {
                   "name": "e",
                   "type": {
-                    "text": "any"
+                    "text": "L.LeafletEvent"
                   }
                 }
               ]
@@ -545,12 +500,12 @@
             },
             {
               "kind": "method",
-              "name": "loadGeoLocation",
+              "name": "addLabel",
               "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "addLabel",
+              "name": "removeEditMarkers",
               "privacy": "private"
             },
             {
@@ -564,11 +519,14 @@
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "o"
+                  "name": "o",
+                  "type": {
+                    "text": "DrawLayer"
+                  }
                 },
                 {
                   "name": "id",
-                  "default": "undefined",
+                  "optional": true,
                   "type": {
                     "text": "string"
                   }
@@ -582,6 +540,7 @@
               "parameters": [
                 {
                   "name": "id",
+                  "optional": true,
                   "type": {
                     "text": "string"
                   }
@@ -595,49 +554,15 @@
             },
             {
               "kind": "method",
-              "name": "getOpacity",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "hex"
-                }
-              ]
-            },
-            {
-              "kind": "method",
               "name": "deleteSelectedObject",
               "privacy": "private"
             }
           ],
           "attributes": [
             {
-              "name": "map",
-              "type": {
-                "text": "L.Map | undefined"
-              },
-              "fieldName": "map"
-            },
-            {
-              "name": "initialPos",
-              "type": {
-                "text": "{\r\n        lat: number;\r\n        lng: number;\r\n    }"
-              },
-              "default": "{ lat: 51, lng: 10, }",
-              "description": "Initial center position of the map.<br>Expected value: object { lat: number, lng: number } (e.g. { lat: 51, lng: 19 }).<br>Optional; when set via attribute, pass a JSON string (e.g. '{\"lat\":51,\"lng\":19}').",
-              "fieldName": "initialPos"
-            },
-            {
-              "name": "mapBounds",
-              "type": {
-                "text": "L.LatLngBoundsExpression"
-              },
-              "description": "Maximum bounding box for panning the map.<br>Expected value: Leaflet LatLngBoundsExpression (e.g. [[northLat, westLng], [southLat, eastLng]]).<br>Optional; when set via attribute, pass a JSON string (e.g. '[[51,6],[50,7]]').",
-              "fieldName": "mapBounds"
-            },
-            {
               "name": "maxZoom",
               "type": {
-                "text": "number"
+                "text": "number | undefined"
               },
               "description": "Maximum zoom level allowed when `boundsActive` is true.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "fieldName": "maxZoom"
@@ -645,7 +570,7 @@
             {
               "name": "minZoom",
               "type": {
-                "text": "number"
+                "text": "number | undefined"
               },
               "description": "Minimum zoom level allowed.<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "fieldName": "minZoom"
@@ -667,33 +592,6 @@
               "default": "1",
               "description": "Fixed zoom level to enforce when panning is not allowed for viewers (non-edit contexts).<br>Expected value: number (Leaflet zoom level).<br>Optional.",
               "fieldName": "fixedZoom"
-            },
-            {
-              "name": "markers",
-              "type": {
-                "text": "array"
-              },
-              "default": "[]",
-              "description": "Static pin markers to display on the map.<br>Expected value: array of { lat: number, lng: number, title?: string }.<br>Optional; when set via attribute, pass a JSON string.",
-              "fieldName": "markers"
-            },
-            {
-              "name": "objects",
-              "type": {
-                "text": "object"
-              },
-              "default": "{}",
-              "description": "Persisted drawing objects (rectangles, circles, polygons, polylines), keyed by id.<br>Expected value: map id -> { id, type, latlngs, radius?, borderColor, fillColor, borderOpacity, fillOpacity, label? }.<br>Optional; when set via attribute, pass a JSON string.",
-              "fieldName": "objects"
-            },
-            {
-              "name": "customTileUrl",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "Custom tile URL template to use for the base map layer.<br>Expected value: string URL template containing {z}/{x}/{y}.<br>Optional; when empty, the default base layer is used.",
-              "fieldName": "customTileUrl"
             },
             {
               "name": "vectorStyle",
@@ -741,6 +639,13 @@
               "fieldName": "boundsActive"
             },
             {
+              "name": "map",
+              "type": {
+                "text": "L.Map"
+              },
+              "fieldName": "map"
+            },
+            {
               "name": "inputLat",
               "type": {
                 "text": "number"
@@ -763,22 +668,6 @@
               },
               "default": "0",
               "fieldName": "inputZoom"
-            },
-            {
-              "name": "inputBorderColor",
-              "type": {
-                "text": "string"
-              },
-              "default": "'#000000ff'",
-              "fieldName": "inputBorderColor"
-            },
-            {
-              "name": "inputFillColor",
-              "type": {
-                "text": "string"
-              },
-              "default": "'#000000ff'",
-              "fieldName": "inputFillColor"
             },
             {
               "name": "inputDrawObjectLabel",
@@ -812,39 +701,26 @@
               "fieldName": "mouseMarker"
             },
             {
-              "name": "showBounds",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "showBounds"
-            },
-            {
-              "name": "showBoundsLayer",
-              "type": {
-                "text": "L.Rectangle | undefined"
-              },
-              "fieldName": "showBoundsLayer"
-            },
-            {
               "name": "editObject",
+              "type": {
+                "text": "DrawLayer | undefined"
+              },
               "fieldName": "editObject"
             },
             {
               "name": "editObjectMarkers",
               "type": {
-                "text": "array"
+                "text": "L.Marker[]"
               },
               "default": "[]",
               "fieldName": "editObjectMarkers"
             },
             {
               "name": "layerControl",
+              "type": {
+                "text": "L.Control.Layers | undefined"
+              },
               "fieldName": "layerControl"
-            },
-            {
-              "name": "drawObject",
-              "fieldName": "drawObject"
             },
             {
               "name": "isFullscreen",
@@ -856,6 +732,9 @@
             },
             {
               "name": "allowPanning",
+              "type": {
+                "text": "boolean | undefined"
+              },
               "fieldName": "allowPanning"
             }
           ],
@@ -865,25 +744,25 @@
           },
           "tagName": "webwriter-map",
           "customElement": true,
-          "modulePath": "index.ts",
-          "definitionPath": "index.ts"
+          "modulePath": "src/widgets/webwriter-map.ts",
+          "definitionPath": "src/widgets/webwriter-map.ts"
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "WwMap",
+          "name": "WebwriterMap",
           "declaration": {
-            "name": "WwMap",
-            "module": "index.ts"
+            "name": "WebwriterMap",
+            "module": "src/widgets/webwriter-map.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "name": "webwriter-map",
           "declaration": {
-            "name": "WwMap",
-            "module": "index.ts"
+            "name": "WebwriterMap",
+            "module": "src/widgets/webwriter-map.ts"
           }
         }
       ]

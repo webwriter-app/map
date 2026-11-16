@@ -143,40 +143,51 @@
     "Jorik van Genuchten"
   ],
   "scripts": {
-    "prepublishOnly": "npx @webwriter/build",
-    "dev": "npx @webwriter/build dev",
+    "prepublishOnly": "npx @webwriter/build --shared-dependencies",
+    "dev": "npx @webwriter/build dev --shared-dependencies",
     "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^7.3.1",
     "@lit/localize": "^0.12.2",
     "@maplibre/maplibre-gl-leaflet": "^0.1.4",
-    "@shoelace-style/shoelace": ">=2.4.0 <3.0.0-0",
-    "@webwriter/lit": "^3.0.0",
-    "fa-icons": ">=0.2.0 <0.3.0-0",
+    "@shoelace-style/shoelace": "^2.20.1",
+    "@tabler/icons": "^3.52.0",
+    "@webwriter/lit": "^3.2.0",
+    "@webwriter/widget": "^1.2.0",
     "leaflet": "^1.9.4",
-    "lit": ">=3.0.0 <4.0.0-0",
+    "lit": "^3.3.0",
     "maplibre-gl": "^6.18.0"
   },
   "devDependencies": {
-    "@webwriter/build": "^1.13.1",
     "@lit/localize-tools": "^0.8.0",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.8"
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@webwriter/build": "^1.14.0",
+    "chai": "^6.3.0",
+    "mocha": "^12.0.3",
+    "typescript": "^7.0.2"
   },
   "exports": {
     "./widgets/webwriter-map.*": {
-      "source": "./index.ts",
+      "source": "./src/widgets/webwriter-map.ts",
       "default": "./dist/widgets/webwriter-map.*"
     },
     "./snippets/Example-Location.html": "./snippets/Example-Location.html",
     "./package.json": "./package.json",
     "./icon": "./icon.svg",
     "./editing-config.json": "./editing-config.json",
-    "./custom-elements.json": "./custom-elements.json"
+    "./custom-elements.json": "./custom-elements.json",
+    "./tests/modules.*": {
+      "source": "./tests/modules.test.ts",
+      "default": "./dist/tests/modules.*"
+    }
   },
   "editingConfig": {
     ".": {}
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "prebuiltDependencies": [
+    "@maplibre/maplibre-gl-leaflet",
+    "leaflet"
+  ]
 }
