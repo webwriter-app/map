@@ -158,6 +158,17 @@ describe("<webwriter-map>", function () {
     await el.updateComplete;
   });
 
+  it("pins are drawn once, also after the base layer or the GeoJSON changes", async function () {
+    const el = await mount("", '{"initialPos":{"lat":50.775,"lng":6.085},"markers":[{"lat":50.7,"lng":6,"title":"a"}]}');
+    const count = () => el.shadowRoot.querySelectorAll(".marker-icon-red").length;
+    equal(count(), 1, "pins at start");
+    el.customTileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+    await settle(el);
+    el.geoJSON = '{"type":"FeatureCollection","features":[]}';
+    await settle(el);
+    equal(count(), 1, "pins after changes");
+  });
+
   it("actions: resetBounds and importGeoJSON still work", async function () {
     const el = await edit();
     el.mapBounds = [[1, 1], [2, 2]]; el.maxZoom = 8; el.boundsActive = true;

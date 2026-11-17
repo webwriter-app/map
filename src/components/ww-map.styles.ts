@@ -59,20 +59,6 @@ export const style = css`
         background-color: green;
     }
 
-    .marker-icon.marker-icon-blue::before {
-        background-color: blue;
-    }
-
-    .marker-icon.marker-icon-yellow::before {
-        background-color: yellow;
-    }
-
-    .mouse-marker-icon {
-        width: 1.5em;
-        height: 1.5em;
-        background-color: blue;
-    }
-
     #overlay{
         position: relative; 
         display: block; 

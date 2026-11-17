@@ -189,19 +189,7 @@ export class WebwriterMap extends LitElementWw {
     private accessor inputZoom = 0;
 
     @property({ type: String })
-    private accessor inputDrawObjectLabel = '';
-
-    @property({ type: String })
     private accessor pinTitle = '';
-
-    @property({ type: String })
-    private accessor mapMode = 'view';
-
-    @property({ type: Object })
-    private accessor mouseMarker: L.Marker | undefined;
-
-    @property({ type: Object })
-    private accessor editObject: DrawLayer | undefined;
 
     @property({ type: Array })
     private accessor editObjectMarkers: L.Marker[] = [];
@@ -215,7 +203,9 @@ export class WebwriterMap extends LitElementWw {
     @property({ type: Boolean, reflect: true })
     accessor allowPanning: boolean | undefined;
 
-    private _vectorLayer: L.Layer | undefined;
+    private markerLayer: L.LayerGroup | undefined;
+
+    private resizeObserver: ResizeObserver | undefined;
 
     private layerHost: BaseLayerHost = {
         getMap: () => this.map,
@@ -248,10 +238,7 @@ export class WebwriterMap extends LitElementWw {
             if (this.geoJSON) {
                 L.geoJSON(JSON.parse(this.geoJSON)).addTo(this.map);
             }
-            this.markers?.forEach((marker) => {
-                const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
-                m.bindPopup(marker.title ?? '');
-            });
+            this.renderMarkers();
         }
 
         if (this.map && changedProperties.has('mapBounds')) {
@@ -287,7 +274,7 @@ export class WebwriterMap extends LitElementWw {
         }
 
         if (this.map && changedProperties.has('editable')) {
-            this.clearEditObject();
+            this.removeEditMarkers();
         }
     }
 
@@ -301,13 +288,10 @@ export class WebwriterMap extends LitElementWw {
             L.geoJSON(JSON.parse(this.geoJSON)).addTo(this.map);
         }
 
-        this.markers?.forEach((marker) => {
-            const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
-            m.bindPopup(marker.title ?? '');
-        });
+        this.markerLayer = L.layerGroup().addTo(this.map);
+        this.renderMarkers();
 
         this.map.on('moveend', this.setInitialPosition.bind(this));
-        this.map.on('click', this.onMapClick.bind(this));
         this.inputLat = this.initialPos.lat;
         this.inputLng = this.initialPos.lng;
         this.inputZoom = this.initialZoom;
@@ -328,7 +312,7 @@ export class WebwriterMap extends LitElementWw {
             this.switchStudentPanning.toggleAttribute("checked", !!this.allowPanning)
         }
 
-        new ResizeObserver(() => {
+        this.resizeObserver = new ResizeObserver(() => {
             const fullscreen = this.ownerDocument.fullscreenElement === this;
             if (!fullscreen && this.isFullscreen) {
                 this.isFullscreen = false;
@@ -337,7 +321,18 @@ export class WebwriterMap extends LitElementWw {
                 this.isFullscreen = true;
                 this.updateComplete.then(() => this.map?.invalidateSize());
             }
-        }).observe(this);
+        });
+        this.resizeObserver.observe(this);
+    }
+
+    connectedCallback(): void {
+        super.connectedCallback();
+        this.resizeObserver?.observe(this);
+    }
+
+    disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.resizeObserver?.disconnect();
     }
 
     async importGeoJSON(files: File[]): Promise<void> {
@@ -365,18 +360,13 @@ export class WebwriterMap extends LitElementWw {
             }
         });
 
-        if (this._vectorLayer) {
-            this._vectorLayer = undefined;
-        }
-
         if (this.layerControl) {
             this.map.removeControl(this.layerControl);
             this.layerControl = undefined;
         }
 
         if (this.vectorStyle) {
-            this._vectorLayer = createMaplibreLayer(this.vectorStyle, this.layerHost);
-            this._vectorLayer.addTo(this.map);
+            createMaplibreLayer(this.vectorStyle, this.layerHost).addTo(this.map);
         } else if (this.customTileUrl) {
             const tileDef = RASTER_TILES.find(t => t.url === this.customTileUrl);
             L.tileLayer(this.customTileUrl, {
@@ -389,22 +379,14 @@ export class WebwriterMap extends LitElementWw {
             this.layerControl = L.control.layers(baseLayers).addTo(this.map);
             vectorLayers[0][1].addTo(this.map);
         }
-        this.markers?.forEach((marker) => {
-            const m = L.marker([marker.lat, marker.lng], { icon: icons.RED }).addTo(this.map);
-            m.bindPopup(marker.title ?? '');
-        });
     }
 
-    private onMapClick(e: L.LeafletMouseEvent) {
-        if (this.mapMode === 'mouseSelect') {
-            if (this.mouseMarker) {
-                this.map?.removeLayer(this.mouseMarker);
-            }
-            this.mouseMarker = L.marker(e.latlng, { icon: icons.YELLOW }).addTo(this.map);
-            this.inputLat = e.latlng.lat;
-            this.inputLng = e.latlng.lng;
-            this.inputZoom = this.map?.getZoom() || 0;
-        }
+    /** Draws the pins into one group, so that drawing them again never stacks duplicates. */
+    private renderMarkers() {
+        this.markerLayer?.clearLayers();
+        this.markers?.forEach((marker) => {
+            L.marker([marker.lat, marker.lng], { icon: icons.RED }).bindPopup(marker.title ?? '').addTo(this.markerLayer!);
+        });
     }
 
     render() {
@@ -432,9 +414,8 @@ export class WebwriterMap extends LitElementWw {
     private onRectangleClick(e: L.LeafletEvent) {
         if (!this.#permissions.editing) return;
 
-        this.clearEditObject();
+        this.removeEditMarkers();
         const rectangle = e.target as WithId<L.Rectangle>;
-        this.editObject = rectangle;
         this.editObjectMarkers.push(...rectangleHandles(this.map, rectangle, () => this.saveObject(rectangle, rectangle.id)));
     }
 
@@ -443,7 +424,6 @@ export class WebwriterMap extends LitElementWw {
 
         this.removeEditMarkers();
         const circle = e.target as WithId<L.Circle>;
-        this.editObject = circle;
         this.editObjectMarkers.push(...circleHandles(this.map, circle, () => this.saveObject(circle, circle.id)));
     }
 
@@ -452,7 +432,6 @@ export class WebwriterMap extends LitElementWw {
 
         this.removeEditMarkers();
         const polygon = e.target as WithId<L.Polygon>;
-        this.editObject = polygon;
         this.editObjectMarkers.push(...polygonHandles(this.map, polygon, () => this.saveObject(polygon, polygon.id)));
     }
 
@@ -461,7 +440,6 @@ export class WebwriterMap extends LitElementWw {
 
         this.removeEditMarkers();
         const polyline = e.target as WithId<L.Polyline>;
-        this.editObject = polyline;
         this.editObjectMarkers.push(...polylineHandles(this.map, polyline, () => this.saveObject(polyline, polyline.id)));
     }
 
@@ -484,8 +462,8 @@ export class WebwriterMap extends LitElementWw {
     private addLabel() {
         if (this.pinTitle) {
             this.pinDialog.hide();
-            const marker = L.marker([this.inputLat, this.inputLng], { icon: icons.RED })
-                .addTo(this.map)
+            L.marker([this.inputLat, this.inputLng], { icon: icons.RED })
+                .addTo(this.markerLayer!)
                 .bindPopup(this.pinTitle)
                 .openPopup();
             this.markers.push({
@@ -505,11 +483,6 @@ export class WebwriterMap extends LitElementWw {
         this.editObjectMarkers = [];
     }
 
-    private clearEditObject() {
-        this.removeEditMarkers();
-        this.editObject = undefined;
-    }
-
     private saveObject(o: DrawLayer, id?: string) {
         if (!id) {
             id = crypto.randomUUID();
@@ -521,7 +494,7 @@ export class WebwriterMap extends LitElementWw {
             fillColor: o.options.fillColor,
             borderOpacity: o.options.opacity,
             fillOpacity: o.options.fillOpacity,
-            label: this.inputDrawObjectLabel,
+            label: '',
         };
         let object: DrawnObject;
         if (o instanceof L.Rectangle) {
@@ -532,13 +505,6 @@ export class WebwriterMap extends LitElementWw {
             object = { id, type: o instanceof L.Polygon ? 'polygon' : 'polyline', latlngs: o.getLatLngs(), ...style };
         }
         this.objects = { ...this.objects, [id]: object };
-    }
-
-    private deleteObject(id?: string) {
-        if (id && Object.hasOwn(this.objects, id)) {
-            const { [id]: _removed, ...rest } = this.objects;
-            this.objects = rest;
-        }
     }
 
     private loadObjects() {
@@ -579,14 +545,6 @@ export class WebwriterMap extends LitElementWw {
             if (o.label) {
                 layer.bindTooltip(o.label, { direction: 'center' });
             }
-        }
-    }
-
-    private deleteSelectedObject() {
-        if (this.editObject) {
-            this.map?.removeLayer(this.editObject);
-            this.deleteObject(this.editObject.id);
-            this.clearEditObject();
         }
     }
 }
