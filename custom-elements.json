@@ -8,8 +8,18 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.",
+          "description": "Geographical map with different terrain options including custom tiling, and GeoJSON support.\n\nKeyboard: with `allowpanning` (and always in edit mode) the focused map pans with the arrow keys and zooms with + and -.\nPins are focusable and open their text on Enter. In edit mode a drawn shape is selected with Enter or Space, and its\nhandles move with the arrow keys. Touch: drag, pinch and tap work as on a mouse.\nLayout: the map fills the width of the widget (down to 300 px) and follows its container when it is resized.\nFiles: GeoJSON (`.geojson`, `application/geo+json`) imports and exports; the export holds the overlay, the pins and the\ndrawn shapes, and an import of it restores them. The base layer, the view and the bounds are not part of the file.\nPrint: the toolbox and map controls are hidden, a vector map is printed as a copy of its current view, and the\ntitles of the pins are listed below the map.",
           "name": "WebwriterMap",
+          "cssParts": [
+            {
+              "description": "The map frame.",
+              "name": "map"
+            },
+            {
+              "description": "The list of pin titles that is shown on paper.",
+              "name": "pins"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -60,10 +70,28 @@
               "kind": "field",
               "name": "actions",
               "static": true,
-              "default": "{ resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg(\"Reset map bounds\"), group: \"map\", icon: \"Restore\", intent: \"default\" }, importGeoJSON: { label: (widget: { msg: MsgFn }) => widget.msg(\"Import GeoJSON\"), group: \"map\", icon: \"Upload\", input: { type: \"file\", accept: \".json,.geojson,application/json,application/geo+json\" }, }, }",
+              "default": "{ resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg(\"Reset map bounds\"), group: \"map\", icon: \"Restore\", intent: \"default\" }, addPin: { label: (widget: { msg: MsgFn }) => widget.msg(\"Add pin at map center\"), group: \"map\", icon: \"Add\", intent: \"default\" }, importGeoJSON: { label: (widget: { msg: MsgFn }) => widget.msg(\"Import GeoJSON\"), group: \"map\", icon: \"Upload\", input: { type: \"file\", accept: \".json,.geojson,application/json,application/geo+json\" }, }, }",
               "type": {
-                "text": "{\n        resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg(\"Reset map bounds\"), group: \"map\", icon: \"Restore\", intent: \"default\" },\n        importGeoJSON: {\n            label: (widget: { msg: MsgFn }) => widget.msg(\"Import GeoJSON\"),\n            group: \"map\",\n            icon: \"Upload\",\n            input: { type: \"file\", accept: \".json,.geojson,application/json,application/geo+json\" },\n        },\n    }"
+                "text": "{\n        resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg(\"Reset map bounds\"), group: \"map\", icon: \"Restore\", intent: \"default\" },\n        addPin: { label: (widget: { msg: MsgFn }) => widget.msg(\"Add pin at map center\"), group: \"map\", icon: \"Add\", intent: \"default\" },\n        importGeoJSON: {\n            label: (widget: { msg: MsgFn }) => widget.msg(\"Import GeoJSON\"),\n            group: \"map\",\n            icon: \"Upload\",\n            input: { type: \"file\", accept: \".json,.geojson,application/json,application/geo+json\" },\n        },\n    }"
               }
+            },
+            {
+              "kind": "field",
+              "name": "convertFrom",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ '.geojson': 'importFile', 'application/geo+json': 'importFile' }"
+            },
+            {
+              "kind": "field",
+              "name": "convertTo",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'application/geo+json': 'exportGeoJSON' }"
             },
             {
               "kind": "field",
@@ -291,16 +319,6 @@
             },
             {
               "kind": "field",
-              "name": "inputDrawObjectLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''",
-              "attribute": "inputDrawObjectLabel"
-            },
-            {
-              "kind": "field",
               "name": "pinTitle",
               "type": {
                 "text": "string"
@@ -308,34 +326,6 @@
               "privacy": "private",
               "default": "''",
               "attribute": "pinTitle"
-            },
-            {
-              "kind": "field",
-              "name": "mapMode",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "'view'",
-              "attribute": "mapMode"
-            },
-            {
-              "kind": "field",
-              "name": "mouseMarker",
-              "type": {
-                "text": "L.Marker | undefined"
-              },
-              "privacy": "private",
-              "attribute": "mouseMarker"
-            },
-            {
-              "kind": "field",
-              "name": "editObject",
-              "type": {
-                "text": "DrawLayer | undefined"
-              },
-              "privacy": "private",
-              "attribute": "editObject"
             },
             {
               "kind": "field",
@@ -377,11 +367,45 @@
             },
             {
               "kind": "field",
-              "name": "_vectorLayer",
+              "name": "markerLayer",
               "type": {
-                "text": "L.Layer | undefined"
+                "text": "L.LayerGroup | undefined"
               },
               "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "resizeObserver",
+              "type": {
+                "text": "ResizeObserver | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "lifetime",
+              "type": {
+                "text": "AbortController | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "printSnapshots",
+              "type": {
+                "text": "Snapshot[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "resizing",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
             },
             {
               "kind": "field",
@@ -391,6 +415,71 @@
               },
               "privacy": "private",
               "default": "{ getMap: () => this.map, useLayerMaxZoom: (maxZoom) => { if (!this.maxZoom || !this.boundsActive) this.map?.setMaxZoom(maxZoom); }, }"
+            },
+            {
+              "kind": "method",
+              "name": "resizeMap",
+              "privacy": "private",
+              "description": "Keeps the map filling its box when the widget is resized. The view keeps its center and is not stored as a new start position."
+            },
+            {
+              "kind": "method",
+              "name": "freezeVectorLayers",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "releaseVectorLayers",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "prepareImport",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<ImportedMap>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "file",
+                  "type": {
+                    "text": "File"
+                  }
+                }
+              ],
+              "description": "Reads and checks a whole GeoJSON file. Nothing changes before the returned function runs."
+            },
+            {
+              "kind": "method",
+              "name": "applyImport",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "{ overlay, pins, objects }",
+                  "type": {
+                    "text": "ImportedMap"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "importFile",
+              "return": {
+                "type": {
+                  "text": "Promise<() => void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "file",
+                  "type": {
+                    "text": "File"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -407,7 +496,28 @@
                     "text": "File[]"
                   }
                 }
-              ]
+              ],
+              "description": "GeoJSON import of an action: the first file replaces the overlay, and replaces the pins and drawings too when the file holds them (nothing is merged)."
+            },
+            {
+              "kind": "method",
+              "name": "exportGeoJSON",
+              "return": {
+                "type": {
+                  "text": "File"
+                }
+              },
+              "description": "Exports the overlay, the pins and the drawn shapes as one GeoJSON FeatureCollection.\nPins and shapes are tagged with a `kind` property, so that an import of the file restores them.\nA circle is a point with a `radius` in meters; styles are kept as properties. Base layer, view and bounds are not part of it."
+            },
+            {
+              "kind": "method",
+              "name": "addPin",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Opens the pin dialog for a pin at the center of the map."
             },
             {
               "kind": "method",
@@ -425,20 +535,13 @@
             },
             {
               "kind": "method",
-              "name": "onMapClick",
+              "name": "renderMarkers",
               "privacy": "private",
-              "parameters": [
-                {
-                  "name": "e",
-                  "type": {
-                    "text": "L.LeafletMouseEvent"
-                  }
-                }
-              ]
+              "description": "Draws the pins into one group, so that drawing them again never stacks duplicates."
             },
             {
               "kind": "method",
-              "name": "onRectangleClick",
+              "name": "selectShape",
               "privacy": "private",
               "parameters": [
                 {
@@ -446,40 +549,27 @@
                   "type": {
                     "text": "L.LeafletEvent"
                   }
+                },
+                {
+                  "name": "handles",
+                  "type": {
+                    "text": "(map: L.Map, layer: WithId<T>, save: () => void) => L.Marker[]"
+                  }
                 }
-              ]
+              ],
+              "description": "Shows the handles of the selected shape. A selection by keyboard moves the focus to the first handle."
             },
             {
               "kind": "method",
-              "name": "onCircleClick",
+              "name": "selectObject",
               "privacy": "private",
               "parameters": [
                 {
-                  "name": "e",
+                  "name": "type",
                   "type": {
-                    "text": "L.LeafletEvent"
+                    "text": "DrawnObject['type']"
                   }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onPolygonClick",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "e",
-                  "type": {
-                    "text": "L.LeafletEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onPolylineClick",
-              "privacy": "private",
-              "parameters": [
+                },
                 {
                   "name": "e",
                   "type": {
@@ -510,11 +600,6 @@
             },
             {
               "kind": "method",
-              "name": "clearEditObject",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
               "name": "saveObject",
               "privacy": "private",
               "parameters": [
@@ -535,27 +620,14 @@
             },
             {
               "kind": "method",
-              "name": "deleteObject",
-              "privacy": "private",
-              "parameters": [
-                {
-                  "name": "id",
-                  "optional": true,
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
               "name": "loadObjects",
               "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "deleteSelectedObject",
-              "privacy": "private"
+              "name": "syncObjectAccess",
+              "privacy": "private",
+              "description": "Makes the drawn shapes reachable by keyboard: all of them for the author, the labelled ones for a reader who may move the map."
             }
           ],
           "attributes": [
@@ -670,42 +742,12 @@
               "fieldName": "inputZoom"
             },
             {
-              "name": "inputDrawObjectLabel",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "inputDrawObjectLabel"
-            },
-            {
               "name": "pinTitle",
               "type": {
                 "text": "string"
               },
               "default": "''",
               "fieldName": "pinTitle"
-            },
-            {
-              "name": "mapMode",
-              "type": {
-                "text": "string"
-              },
-              "default": "'view'",
-              "fieldName": "mapMode"
-            },
-            {
-              "name": "mouseMarker",
-              "type": {
-                "text": "L.Marker | undefined"
-              },
-              "fieldName": "mouseMarker"
-            },
-            {
-              "name": "editObject",
-              "type": {
-                "text": "DrawLayer | undefined"
-              },
-              "fieldName": "editObject"
             },
             {
               "name": "editObjectMarkers",

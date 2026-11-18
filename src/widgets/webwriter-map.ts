@@ -19,6 +19,9 @@ import minimizeIcon from '@tabler/icons/outline/minimize.svg';
 import { createMaplibreLayer, createRasterLayer, type BaseLayerHost } from '../components/base-layers';
 import { circleHandles, polygonHandles, polylineHandles, rectangleHandles } from '../components/edit-handles';
 import { mapToolbox, pinDialog } from '../components/map-panels';
+import { freezeVectorLayers, releaseSnapshots, type Snapshot } from '../components/print-snapshot';
+import { bindShapeKeys, drawObject, setShapeAccess, storeObject } from '../components/map-objects';
+import { exportFeatures, importFeatures, type ImportedMap } from '../model/geojson';
 import { copy, defaultMaxZoom, VECTOR_TILES, RASTER_TILES, type DrawLayer, type DrawnObject, type Pin, type Point, type WithId } from '../model/map-data';
 
 import SlButton from '@shoelace-style/shoelace/dist/components/button/button.component.js';
@@ -38,6 +41,18 @@ import '@maplibre/maplibre-gl-leaflet';
 
 /**
  * Geographical map with different terrain options including custom tiling, and GeoJSON support.
+ *
+ * Keyboard: with `allowpanning` (and always in edit mode) the focused map pans with the arrow keys and zooms with + and -.
+ * Pins are focusable and open their text on Enter. In edit mode a drawn shape is selected with Enter or Space, and its
+ * handles move with the arrow keys. Touch: drag, pinch and tap work as on a mouse.
+ * Layout: the map fills the width of the widget (down to 300 px) and follows its container when it is resized.
+ * Files: GeoJSON (`.geojson`, `application/geo+json`) imports and exports; the export holds the overlay, the pins and the
+ * drawn shapes, and an import of it restores them. The base layer, the view and the bounds are not part of the file.
+ * Print: the toolbox and map controls are hidden, a vector map is printed as a copy of its current view, and the
+ * titles of the pins are listed below the map.
+ *
+ * @part map - The map frame.
+ * @part pins - The list of pin titles that is shown on paper.
  */
 @customElement('webwriter-map')
 export class WebwriterMap extends LitElementWw {
@@ -79,6 +94,7 @@ export class WebwriterMap extends LitElementWw {
 
     static actions = {
         resetBounds: { label: (widget: { msg: MsgFn }) => widget.msg("Reset map bounds"), group: "map", icon: "Restore", intent: "default" },
+        addPin: { label: (widget: { msg: MsgFn }) => widget.msg("Add pin at map center"), group: "map", icon: "Add", intent: "default" },
         importGeoJSON: {
             label: (widget: { msg: MsgFn }) => widget.msg("Import GeoJSON"),
             group: "map",
@@ -86,6 +102,10 @@ export class WebwriterMap extends LitElementWw {
             input: { type: "file", accept: ".json,.geojson,application/json,application/geo+json" },
         },
     } as const;
+
+    static convertFrom = { '.geojson': 'importFile', 'application/geo+json': 'importFile' };
+
+    static convertTo = { 'application/geo+json': 'exportGeoJSON' };
 
     // The drawer labels are computed with `msg`, so the editor has to read them again after a language change.
     protected localize = localizer(this, { sourceLocale, targetLocales, load: (locale) => import(`../../localization/generated/${locale}.ts`), drawer: true });
@@ -207,6 +227,12 @@ export class WebwriterMap extends LitElementWw {
 
     private resizeObserver: ResizeObserver | undefined;
 
+    private lifetime: AbortController | undefined;
+
+    private printSnapshots: Snapshot[] = [];
+
+    private resizing = false;
+
     private layerHost: BaseLayerHost = {
         getMap: () => this.map,
         useLayerMaxZoom: (maxZoom) => {
@@ -242,11 +268,7 @@ export class WebwriterMap extends LitElementWw {
         }
 
         if (this.map && changedProperties.has('mapBounds')) {
-            if (this.mapBounds && this.boundsActive) {
-                this.map.setMaxBounds(this.mapBounds);
-            } else {
-                this.map.setMaxBounds(undefined);
-            }
+            this.map.setMaxBounds(this.mapBounds && this.boundsActive ? this.mapBounds : undefined);
         }
 
         if (this.map && (changedProperties.has('maxZoom') || changedProperties.has('vectorStyle') || changedProperties.has('customTileUrl'))) {
@@ -258,11 +280,7 @@ export class WebwriterMap extends LitElementWw {
         }
 
         if (this.map && changedProperties.has('minZoom')) {
-            if (this.minZoom) {
-                this.map.setMinZoom(this.minZoom);
-            } else {
-                this.map.setMinZoom(0);
-            }
+            this.map.setMinZoom(this.minZoom || 0);
         }
 
         if (this.map && changedProperties.has('boundsActive')) {
@@ -275,6 +293,7 @@ export class WebwriterMap extends LitElementWw {
 
         if (this.map && changedProperties.has('editable')) {
             this.removeEditMarkers();
+            this.syncObjectAccess();
         }
     }
 
@@ -313,6 +332,7 @@ export class WebwriterMap extends LitElementWw {
         }
 
         this.resizeObserver = new ResizeObserver(() => {
+            this.resizeMap();
             const fullscreen = this.ownerDocument.fullscreenElement === this;
             if (!fullscreen && this.isFullscreen) {
                 this.isFullscreen = false;
@@ -323,27 +343,94 @@ export class WebwriterMap extends LitElementWw {
             }
         });
         this.resizeObserver.observe(this);
+        this.syncObjectAccess();
     }
 
     connectedCallback(): void {
         super.connectedCallback();
         this.resizeObserver?.observe(this);
+        this.lifetime = new AbortController();
+        window.addEventListener('beforeprint', () => this.freezeVectorLayers(), { signal: this.lifetime.signal });
+        window.addEventListener('afterprint', () => this.releaseVectorLayers(), { signal: this.lifetime.signal });
     }
 
     disconnectedCallback(): void {
         super.disconnectedCallback();
         this.resizeObserver?.disconnect();
+        this.lifetime?.abort();
+        this.releaseVectorLayers();
     }
 
-    async importGeoJSON(files: File[]): Promise<void> {
-        const file = files[0];
-        if (!file) return;
-        const text = await file.text();
-        const parsed = JSON.parse(text);
-        if (!parsed || typeof parsed !== "object" || !["Feature", "FeatureCollection", "GeometryCollection"].includes(parsed.type)) {
-            throw new TypeError("The selected file does not contain GeoJSON.");
+    /** Keeps the map filling its box when the widget is resized. The view keeps its center and is not stored as a new start position. */
+    private resizeMap() {
+        if (!this.map) return;
+        this.resizing = true;
+        try {
+            this.map.invalidateSize({ animate: false });
+        } finally {
+            this.resizing = false;
         }
-        this.geoJSON = JSON.stringify(parsed);
+    }
+
+    private freezeVectorLayers() {
+        this.releaseVectorLayers();
+        if (this.map) this.printSnapshots = freezeVectorLayers(this.map);
+    }
+
+    private releaseVectorLayers() {
+        releaseSnapshots(this.printSnapshots);
+        this.printSnapshots = [];
+    }
+
+    /** Reads and checks a whole GeoJSON file. Nothing changes before the returned function runs. */
+    private async prepareImport(file: File): Promise<ImportedMap> {
+        const imported = importFeatures(await file.text());
+        if (!imported) throw new Error(this.msg('The selected file does not contain GeoJSON.'));
+        return imported;
+    }
+
+    private applyImport({ overlay, pins, objects }: ImportedMap) {
+        this.geoJSON = overlay;
+        if (pins) {
+            this.markers = pins;
+            this.renderMarkers();
+        }
+        if (!objects) return;
+        this.removeEditMarkers();
+        this.map?.eachLayer((layer) => {
+            if (this.objects[(layer as DrawLayer).id ?? '']) this.map.removeLayer(layer);
+        });
+        this.objects = objects;
+        if (this.map) {
+            this.loadObjects();
+            this.syncObjectAccess();
+        }
+    }
+
+    async importFile(file: File): Promise<() => void> {
+        const imported = await this.prepareImport(file);
+        return () => this.applyImport(imported);
+    }
+
+    /** GeoJSON import of an action: the first file replaces the overlay, and replaces the pins and drawings too when the file holds them (nothing is merged). */
+    async importGeoJSON(files: File[]): Promise<void> {
+        if (files[0]) this.applyImport(await this.prepareImport(files[0]));
+    }
+
+    /**
+     * Exports the overlay, the pins and the drawn shapes as one GeoJSON FeatureCollection.
+     * Pins and shapes are tagged with a `kind` property, so that an import of the file restores them.
+     * A circle is a point with a `radius` in meters; styles are kept as properties. Base layer, view and bounds are not part of it.
+     */
+    exportGeoJSON(): File {
+        return new File([exportFeatures(this.geoJSON, this.markers, this.objects)], 'map.geojson', { type: 'application/geo+json' });
+    }
+
+    /** Opens the pin dialog for a pin at the center of the map. */
+    addPin(): void {
+        this.loadMapPosition();
+        this.pinTitle = '';
+        this.pinDialog?.show();
     }
 
     resetBounds(): void {
@@ -385,65 +472,56 @@ export class WebwriterMap extends LitElementWw {
     private renderMarkers() {
         this.markerLayer?.clearLayers();
         this.markers?.forEach((marker) => {
-            L.marker([marker.lat, marker.lng], { icon: icons.RED }).bindPopup(marker.title ?? '').addTo(this.markerLayer!);
+            L.marker([marker.lat, marker.lng], { icon: icons.RED, title: marker.title, alt: marker.title }).bindPopup(marker.title ?? '').addTo(this.markerLayer!);
         });
     }
 
     render() {
         return html`
-            ${this.#permissions.editing ? mapToolbox(this) : ''}
-            <div id="map" style=${styleMap({ height: this.isFullscreen ? '100%' : this.mapHeight + 'px', width: this.mapWidth + '%' })}>
+            ${this.#permissions.editing ? html`<div class="toolbox-frame">${mapToolbox(this)}</div>` : ''}
+            <div id="map" part="map" style=${styleMap({ height: this.isFullscreen ? '100%' : this.mapHeight + 'px', width: this.mapWidth + '%' })}>
                 <div id="overlay">
-                    <sl-button id="fsButton" size="small" @click=${()=>{
+                    <sl-button id="fsButton" size="small" title=${this.isFullscreen ? this.msg('Exit fullscreen') : this.msg('Enter fullscreen')} @click=${()=>{
                         if (this.ownerDocument.fullscreenElement === this) {
                             this.ownerDocument.exitFullscreen()
                         } else {
                             this.requestFullscreen()
                         }
                     }}>
-                    <sl-icon src=${this.isFullscreen ? minimizeIcon : maximizeIcon}></sl-icon>
+                    <sl-icon src=${this.isFullscreen ? minimizeIcon : maximizeIcon} label=${this.isFullscreen ? this.msg('Exit fullscreen') : this.msg('Enter fullscreen')}></sl-icon>
                     </sl-button> 
                 </div>
             </div>
-            
+            ${this.markers?.some((pin) => pin.title) ? html`<section class="print-pins" part="pins">
+                <h3>${this.msg('Pins')}</h3>
+                <ol>${this.markers.filter((pin) => pin.title).map((pin) => html`<li>${pin.title} <small>${pin.lat.toFixed(4)}, ${pin.lng.toFixed(4)}</small></li>`)}</ol>
+            </section>` : ''}
 
             ${this.#permissions.editing ? pinDialog(this.msg, this.pinTitle, (title) => (this.pinTitle = title), () => this.addLabel()) : ''}
         `;
     }
 
-    private onRectangleClick(e: L.LeafletEvent) {
+    /** Shows the handles of the selected shape. A selection by keyboard moves the focus to the first handle. */
+    private selectShape<T extends DrawLayer>(e: L.LeafletEvent, handles: (map: L.Map, layer: WithId<T>, save: () => void) => L.Marker[]) {
         if (!this.#permissions.editing) return;
 
         this.removeEditMarkers();
-        const rectangle = e.target as WithId<L.Rectangle>;
-        this.editObjectMarkers.push(...rectangleHandles(this.map, rectangle, () => this.saveObject(rectangle, rectangle.id)));
+        const layer = e.target as WithId<T>;
+        const markers = handles(this.map, layer, () => this.saveObject(layer, layer.id));
+        for (const marker of markers) marker.getElement()?.setAttribute('aria-label', this.msg('Move handle'));
+        this.editObjectMarkers.push(...markers);
+        if ((e as L.LeafletMouseEvent).originalEvent instanceof KeyboardEvent) markers[0]?.getElement()?.focus();
     }
 
-    private onCircleClick(e: L.LeafletEvent) {
-        if (!this.#permissions.editing) return;
-
-        this.removeEditMarkers();
-        const circle = e.target as WithId<L.Circle>;
-        this.editObjectMarkers.push(...circleHandles(this.map, circle, () => this.saveObject(circle, circle.id)));
-    }
-
-    private onPolygonClick(e: L.LeafletEvent) {
-        if (!this.#permissions.editing) return;
-
-        this.removeEditMarkers();
-        const polygon = e.target as WithId<L.Polygon>;
-        this.editObjectMarkers.push(...polygonHandles(this.map, polygon, () => this.saveObject(polygon, polygon.id)));
-    }
-
-    private onPolylineClick(e: L.LeafletEvent) {
-        if (!this.#permissions.editing) return;
-
-        this.removeEditMarkers();
-        const polyline = e.target as WithId<L.Polyline>;
-        this.editObjectMarkers.push(...polylineHandles(this.map, polyline, () => this.saveObject(polyline, polyline.id)));
+    private selectObject(type: DrawnObject['type'], e: L.LeafletEvent) {
+        if (type === 'rectangle') this.selectShape<L.Rectangle>(e, rectangleHandles);
+        else if (type === 'circle') this.selectShape<L.Circle>(e, circleHandles);
+        else if (type === 'polygon') this.selectShape<L.Polygon>(e, polygonHandles);
+        else this.selectShape<L.Polyline>(e, polylineHandles);
     }
 
     private setInitialPosition() {
+        if (this.resizing) return;
         this.loadMapPosition()
 
         this.initialPos = {
@@ -462,7 +540,7 @@ export class WebwriterMap extends LitElementWw {
     private addLabel() {
         if (this.pinTitle) {
             this.pinDialog.hide();
-            L.marker([this.inputLat, this.inputLng], { icon: icons.RED })
+            L.marker([this.inputLat, this.inputLng], { icon: icons.RED, title: this.pinTitle, alt: this.pinTitle })
                 .addTo(this.markerLayer!)
                 .bindPopup(this.pinTitle)
                 .openPopup();
@@ -484,67 +562,32 @@ export class WebwriterMap extends LitElementWw {
     }
 
     private saveObject(o: DrawLayer, id?: string) {
-        if (!id) {
-            id = crypto.randomUUID();
-            o.id = id;
-        }
-
-        const style = {
-            borderColor: o.options.color,
-            fillColor: o.options.fillColor,
-            borderOpacity: o.options.opacity,
-            fillOpacity: o.options.fillOpacity,
-            label: '',
-        };
-        let object: DrawnObject;
-        if (o instanceof L.Rectangle) {
-            object = { id, type: 'rectangle', latlngs: o.getBounds() as unknown as { _northEast: Point; _southWest: Point }, ...style };
-        } else if (o instanceof L.Circle) {
-            object = { id, type: 'circle', latlngs: o.getLatLng(), radius: o.getRadius(), ...style };
-        } else {
-            object = { id, type: o instanceof L.Polygon ? 'polygon' : 'polyline', latlngs: o.getLatLngs(), ...style };
-        }
-        this.objects = { ...this.objects, [id]: object };
+        if (!id) o.id = id = crypto.randomUUID();
+        this.objects = { ...this.objects, [id]: storeObject(o, id) };
     }
 
     private loadObjects() {
         for (const o of Object.values(this.objects)) {
-            const style = { color: o.borderColor, fillColor: o.fillColor, opacity: o.borderOpacity, fillOpacity: o.fillOpacity };
-            let layer: DrawLayer;
-            let onClick: (e: L.LeafletEvent) => void;
-
-            switch (o.type) {
-                case 'rectangle':
-                    layer = L.rectangle(
-                        [
-                            [o.latlngs._northEast.lat, o.latlngs._northEast.lng],
-                            [o.latlngs._southWest.lat, o.latlngs._southWest.lng],
-                        ],
-                        style
-                    );
-                    onClick = (e) => this.onRectangleClick(e);
-                    break;
-                case 'circle':
-                    layer = L.circle([o.latlngs.lat, o.latlngs.lng], { radius: o.radius, ...style });
-                    onClick = (e) => this.onCircleClick(e);
-                    break;
-                case 'polygon':
-                    layer = L.polygon(o.latlngs as L.LatLngExpression[][], style);
-                    onClick = (e) => this.onPolygonClick(e);
-                    break;
-                case 'polyline':
-                    layer = L.polyline(o.latlngs as L.LatLngExpression[], style) as L.Polyline;
-                    onClick = (e) => this.onPolylineClick(e);
-                    break;
-                default:
-                    continue;
-            }
+            const layer = drawObject(o);
+            if (!layer) continue;
             layer.addTo(this.map);
             layer.id = o.id;
-            layer.on('click', onClick);
-            if (o.label) {
-                layer.bindTooltip(o.label, { direction: 'center' });
-            }
+            layer.on('click', (e: L.LeafletEvent) => this.selectObject(o.type, e));
+            if (o.label) layer.bindTooltip(o.label, { direction: 'center' });
+            bindShapeKeys(layer, () => this.#permissions.editing);
         }
+    }
+
+    /** Makes the drawn shapes reachable by keyboard: all of them for the author, the labelled ones for a reader who may move the map. */
+    private syncObjectAccess() {
+        if (!this.map) return;
+        const interactive = this.#permissions.can('allowPanning');
+        this.map.eachLayer((layer) => {
+            const id = (layer as DrawLayer).id;
+            const object = id ? this.objects[id] : undefined;
+            const element = object && (layer as DrawLayer).getElement?.();
+            if (!object || !element) return;
+            setShapeAccess(element, interactive && (this.#permissions.editing || !!object.label), this.#permissions.editing, object.label || this.msg('Shape'));
+        });
     }
 }

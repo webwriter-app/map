@@ -281,7 +281,7 @@ export const leafletStyles = css`
         outline-offset: 1px;
     }
     .leaflet-container a {
-        color: #0078a8;
+        color: var(--ww-link-color, #0078a8);
     }
     .leaflet-zoom-box {
         border: 2px dotted #38f;
@@ -290,7 +290,7 @@ export const leafletStyles = css`
 
     /* general typography */
     .leaflet-container {
-        font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-family: var(--ww-font-family, 'Helvetica Neue', Arial, Helvetica, sans-serif);
         font-size: 12px;
         font-size: 0.75rem;
         line-height: 1.5;

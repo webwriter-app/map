@@ -2,7 +2,25 @@ import L from 'leaflet';
 import { icons } from './icons';
 import type { WithId } from '../model/map-data';
 
-const handle = (map: L.Map, latlng: L.LatLngExpression) => L.marker(latlng, { draggable: true, icon: icons.GREEN }).addTo(map);
+const NUDGE_PX = 10;
+const ARROWS: Record<string, [number, number]> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+
+/** A handle that is moved by dragging (mouse, touch) or with the arrow keys while it has focus. */
+const handle = (map: L.Map, latlng: L.LatLngExpression) => {
+    const marker = L.marker(latlng, { draggable: true, icon: icons.GREEN }).addTo(map);
+    // The map pans on arrow keys itself, so the key is stopped here.
+    marker.getElement()?.addEventListener('keydown', (event) => {
+        const step = ARROWS[event.key];
+        if (!step) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const point = map.latLngToContainerPoint(marker.getLatLng()).add([step[0] * NUDGE_PX, step[1] * NUDGE_PX]);
+        marker.setLatLng(map.containerPointToLatLng(point));
+        marker.fire('drag');
+        marker.fire('dragend');
+    });
+    return marker;
+};
 
 /** Adds draggable corner handles to a rectangle and returns them. `save` runs after a handle was dropped. */
 export function rectangleHandles(map: L.Map, rectangle: WithId<L.Rectangle>, save: () => void): L.Marker[] {
@@ -19,7 +37,7 @@ export function rectangleHandles(map: L.Map, rectangle: WithId<L.Rectangle>, sav
         markerBL.setLatLng(rectangle.getBounds().getSouthWest());
         markerBR.setLatLng(rectangle.getBounds().getSouthEast());
     });
-    markerTL.once('dragend', save);
+    markerTL.on('dragend', save);
     markerTR.on('drag', (e: L.LeafletEvent) => {
         const dragged = (e.target as L.Marker).getLatLng();
         rectangle.setBounds(
@@ -30,7 +48,7 @@ export function rectangleHandles(map: L.Map, rectangle: WithId<L.Rectangle>, sav
         markerBL.setLatLng(rectangle.getBounds().getSouthWest());
         markerBR.setLatLng(rectangle.getBounds().getSouthEast());
     });
-    markerTR.once('dragend', save);
+    markerTR.on('dragend', save);
     markerBL.on('drag', (e: L.LeafletEvent) => {
         const dragged = (e.target as L.Marker).getLatLng();
         rectangle.setBounds(
@@ -41,7 +59,7 @@ export function rectangleHandles(map: L.Map, rectangle: WithId<L.Rectangle>, sav
         markerTR.setLatLng(rectangle.getBounds().getNorthEast());
         markerBR.setLatLng(rectangle.getBounds().getSouthEast());
     });
-    markerBL.once('dragend', save);
+    markerBL.on('dragend', save);
     markerBR.on('drag', (e: L.LeafletEvent) => {
         rectangle.setBounds(L.latLngBounds(markerTL.getLatLng(), (e.target as L.Marker).getLatLng()));
 
@@ -49,7 +67,7 @@ export function rectangleHandles(map: L.Map, rectangle: WithId<L.Rectangle>, sav
         markerTR.setLatLng(rectangle.getBounds().getNorthEast());
         markerBL.setLatLng(rectangle.getBounds().getSouthWest());
     });
-    markerBR.once('dragend', save);
+    markerBR.on('dragend', save);
 
     return [markerTL, markerTR, markerBL, markerBR];
 }
@@ -70,13 +88,13 @@ export function circleHandles(map: L.Map, circle: WithId<L.Circle>, save: () => 
         circle.setLatLng((e.target as L.Marker).getLatLng());
         markerRadius.setLatLng(radiusHandle());
     });
-    markerCenter.once('dragend', save);
+    markerCenter.on('dragend', save);
 
     markerRadius.on('drag', (e: L.LeafletEvent) => {
         circle.setRadius((e.target as L.Marker).getLatLng().distanceTo(markerCenter.getLatLng()));
         markerCenter.setLatLng(circle.getLatLng());
     });
-    markerRadius.once('dragend', save);
+    markerRadius.on('dragend', save);
 
     return [markerCenter, markerRadius];
 }
@@ -95,7 +113,7 @@ export function polygonHandles(map: L.Map, polygon: WithId<L.Polygon>, save: () 
             polygon.setLatLngs(latlngs);
         });
 
-        marker.once('dragend', save);
+        marker.on('dragend', save);
     });
     return markers;
 }
@@ -114,7 +132,7 @@ export function polylineHandles(map: L.Map, polyline: WithId<L.Polyline>, save: 
             polyline.setLatLngs(latlngs);
         });
 
-        marker.once('dragend', save);
+        marker.on('dragend', save);
     });
     return markers;
 }

@@ -345,7 +345,14 @@
       "ckb-Arab": "نەخشە",
       "af-ZA": "Kaart",
       "af-NA": "Kaart"
-    }
+    },
+    "importFormats": [
+      ".geojson",
+      "application/geo+json"
+    ],
+    "exportFormats": [
+      "application/geo+json"
+    ]
   },
   "./snippets/Example-Location": {
     "label": {
