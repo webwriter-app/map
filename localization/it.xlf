@@ -1,13 +1,118 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="it">
     <body>
-      <trans-unit id="s8af61807443f32a4">
-        <source>Actions</source>
-        <target>Azioni</target>
-      </trans-unit>
       <trans-unit id="s1bcea0c68ac23efb">
         <source>Add Pin</source>
         <target>Aggiungi Pin</target>
+      </trans-unit>
+      <trans-unit id="s71218539d83e0ab8">
+        <source>Movement</source>
+        <target>Movimento</target>
+      </trans-unit>
+      <trans-unit id="sa88dfb051be09d0e">
+        <source>Allow student movement</source>
+        <target>Consentire il movimento degli studenti</target>
+      </trans-unit>
+      <trans-unit id="s21b06c38fc4164db">
+        <source>Advanced</source>
+        <target>Avanzato</target>
+      </trans-unit>
+      <trans-unit id="s32689d1d09608f54">
+        <source>Map style</source>
+        <target>Stile della mappa</target>
+      </trans-unit>
+      <trans-unit id="s3011241149f8d10e">
+        <source>User select</source>
+        <target>Selezione dell'utente</target>
+      </trans-unit>
+      <trans-unit id="s8abdd4fbc8368253">
+        <source>Custom Tile Url</source>
+        <target>Url di piastrelle personalizzate</target>
+      </trans-unit>
+      <trans-unit id="s2492f5fb1b05b45e">
+        <source>Text</source>
+        <target>Testo</target>
+      </trans-unit>
+      <trans-unit id="sf9aee319a006c9b4">
+        <source>Add</source>
+        <target>Aggiungi</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>Tessere vettoriali di OpenFreeMap</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>Tessere raster</target>
+      </trans-unit>
+      <trans-unit id="sc8f38d904797cd0e">
+        <source>Initial zoom</source>
+        <target>Zoom iniziale</target>
+      </trans-unit>
+      <trans-unit id="s22c01523df47ee0b">
+        <source>Map width (%)</source>
+        <target>Larghezza della mappa (%)</target>
+      </trans-unit>
+      <trans-unit id="s342ff2d65f30029f">
+        <source>Map height (px)</source>
+        <target>Altezza della mappa (px)</target>
+      </trans-unit>
+      <trans-unit id="sf23555c6213a109d">
+        <source>Constrain panning to bounds</source>
+        <target>Limita lo spostamento ai confini della mappa</target>
+      </trans-unit>
+      <trans-unit id="s10ef8df6dd94e473">
+        <source>Custom tile URL</source>
+        <target>URL delle tessere personalizzate</target>
+      </trans-unit>
+      <trans-unit id="s6d4de8ac6f00f238">
+        <source>Vector map style URL</source>
+        <target>URL dello stile della mappa vettoriale</target>
+      </trans-unit>
+      <trans-unit id="s82b042b76a395dee">
+        <source>Map settings</source>
+        <target>Impostazioni della mappa</target>
+      </trans-unit>
+      <trans-unit id="s5762120510bc3df3">
+        <source>Reset map bounds</source>
+        <target>Ripristina i confini della mappa</target>
+      </trans-unit>
+      <trans-unit id="s126e8d634c216da7">
+        <source>Import GeoJSON</source>
+        <target>Importa GeoJSON</target>
+      </trans-unit>
+      <trans-unit id="s94b2bf93183aa7c3">
+        <source>Add pin at map center</source>
+        <target>Aggiungi un segnaposto al centro della mappa</target>
+      </trans-unit>
+      <trans-unit id="sb8fe547392ed0e42">
+        <source>The selected file does not contain GeoJSON.</source>
+        <target>Il file selezionato non contiene GeoJSON.</target>
+      </trans-unit>
+      <trans-unit id="s5334c0927cf25b86">
+        <source>Exit fullscreen</source>
+        <target>Esci da schermo intero</target>
+      </trans-unit>
+      <trans-unit id="s9b2bb1407142018e">
+        <source>Enter fullscreen</source>
+        <target>Entra a schermo intero</target>
+      </trans-unit>
+      <trans-unit id="se9bed519c6a36725">
+        <source>Pins</source>
+        <target>Segnaposti</target>
+      </trans-unit>
+      <trans-unit id="sc5697cf6d7f5b6d2">
+        <source>Move handle</source>
+        <target>Sposta la maniglia</target>
+      </trans-unit>
+      <trans-unit id="s2de969afacdaa7a6">
+        <source>Shape</source>
+        <target>Forma</target>
+      </trans-unit>
+      <trans-unit id="s8af61807443f32a4">
+        <source>Actions</source>
+        <target>Azioni</target>
       </trans-unit>
       <trans-unit id="sab904a167497cd3e">
         <source>Set Position as initial</source>
@@ -116,46 +221,6 @@
       <trans-unit id="sffdadf0a576fd802">
         <source>Height</source>
         <target>Altezza</target>
-      </trans-unit>
-      <trans-unit id="s71218539d83e0ab8">
-        <source>Movement</source>
-        <target>Movimento</target>
-      </trans-unit>
-      <trans-unit id="sa88dfb051be09d0e">
-        <source>Allow student movement</source>
-        <target>Consentire il movimento degli studenti</target>
-      </trans-unit>
-      <trans-unit id="s21b06c38fc4164db">
-        <source>Advanced</source>
-        <target>Avanzato</target>
-      </trans-unit>
-      <trans-unit id="s32689d1d09608f54">
-        <source>Map style</source>
-        <target>Stile della mappa</target>
-      </trans-unit>
-      <trans-unit id="s3011241149f8d10e">
-        <source>User select</source>
-        <target>Selezione dell'utente</target>
-      </trans-unit>
-      <trans-unit id="s8abdd4fbc8368253">
-        <source>Custom Tile Url</source>
-        <target>Url di piastrelle personalizzate</target>
-      </trans-unit>
-      <trans-unit id="s2492f5fb1b05b45e">
-        <source>Text</source>
-        <target>Testo</target>
-      </trans-unit>
-      <trans-unit id="sf9aee319a006c9b4">
-        <source>Add</source>
-        <target>Aggiungi</target>
-      </trans-unit>
-      <trans-unit id="s9132eff33fb5ed73">
-        <source>OpenFreeMap vector tiles</source>
-        <target>Tessere vettoriali di OpenFreeMap</target>
-      </trans-unit>
-      <trans-unit id="s8af7951ebf77cbed">
-        <source>Raster tiles</source>
-        <target>Tessere raster</target>
       </trans-unit>
     </body>
   </file>

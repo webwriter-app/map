@@ -2,51 +2,38 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
-    
+
+
 
     /* eslint-disable no-irregular-whitespace */
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
-      's0aee4705bcc0c15e': `Definir zoom mínimo`,
+      's10ef8df6dd94e473': `URL de blocos personalizados`,
+'s126e8d634c216da7': `Importar GeoJSON`,
 's1bcea0c68ac23efb': `Adicionar pino`,
-'s1c0ea772de28e773': `Sorteio`,
 's21b06c38fc4164db': `Avançado`,
+'s22c01523df47ee0b': `Largura do mapa (%)`,
 's2492f5fb1b05b45e': `Texto`,
-'s25392c6d0eb63175': `desativado`,
+'s2de969afacdaa7a6': `Forma`,
 's3011241149f8d10e': `Seleção de usuário`,
 's32689d1d09608f54': `Estilo do mapa`,
-'s37c758bc19c67a4d': `Desenhar círculo`,
-'s3b5ddf60892a6a48': `Limites`,
-'s5488509fd37aa9fc': `Desativar limites`,
-'s5590dbf7e425789d': `Rótulo`,
-'s6ba44d4d5d284468': `Cor da borda`,
-'s6beb392ed926ce5b': `Ativar limites`,
-'s6fc95ee75e407518': `Definir zoom máximo`,
+'s342ff2d65f30029f': `Altura do mapa (px)`,
+'s5334c0927cf25b86': `Sair da tela cheia`,
+'s5762120510bc3df3': `Redefinir os limites do mapa`,
+'s6d4de8ac6f00f238': `URL do estilo do mapa vetorial`,
 's71218539d83e0ab8': `Movimento`,
-'s78789724e789221c': `Tamanho`,
+'s82b042b76a395dee': `Configurações do mapa`,
 's8abdd4fbc8368253': `Url de ladrilho personalizado`,
-'s8af61807443f32a4': `Ações`,
 's8af7951ebf77cbed': `Mosaicos raster`,
-'s8f3d223923b156c6': `não definido`,
 's9132eff33fb5ed73': `Mosaicos vetoriais do OpenFreeMap`,
-'s936c17dcc2e04cf5': `Limites de ajuste`,
-'sa53d08f6b088b54e': `Visualizar limites`,
+'s94b2bf93183aa7c3': `Adicionar um marcador no centro do mapa`,
+'s9b2bb1407142018e': `Entrar em tela cheia`,
 'sa88dfb051be09d0e': `Permitir a movimentação dos alunos`,
-'sa9f2381c84bd9969': `Set Top Left`,
-'sab904a167497cd3e': `Definir Posição como inicial`,
-'saeeff153fba5364d': `Desenhar polígono`,
-'sc539af8ae925acc1': `Desenhar polilinha`,
-'sca9faebc773bf95d': `Excluir objeto`,
-'sd42752882536c15a': `Desenhar retângulo`,
-'sd83da86c74147960': `Definir a parte inferior direita`,
-'sdc673e73b5c13aea': `Excluir`,
-'sdc9cf2d6e96526c1': `Redefinir limites`,
-'sdd253aec6b88b6af': `Cor de preenchimento`,
-'sf21fb4f4b9e8911f': `Largura`,
-'sf42ce409138b0d9c': `ativado`,
+'sb8fe547392ed0e42': `O arquivo selecionado não contém GeoJSON.`,
+'sc5697cf6d7f5b6d2': `Mover a alça`,
+'sc8f38d904797cd0e': `Zoom inicial`,
+'se9bed519c6a36725': `Marcadores`,
+'sf23555c6213a109d': `Limitar o deslocamento à área do mapa`,
 'sf9aee319a006c9b4': `Adicionar`,
-'sffdadf0a576fd802': `Altura`,
     };
-  

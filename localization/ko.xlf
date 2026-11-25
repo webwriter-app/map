@@ -1,13 +1,118 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ko">
     <body>
-      <trans-unit id="s8af61807443f32a4">
-        <source>Actions</source>
-        <target>작업</target>
-      </trans-unit>
       <trans-unit id="s1bcea0c68ac23efb">
         <source>Add Pin</source>
         <target>핀 추가</target>
+      </trans-unit>
+      <trans-unit id="s71218539d83e0ab8">
+        <source>Movement</source>
+        <target>이동</target>
+      </trans-unit>
+      <trans-unit id="sa88dfb051be09d0e">
+        <source>Allow student movement</source>
+        <target>학생 이동 허용</target>
+      </trans-unit>
+      <trans-unit id="s21b06c38fc4164db">
+        <source>Advanced</source>
+        <target>고급</target>
+      </trans-unit>
+      <trans-unit id="s32689d1d09608f54">
+        <source>Map style</source>
+        <target>지도 스타일</target>
+      </trans-unit>
+      <trans-unit id="s3011241149f8d10e">
+        <source>User select</source>
+        <target>사용자 선택</target>
+      </trans-unit>
+      <trans-unit id="s8abdd4fbc8368253">
+        <source>Custom Tile Url</source>
+        <target>사용자 지정 타일 URL</target>
+      </trans-unit>
+      <trans-unit id="s2492f5fb1b05b45e">
+        <source>Text</source>
+        <target>텍스트</target>
+      </trans-unit>
+      <trans-unit id="sf9aee319a006c9b4">
+        <source>Add</source>
+        <target>추가</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>OpenFreeMap 벡터 타일</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>래스터 타일</target>
+      </trans-unit>
+      <trans-unit id="sc8f38d904797cd0e">
+        <source>Initial zoom</source>
+        <target>초기 확대 수준</target>
+      </trans-unit>
+      <trans-unit id="s22c01523df47ee0b">
+        <source>Map width (%)</source>
+        <target>지도 너비(%)</target>
+      </trans-unit>
+      <trans-unit id="s342ff2d65f30029f">
+        <source>Map height (px)</source>
+        <target>지도 높이(px)</target>
+      </trans-unit>
+      <trans-unit id="sf23555c6213a109d">
+        <source>Constrain panning to bounds</source>
+        <target>이동을 지도 범위 안으로 제한</target>
+      </trans-unit>
+      <trans-unit id="s10ef8df6dd94e473">
+        <source>Custom tile URL</source>
+        <target>사용자 지정 지도 타일 URL</target>
+      </trans-unit>
+      <trans-unit id="s6d4de8ac6f00f238">
+        <source>Vector map style URL</source>
+        <target>벡터 지도 스타일 URL</target>
+      </trans-unit>
+      <trans-unit id="s82b042b76a395dee">
+        <source>Map settings</source>
+        <target>지도 설정</target>
+      </trans-unit>
+      <trans-unit id="s5762120510bc3df3">
+        <source>Reset map bounds</source>
+        <target>지도 범위 재설정</target>
+      </trans-unit>
+      <trans-unit id="s126e8d634c216da7">
+        <source>Import GeoJSON</source>
+        <target>GeoJSON 가져오기</target>
+      </trans-unit>
+      <trans-unit id="s94b2bf93183aa7c3">
+        <source>Add pin at map center</source>
+        <target>지도 중앙에 핀 추가</target>
+      </trans-unit>
+      <trans-unit id="sb8fe547392ed0e42">
+        <source>The selected file does not contain GeoJSON.</source>
+        <target>선택한 파일에 GeoJSON이 없습니다.</target>
+      </trans-unit>
+      <trans-unit id="s5334c0927cf25b86">
+        <source>Exit fullscreen</source>
+        <target>전체 화면 종료</target>
+      </trans-unit>
+      <trans-unit id="s9b2bb1407142018e">
+        <source>Enter fullscreen</source>
+        <target>전체 화면으로 전환</target>
+      </trans-unit>
+      <trans-unit id="se9bed519c6a36725">
+        <source>Pins</source>
+        <target>핀</target>
+      </trans-unit>
+      <trans-unit id="sc5697cf6d7f5b6d2">
+        <source>Move handle</source>
+        <target>핸들 이동</target>
+      </trans-unit>
+      <trans-unit id="s2de969afacdaa7a6">
+        <source>Shape</source>
+        <target>도형</target>
+      </trans-unit>
+      <trans-unit id="s8af61807443f32a4">
+        <source>Actions</source>
+        <target>작업</target>
       </trans-unit>
       <trans-unit id="sab904a167497cd3e">
         <source>Set Position as initial</source>
@@ -116,46 +221,6 @@
       <trans-unit id="sffdadf0a576fd802">
         <source>Height</source>
         <target>높이</target>
-      </trans-unit>
-      <trans-unit id="s71218539d83e0ab8">
-        <source>Movement</source>
-        <target>이동</target>
-      </trans-unit>
-      <trans-unit id="sa88dfb051be09d0e">
-        <source>Allow student movement</source>
-        <target>학생 이동 허용</target>
-      </trans-unit>
-      <trans-unit id="s21b06c38fc4164db">
-        <source>Advanced</source>
-        <target>고급</target>
-      </trans-unit>
-      <trans-unit id="s32689d1d09608f54">
-        <source>Map style</source>
-        <target>지도 스타일</target>
-      </trans-unit>
-      <trans-unit id="s3011241149f8d10e">
-        <source>User select</source>
-        <target>사용자 선택</target>
-      </trans-unit>
-      <trans-unit id="s8abdd4fbc8368253">
-        <source>Custom Tile Url</source>
-        <target>사용자 지정 타일 URL</target>
-      </trans-unit>
-      <trans-unit id="s2492f5fb1b05b45e">
-        <source>Text</source>
-        <target>텍스트</target>
-      </trans-unit>
-      <trans-unit id="sf9aee319a006c9b4">
-        <source>Add</source>
-        <target>추가</target>
-      </trans-unit>
-      <trans-unit id="s9132eff33fb5ed73">
-        <source>OpenFreeMap vector tiles</source>
-        <target>OpenFreeMap 벡터 타일</target>
-      </trans-unit>
-      <trans-unit id="s8af7951ebf77cbed">
-        <source>Raster tiles</source>
-        <target>래스터 타일</target>
       </trans-unit>
     </body>
   </file>
