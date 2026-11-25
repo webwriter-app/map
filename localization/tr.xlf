@@ -1,14 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="tr">
     <body>
-      <trans-unit id="s8af61807443f32a4">
-        <source>Actions</source>
-        <target>Eylemler</target>
-      </trans-unit>
       <trans-unit id="s1bcea0c68ac23efb">
         <source>Add Pin</source>
         <target>Pin Ekle</target>
+      </trans-unit>
+      <trans-unit id="s71218539d83e0ab8">
+        <source>Movement</source>
+        <target>Hareket</target>
+      </trans-unit>
+      <trans-unit id="sa88dfb051be09d0e">
+        <source>Allow student movement</source>
+        <target>Öğrenci hareketine izin verin</target>
+      </trans-unit>
+      <trans-unit id="s21b06c38fc4164db">
+        <source>Advanced</source>
+        <target>Gelişmiş</target>
+      </trans-unit>
+      <trans-unit id="s32689d1d09608f54">
+        <source>Map style</source>
+        <target>Harita stili</target>
+      </trans-unit>
+      <trans-unit id="s3011241149f8d10e">
+        <source>User select</source>
+        <target>Kullanıcı seçimi</target>
+      </trans-unit>
+      <trans-unit id="s8abdd4fbc8368253">
+        <source>Custom Tile Url</source>
+        <target>Özel Karo Url</target>
+      </trans-unit>
+      <trans-unit id="s2492f5fb1b05b45e">
+        <source>Text</source>
+        <target>Metin</target>
+      </trans-unit>
+      <trans-unit id="sf9aee319a006c9b4">
+        <source>Add</source>
+        <target>Ekle</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>OpenFreeMap vektör döşemeleri</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>Raster döşemeler</target>
+      </trans-unit>
+      <trans-unit id="sc8f38d904797cd0e">
+        <source>Initial zoom</source>
+        <target>Başlangıç yakınlaştırması</target>
+      </trans-unit>
+      <trans-unit id="s22c01523df47ee0b">
+        <source>Map width (%)</source>
+        <target>Harita genişliği (%)</target>
+      </trans-unit>
+      <trans-unit id="s342ff2d65f30029f">
+        <source>Map height (px)</source>
+        <target>Harita yüksekliği (piksel)</target>
+      </trans-unit>
+      <trans-unit id="sf23555c6213a109d">
+        <source>Constrain panning to bounds</source>
+        <target>Kaydırmayı harita sınırlarıyla kısıtla</target>
+      </trans-unit>
+      <trans-unit id="s10ef8df6dd94e473">
+        <source>Custom tile URL</source>
+        <target>Özel harita döşemesi URL’si</target>
+      </trans-unit>
+      <trans-unit id="s6d4de8ac6f00f238">
+        <source>Vector map style URL</source>
+        <target>Vektör harita stili URL’si</target>
+      </trans-unit>
+      <trans-unit id="s82b042b76a395dee">
+        <source>Map settings</source>
+        <target>Harita ayarları</target>
+      </trans-unit>
+      <trans-unit id="s5762120510bc3df3">
+        <source>Reset map bounds</source>
+        <target>Harita sınırlarını sıfırla</target>
+      </trans-unit>
+      <trans-unit id="s126e8d634c216da7">
+        <source>Import GeoJSON</source>
+        <target>GeoJSON içe aktar</target>
+      </trans-unit>
+      <trans-unit id="s94b2bf93183aa7c3">
+        <source>Add pin at map center</source>
+        <target>Haritanın ortasına iğne ekle</target>
+      </trans-unit>
+      <trans-unit id="sb8fe547392ed0e42">
+        <source>The selected file does not contain GeoJSON.</source>
+        <target>Seçilen dosya GeoJSON içermiyor.</target>
+      </trans-unit>
+      <trans-unit id="s5334c0927cf25b86">
+        <source>Exit fullscreen</source>
+        <target>Tam ekrandan çık</target>
+      </trans-unit>
+      <trans-unit id="s9b2bb1407142018e">
+        <source>Enter fullscreen</source>
+        <target>Tam ekrana geç</target>
+      </trans-unit>
+      <trans-unit id="se9bed519c6a36725">
+        <source>Pins</source>
+        <target>İğneler</target>
+      </trans-unit>
+      <trans-unit id="sc5697cf6d7f5b6d2">
+        <source>Move handle</source>
+        <target>Tutamacı taşı</target>
+      </trans-unit>
+      <trans-unit id="s2de969afacdaa7a6">
+        <source>Shape</source>
+        <target>Şekil</target>
+      </trans-unit>
+      <trans-unit id="s8af61807443f32a4">
+        <source>Actions</source>
+        <target>Eylemler</target>
       </trans-unit>
       <trans-unit id="sab904a167497cd3e">
         <source>Set Position as initial</source>
@@ -118,73 +222,6 @@
         <source>Height</source>
         <target>Yükseklik</target>
       </trans-unit>
-      <trans-unit id="s71218539d83e0ab8">
-        <source>Movement</source>
-        <target>Hareket</target>
-      </trans-unit>
-      <trans-unit id="sa88dfb051be09d0e">
-        <source>Allow student movement</source>
-        <target>Öğrenci hareketine izin verin</target>
-      </trans-unit>
-      <trans-unit id="s21b06c38fc4164db">
-        <source>Advanced</source>
-        <target>Gelişmiş</target>
-      </trans-unit>
-      <trans-unit id="s32689d1d09608f54">
-        <source>Map style</source>
-        <target>Harita stili</target>
-      </trans-unit>
-      <trans-unit id="s3011241149f8d10e">
-        <source>User select</source>
-        <target>Kullanıcı seçimi</target>
-      </trans-unit>
-      <trans-unit id="s8abdd4fbc8368253">
-        <source>Custom Tile Url</source>
-        <target>Özel Karo Url</target>
-      </trans-unit>
-      <trans-unit id="s2492f5fb1b05b45e">
-        <source>Text</source>
-        <target>Metin</target>
-      </trans-unit>
-      <trans-unit id="sf9aee319a006c9b4">
-        <source>Add</source>
-        <target>Ekle</target>
-      </trans-unit>
-      <trans-unit id="s9132eff33fb5ed73">
-        <source>OpenFreeMap vector tiles</source>
-        <target>OpenFreeMap vektör döşemeleri</target>
-      </trans-unit>
-      <trans-unit id="s8af7951ebf77cbed">
-        <source>Raster tiles</source>
-        <target>Raster döşemeler</target>
-      </trans-unit>
-    <trans-unit id="sc8f38d904797cd0e">
-  <source>Initial zoom</source>
-<target>Başlangıç yakınlaştırması</target></trans-unit>
-<trans-unit id="s22c01523df47ee0b">
-  <source>Map width (%)</source>
-<target>Harita genişliği (%)</target></trans-unit>
-<trans-unit id="s342ff2d65f30029f">
-  <source>Map height (px)</source>
-<target>Harita yüksekliği (piksel)</target></trans-unit>
-<trans-unit id="sf23555c6213a109d">
-  <source>Constrain panning to bounds</source>
-<target>Kaydırmayı harita sınırlarıyla kısıtla</target></trans-unit>
-<trans-unit id="s10ef8df6dd94e473">
-  <source>Custom tile URL</source>
-<target>Özel harita döşemesi URL’si</target></trans-unit>
-<trans-unit id="s6d4de8ac6f00f238">
-  <source>Vector map style URL</source>
-<target>Vektör harita stili URL’si</target></trans-unit>
-<trans-unit id="s82b042b76a395dee">
-  <source>Map settings</source>
-<target>Harita ayarları</target></trans-unit>
-<trans-unit id="s5762120510bc3df3">
-  <source>Reset map bounds</source>
-<target>Harita sınırlarını sıfırla</target></trans-unit>
-<trans-unit id="s126e8d634c216da7">
-  <source>Import GeoJSON</source>
-<target>GeoJSON içe aktar</target></trans-unit>
-</body>
+    </body>
   </file>
 </xliff>

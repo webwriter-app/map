@@ -1,14 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="sl">
     <body>
-      <trans-unit id="s8af61807443f32a4">
-        <source>Actions</source>
-        <target>Ukrepi</target>
-      </trans-unit>
       <trans-unit id="s1bcea0c68ac23efb">
         <source>Add Pin</source>
         <target>Dodajanje zatiča</target>
+      </trans-unit>
+      <trans-unit id="s71218539d83e0ab8">
+        <source>Movement</source>
+        <target>Gibanje</target>
+      </trans-unit>
+      <trans-unit id="sa88dfb051be09d0e">
+        <source>Allow student movement</source>
+        <target>Omogočiti gibanje učencev</target>
+      </trans-unit>
+      <trans-unit id="s21b06c38fc4164db">
+        <source>Advanced</source>
+        <target>Napredni</target>
+      </trans-unit>
+      <trans-unit id="s32689d1d09608f54">
+        <source>Map style</source>
+        <target>Slog zemljevida</target>
+      </trans-unit>
+      <trans-unit id="s3011241149f8d10e">
+        <source>User select</source>
+        <target>Izberite uporabnika</target>
+      </trans-unit>
+      <trans-unit id="s8abdd4fbc8368253">
+        <source>Custom Tile Url</source>
+        <target>Po meri ploščice Url</target>
+      </trans-unit>
+      <trans-unit id="s2492f5fb1b05b45e">
+        <source>Text</source>
+        <target>Besedilo</target>
+      </trans-unit>
+      <trans-unit id="sf9aee319a006c9b4">
+        <source>Add</source>
+        <target>Dodaj</target>
+      </trans-unit>
+      <trans-unit id="s9132eff33fb5ed73">
+        <source>OpenFreeMap vector tiles</source>
+        <target>Vektorske ploščice OpenFreeMap</target>
+      </trans-unit>
+      <trans-unit id="s8af7951ebf77cbed">
+        <source>Raster tiles</source>
+        <target>Rasterske ploščice</target>
+      </trans-unit>
+      <trans-unit id="sc8f38d904797cd0e">
+        <source>Initial zoom</source>
+        <target>Začetna povečava</target>
+      </trans-unit>
+      <trans-unit id="s22c01523df47ee0b">
+        <source>Map width (%)</source>
+        <target>Širina zemljevida (%)</target>
+      </trans-unit>
+      <trans-unit id="s342ff2d65f30029f">
+        <source>Map height (px)</source>
+        <target>Višina zemljevida (px)</target>
+      </trans-unit>
+      <trans-unit id="sf23555c6213a109d">
+        <source>Constrain panning to bounds</source>
+        <target>Omeji premikanje na meje zemljevida</target>
+      </trans-unit>
+      <trans-unit id="s10ef8df6dd94e473">
+        <source>Custom tile URL</source>
+        <target>URL ploščic zemljevida po meri</target>
+      </trans-unit>
+      <trans-unit id="s6d4de8ac6f00f238">
+        <source>Vector map style URL</source>
+        <target>URL sloga vektorskega zemljevida</target>
+      </trans-unit>
+      <trans-unit id="s82b042b76a395dee">
+        <source>Map settings</source>
+        <target>Nastavitve zemljevida</target>
+      </trans-unit>
+      <trans-unit id="s5762120510bc3df3">
+        <source>Reset map bounds</source>
+        <target>Ponastavi meje zemljevida</target>
+      </trans-unit>
+      <trans-unit id="s126e8d634c216da7">
+        <source>Import GeoJSON</source>
+        <target>Uvozi GeoJSON</target>
+      </trans-unit>
+      <trans-unit id="s94b2bf93183aa7c3">
+        <source>Add pin at map center</source>
+        <target>Dodaj žebljiček na sredino zemljevida</target>
+      </trans-unit>
+      <trans-unit id="sb8fe547392ed0e42">
+        <source>The selected file does not contain GeoJSON.</source>
+        <target>Izbrana datoteka ne vsebuje GeoJSON.</target>
+      </trans-unit>
+      <trans-unit id="s5334c0927cf25b86">
+        <source>Exit fullscreen</source>
+        <target>Izhod iz celozaslonskega načina</target>
+      </trans-unit>
+      <trans-unit id="s9b2bb1407142018e">
+        <source>Enter fullscreen</source>
+        <target>Vstopi v celozaslonski način</target>
+      </trans-unit>
+      <trans-unit id="se9bed519c6a36725">
+        <source>Pins</source>
+        <target>Žebljički</target>
+      </trans-unit>
+      <trans-unit id="sc5697cf6d7f5b6d2">
+        <source>Move handle</source>
+        <target>Premakni ročico</target>
+      </trans-unit>
+      <trans-unit id="s2de969afacdaa7a6">
+        <source>Shape</source>
+        <target>Oblika</target>
+      </trans-unit>
+      <trans-unit id="s8af61807443f32a4">
+        <source>Actions</source>
+        <target>Ukrepi</target>
       </trans-unit>
       <trans-unit id="sab904a167497cd3e">
         <source>Set Position as initial</source>
@@ -118,73 +222,6 @@
         <source>Height</source>
         <target>Višina</target>
       </trans-unit>
-      <trans-unit id="s71218539d83e0ab8">
-        <source>Movement</source>
-        <target>Gibanje</target>
-      </trans-unit>
-      <trans-unit id="sa88dfb051be09d0e">
-        <source>Allow student movement</source>
-        <target>Omogočiti gibanje učencev</target>
-      </trans-unit>
-      <trans-unit id="s21b06c38fc4164db">
-        <source>Advanced</source>
-        <target>Napredni</target>
-      </trans-unit>
-      <trans-unit id="s32689d1d09608f54">
-        <source>Map style</source>
-        <target>Slog zemljevida</target>
-      </trans-unit>
-      <trans-unit id="s3011241149f8d10e">
-        <source>User select</source>
-        <target>Izberite uporabnika</target>
-      </trans-unit>
-      <trans-unit id="s8abdd4fbc8368253">
-        <source>Custom Tile Url</source>
-        <target>Po meri ploščice Url</target>
-      </trans-unit>
-      <trans-unit id="s2492f5fb1b05b45e">
-        <source>Text</source>
-        <target>Besedilo</target>
-      </trans-unit>
-      <trans-unit id="sf9aee319a006c9b4">
-        <source>Add</source>
-        <target>Dodaj</target>
-      </trans-unit>
-      <trans-unit id="s9132eff33fb5ed73">
-        <source>OpenFreeMap vector tiles</source>
-        <target>Vektorske ploščice OpenFreeMap</target>
-      </trans-unit>
-      <trans-unit id="s8af7951ebf77cbed">
-        <source>Raster tiles</source>
-        <target>Rasterske ploščice</target>
-      </trans-unit>
-    <trans-unit id="sc8f38d904797cd0e">
-  <source>Initial zoom</source>
-<target>Začetna povečava</target></trans-unit>
-<trans-unit id="s22c01523df47ee0b">
-  <source>Map width (%)</source>
-<target>Širina zemljevida (%)</target></trans-unit>
-<trans-unit id="s342ff2d65f30029f">
-  <source>Map height (px)</source>
-<target>Višina zemljevida (px)</target></trans-unit>
-<trans-unit id="sf23555c6213a109d">
-  <source>Constrain panning to bounds</source>
-<target>Omeji premikanje na meje zemljevida</target></trans-unit>
-<trans-unit id="s10ef8df6dd94e473">
-  <source>Custom tile URL</source>
-<target>URL ploščic zemljevida po meri</target></trans-unit>
-<trans-unit id="s6d4de8ac6f00f238">
-  <source>Vector map style URL</source>
-<target>URL sloga vektorskega zemljevida</target></trans-unit>
-<trans-unit id="s82b042b76a395dee">
-  <source>Map settings</source>
-<target>Nastavitve zemljevida</target></trans-unit>
-<trans-unit id="s5762120510bc3df3">
-  <source>Reset map bounds</source>
-<target>Ponastavi meje zemljevida</target></trans-unit>
-<trans-unit id="s126e8d634c216da7">
-  <source>Import GeoJSON</source>
-<target>Uvozi GeoJSON</target></trans-unit>
-</body>
+    </body>
   </file>
 </xliff>

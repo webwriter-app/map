@@ -1,7 +1,7 @@
 # Map (`@webwriter/map@3.0.0`)
 [License: MIT](LICENSE) | Version: 3.0.0
 
-Geographical map with different terrain options including custom tiling, and GeoJSON support.
+Explore geographic maps with terrain options, custom tiles, and GeoJSON support.
 
 ## Snippets
 [Snippets](https://webwriter.app/docs/snippets/snippets/) are examples and templates using the package's widgets.
@@ -105,4 +105,4 @@ npm install @webwriter/map
 
 
 ---
-*Generated with @webwriter/build@1.14.0*
+*Generated with @webwriter/build@1.15.0*
