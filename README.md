@@ -1,5 +1,5 @@
-# Map (`@webwriter/map@3.1.1`)
-[License: MIT](LICENSE) | Version: 3.1.1
+# Map (`@webwriter/map@3.1.2`)
+[License: MIT](LICENSE) | Version: 3.1.2
 
 Explore geographic maps with terrain options, custom tiles, and GeoJSON support.
 
